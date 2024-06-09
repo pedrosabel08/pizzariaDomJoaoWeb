@@ -143,6 +143,9 @@ CREATE TABLE IF NOT EXISTS `bordas_pizza` (
   PRIMARY KEY (`idbordas_pizza`)
 );
 
+-- -----------------------------------------------------
+-- Table `bd_pizzaria`.`vendas`
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `vendas` (
   `idvendas` INT(11) NOT NULL AUTO_INCREMENT,
   `data_venda` DATETIME NOT NULL,

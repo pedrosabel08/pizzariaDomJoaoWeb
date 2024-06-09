@@ -19,7 +19,7 @@ include ("conexao.php");
     <title>Pizzaria</title>
 </head>
 
-<body class="bg-gray-100">
+<body>
 
 
     <header class="w-full h-[420px] bg-orange-300">
@@ -44,7 +44,7 @@ include ("conexao.php");
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <button
                     class="pizza-size flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500"
-                    data-size="Baby" data-sabores="1">
+                    data-size="Baby" data-sabores="1" data-price="29.90" data-id-size="2">
                     <img src="./assets/pizzaBaby.jpg" alt="pizzaBaby" class="w-24 h-24 object-cover rounded-3xl mr-6">
                     <div class="text-left">
                         <p class="font-bold text-2xl mb-3">Baby</p>
@@ -54,7 +54,7 @@ include ("conexao.php");
                 </button>
                 <button
                     class="pizza-size flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500"
-                    data-size="Média" data-sabores="2">
+                    data-size="Média" data-sabores="2" data-price="58.90" data-id-size="3">
                     <img src="./assets/pizzaMedia.jpg" alt="pizzaMedia" class="w-24 h-24 object-cover rounded-3xl mr-6">
                     <div class="text-left">
                         <p class="font-bold text-2xl mb-3">Média</p>
@@ -64,22 +64,22 @@ include ("conexao.php");
                 </button>
                 <button
                     class="pizza-size flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500"
-                    data-size="Grande" data-sabores="3">
+                    data-size="Grande" data-sabores="3" data-price="76.90" data-id-size="4">
                     <img src="./assets/pizzaGrande.jpg" alt="pizzaGrande"
                         class="w-24 h-24 object-cover rounded-3xl mr-6">
                     <div class="text-left">
-                        <p class="font-bold text-2xl mb-3">Baby</p>
+                        <p class="font-bold text-2xl mb-3">Grande</p>
                         <p class="text-[16px]">35cm, 12 fatias, 3 sabores</p>
                         <p class="text-[16px] text-red-700 font-medium">A partir de R$ 76,90</p>
                     </div>
                 </button>
                 <button
                     class="pizza-size flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500"
-                    data-size="Gigante" data-sabores="4">
+                    data-size="Gigante" data-sabores="4" data-price="87.90" data-id-size="5">
                     <img src="./assets/pizzaGigante.jpg" alt="pizzaGigante"
                         class="w-24 h-24 object-cover rounded-3xl mr-6">
                     <div class="text-left">
-                        <p class="font-bold text-2xl mb-3">Baby</p>
+                        <p class="font-bold text-2xl mb-3">Gigante</p>
                         <p class="text-[16px]">45cm, 16 fatias, 4 sabores</p>
                         <p class="text-[16px] text-red-700 font-medium">A partir de R$ 87,90</p>
                     </div>
@@ -89,49 +89,82 @@ include ("conexao.php");
 
         <!-- Step 2: Borda da Pizza -->
         <div id="step2" class="mb-8 hidden">
-            <h2 class="text-2xl mb-4">Escolha a borda da pizza:</h2>
+            <div class="flex items-center mb-4">
+                <button id="backToStep1" class="mr-4 bg-zinc-500 text-white p-3 rounded-full hidden">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <h2 class="text-2xl">Escolha os tipos de borda:</h2>
+            </div>
+            <p id="selectedSizeStep2" class="text-lg mb-4"></p> <!-- Exibe o tamanho da pizza escolhida -->
             <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-8">
                 <button
                     class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
-                    data-border="Sem Borda">
-                    Sem Borda
+                    data-border="Sem Borda" data-border-price="0" data-id-border="7">
+                    <div>
+                        <p>Sem borda</p>
+                    </div>
                 </button>
                 <button
                     class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
-                    data-border="Tradicional">
-                    Catupiry
+                    data-border="Catupiry" data-border-price="10" data-id-border="1">
+                    <div>
+                        <p>Catupiry</p>
+                        <p class="text-red-500">+ R$10,00</p>
+                    </div>
                 </button>
                 <button
                     class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
-                    data-border="Recheada">
-                    Cheddar
+                    data-border="Cheddar" data-border-price="10" data-id-border="2">
+                    <div>
+                        <p>Cheddar</p>
+                        <p class="text-red-500">+ R$10,00</p>
+                    </div>
                 </button>
                 <button
                     class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
-                    data-border="Cream Cheese">
-                    Cream Cheese
+                    data-border="Cream Cheese" data-border-price="10" data-id-border="3">
+                    <div>
+                        <p>Cream Cheese</p>
+                        <p class="text-red-500">+ R$10,00</p>
+                    </div>
                 </button>
                 <button
                     class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
-                    data-border="Chocolate preto">
-                    Chocolate preto
+                    data-border="Chocolate preto" data-border-price="10" data-id-border="4">
+                    <div>
+                        <p>Chocolate Preto</p>
+                        <p class="text-red-500">+ R$10,00</p>
+                    </div>
                 </button>
                 <button
                     class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
-                    data-border="Chocolate branco">
-                    Chocolate branco
+                    data-border="Chocolate branco" data-border-price="10" data-id-border="5">
+                    <div>
+                        <p>Chocolate Branco</p>
+                        <p class="text-red-500">+ R$10,00</p>
+                    </div>
                 </button>
                 <button
                     class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
-                    data-border="Doce de Leite">
-                    Doce de Leite
+                    data-border="Doce de Leite" data-border-price="10" data-id-border="6">
+                    <div>
+                        <p>Doce de leite</p>
+                        <p class="text-red-500">+ R$10,00</p>
+                    </div>
                 </button>
             </div>
         </div>
 
         <!-- Step 3: Sabores da Pizza -->
         <div id="step3" class="mb-8 hidden">
-
+            <div class="flex items-center mb-4">
+                <button id="backToStep2" class="mr-4 bg-zinc-500 text-white p-3 rounded-full hidden">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <h2 class="text-2xl">Escolha os sabores da pizza:</h2>
+            </div>
+            <p id="selectedSizeStep3" class="text-lg mb-2"></p> <!-- Exibe o tamanho da pizza escolhido -->
+            <p id="selectedBorderStep3" class="text-lg mb-4"></p> <!-- Exibe a borda da pizza escolhida -->
             <!-- Pizzas Salgadas -->
             <h3 class="text-xl mb-2 mt-10">Pizzas Salgadas:</h3>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -150,7 +183,8 @@ include ("conexao.php");
                     while ($row = $result->fetch_assoc()) {
                         ?>
                         <button class="pizza-flavor bg-white p-4 rounded-lg shadow-md text-center"
-                            data-flavor="<?php echo htmlspecialchars($row['nomePizza']); ?>">
+                            data-flavor="<?php echo htmlspecialchars($row['nomePizza']); ?>"
+                            data-id-flavor="<?php echo $row['idpizzas'] ?>">
                             <div class="font-bold"><?php echo htmlspecialchars($row['nomePizza']); ?></div>
                             <div class="text-sm text-gray-600"><?php echo htmlspecialchars($row['ingredientes']); ?></div>
                         </button>
@@ -180,7 +214,8 @@ include ("conexao.php");
                     while ($row = $result->fetch_assoc()) {
                         ?>
                         <button class="pizza-flavor bg-white p-4 rounded-lg shadow-md text-center"
-                            data-flavor="<?php echo htmlspecialchars($row['nomePizza']); ?>">
+                            data-flavor="<?php echo htmlspecialchars($row['nomePizza']); ?>"
+                            data-id-flavor="<?php echo $row['idpizzas'] ?>">
                             <div class="font-bold"><?php echo htmlspecialchars($row['nomePizza']); ?></div>
                             <div class="text-sm text-gray-600"><?php echo htmlspecialchars($row['ingredientes']); ?></div>
                         </button>
@@ -195,6 +230,7 @@ include ("conexao.php");
                 ?>
             </div>
 
+
             <button id="addToCart" class="mt-4 bg-green-500 text-white p-4 rounded-lg">Adicionar ao Carrinho</button>
         </div>
 
@@ -203,7 +239,10 @@ include ("conexao.php");
             <div id="cart" class="mt-8">
                 <h2 class="text-2xl mb-4">Carrinho:</h2>
                 <ul id="cartItems" class="list-disc pl-6"></ul>
-                <button>Finalizar Venda</button>
+                <!-- Inputs para cada item do carrinho -->
+                <div id="cartInputs"></div>
+
+                <button id="finalizeSale">Finalizar Venda</button>
             </div>
         </form>
     </div>
