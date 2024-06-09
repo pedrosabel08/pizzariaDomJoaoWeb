@@ -78,7 +78,7 @@ DEFAULT CHARACTER SET = utf8mb4;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`tamanho` (
   `idtamanho` INT(11) NOT NULL AUTO_INCREMENT,
-  `tamanho` VARCHAR(45) NOT NULL,
+  `nome` VARCHAR(45) NOT NULL,
   `preco` DECIMAL(10,2) NOT NULL,
   PRIMARY KEY (`idtamanho`))
 ENGINE = InnoDB
