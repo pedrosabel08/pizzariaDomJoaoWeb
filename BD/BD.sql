@@ -936,11 +936,11 @@ USE `bd_pizzaria`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION `inserirTamanho`() RETURNS int(11)
     DETERMINISTIC
 BEGIN
-	INSERT INTO tamanho (tamanho, preco) VALUES ('Love', 20.00);
-	INSERT INTO tamanho (tamanho, preco) VALUES ('Baby', 29.90);
-	INSERT INTO tamanho (tamanho, preco) VALUES ('Média', 58.90);
-	INSERT INTO tamanho (tamanho, preco) VALUES ('Grande', 76.90);
-	INSERT INTO tamanho (tamanho, preco) VALUES ('Gigante', 87.90);
+	INSERT INTO tamanho (nome, preco) VALUES ('Love', 20.00);
+	INSERT INTO tamanho (nome, preco) VALUES ('Baby', 29.90);
+	INSERT INTO tamanho (nome, preco) VALUES ('Média', 58.90);
+	INSERT INTO tamanho (nome, preco) VALUES ('Grande', 76.90);
+	INSERT INTO tamanho (nome, preco) VALUES ('Gigante', 87.90);
 
 RETURN 1;
 END$$

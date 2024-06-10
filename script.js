@@ -79,6 +79,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const li = document.createElement('li');
             li.textContent = `Pizza ${pizzaSize} com borda ${pizzaBorder}, sabores: ${pizzaFlavors.join(', ')}, Preço: R$ ${totalPrice.toFixed(2)}`;
     
+            document.getElementById('total-price').textContent = `Total: R$ ${totalPrice.toFixed(2)}`;
+
             // Adicionar o item ao carrinho na interface do usuário
             document.getElementById('cartItems').appendChild(li);
             console.log(pizzaSize, pizzaBorder, pizzaFlavors, totalPrice);

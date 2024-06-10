@@ -19,6 +19,7 @@ include ("conexao.php");
         integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Pizzaria</title>
+    <link rel="icon" href="./assets/pizza.png" type="image/png">
 </head>
 
 <body>
@@ -243,7 +244,7 @@ include ("conexao.php");
                 <ul id="cartItems" class="list-disc pl-6"></ul>
                 <!-- Inputs para cada item do carrinho -->
                 <div id="cartInputs"></div>
-
+                <div id="total-price" class="font-bold text-green-700"></div>
                 <button id="finalizeSale">Finalizar Venda</button>
             </div>
         </form>
