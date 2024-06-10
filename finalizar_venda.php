@@ -15,8 +15,8 @@ function inserirVenda($conn, $formaEntregaId, $total, $clienteId) {
         if (mysqli_query($conn, $sqlInsertCliente)) {
             $clienteId = mysqli_insert_id($conn);
         } else {
-            echo "Erro ao inserir cliente fictício: " . mysqli_error($conn);
-            return false;
+            header("Location: index.php?status=error&message=" . urlencode("Erro ao inserir cliente fictício: " . mysqli_error($conn)));
+            exit();
         }
     }
 
@@ -26,12 +26,12 @@ function inserirVenda($conn, $formaEntregaId, $total, $clienteId) {
         if (mysqli_stmt_execute($stmt)) {
             return mysqli_insert_id($conn);
         } else {
-            echo "Erro ao inserir venda: " . mysqli_error($conn);
-            return false;
+            header("Location: index.php?status=error&message=" . urlencode("Erro ao inserir venda: " . mysqli_error($conn)));
+            exit();
         }
     } else {
-        echo "Erro ao preparar a declaração SQL para inserir venda: " . mysqli_error($conn);
-        return false;
+        header("Location: index.php?status=error&message=" . urlencode("Erro ao preparar a declaração SQL para inserir venda: " . mysqli_error($conn)));
+        exit();
     }
 }
 
@@ -47,9 +47,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             foreach ($_POST["cartItems"] as $item) {
                 $size = $item["size"];
                 $border = $item["border"];
-                $flavors = (array) $item["flavors"];
+                $flavors = $item["flavors"];
                 $price = $item["price"];
 
+                // Garantir que flavors seja um array
+                if (!is_array($flavors)) {
+                    $flavors = explode(',', $flavors);
+                }
+
+                // Obter ID da borda
                 $sqlBorda = "SELECT idbordas_pizza FROM bordas_pizza WHERE nome = ?";
                 if ($stmtBorda = mysqli_prepare($conn, $sqlBorda)) {
                     mysqli_stmt_bind_param($stmtBorda, "s", $border);
@@ -58,12 +64,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         mysqli_stmt_fetch($stmtBorda);
                         mysqli_stmt_close($stmtBorda);
                     } else {
-                        echo "Erro ao executar a consulta SQL para obter o ID da borda: " . mysqli_error($conn);
+                        header("Location: index.php?status=error&message=" . urlencode("Erro ao executar a consulta SQL para obter o ID da borda: " . mysqli_error($conn)));
+                        continue;
                     }
                 } else {
-                    echo "Erro ao preparar a declaração SQL para obter o ID da borda: " . mysqli_error($conn);
+                    header("Location: index.php?status=error&message=" . urlencode("Erro ao preparar a declaração SQL para obter o ID da borda: " . mysqli_error($conn)));
+                    continue;
                 }
 
+                // Obter ID do tamanho
                 $sqlTamanho = "SELECT idtamanho FROM tamanho WHERE nome = ?";
                 if ($stmtTamanho = mysqli_prepare($conn, $sqlTamanho)) {
                     mysqli_stmt_bind_param($stmtTamanho, "s", $size);
@@ -72,13 +81,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         mysqli_stmt_fetch($stmtTamanho);
                         mysqli_stmt_close($stmtTamanho);
                     } else {
-                        echo "Erro ao executar a consulta SQL para obter o ID do tamanho: " . mysqli_error($conn);
+                        header("Location: index.php?status=error&message=" . urlencode("Erro ao executar a consulta SQL para obter o ID do tamanho: " . mysqli_error($conn)));
+                        continue;
                     }
                 } else {
-                    echo "Erro ao preparar a declaração SQL para obter o ID do tamanho: " . mysqli_error($conn);
+                    header("Location: index.php?status=error&message=" . urlencode("Erro ao preparar a declaração SQL para obter o ID do tamanho: " . mysqli_error($conn)));
+                    continue;
                 }
 
                 foreach ($flavors as $flavor) {
+                    // Obter ID da pizza
                     $sqlPizza = "SELECT idpizzas FROM pizzas WHERE nomePizza = ?";
                     if ($stmtPizza = mysqli_prepare($conn, $sqlPizza)) {
                         mysqli_stmt_bind_param($stmtPizza, "s", $flavor);
@@ -87,38 +99,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             mysqli_stmt_fetch($stmtPizza);
                             mysqli_stmt_close($stmtPizza);
                         } else {
-                            echo "Erro ao executar a consulta SQL para obter o ID da pizza: " . mysqli_error($conn);
+                            header("Location: index.php?status=error&message=" . urlencode("Erro ao executar a consulta SQL para obter o ID da pizza: " . mysqli_error($conn)));
+                            continue;
                         }
                     } else {
-                        echo "Erro ao preparar a declaração SQL para obter o ID da pizza: " . mysqli_error($conn);
+                        header("Location: index.php?status=error&message=" . urlencode("Erro ao preparar a declaração SQL para obter o ID da pizza: " . mysqli_error($conn)));
+                        continue;
                     }
 
                     if ($pizzaId !== null) {
+                        // Inserir item na tabela vendas_pizzas
                         $sqlVendaPizza = "INSERT INTO vendas_pizzas (vendas_idvendas, pizzas_idpizzas, tamanho_idtamanho, borda_idbordas_pizza) VALUES (?, ?, ?, ?)";
                         if ($stmtVendaPizza = mysqli_prepare($conn, $sqlVendaPizza)) {
                             mysqli_stmt_bind_param($stmtVendaPizza, "iiii", $vendaId, $pizzaId, $tamanhoId, $bordaId);
                             if (!mysqli_stmt_execute($stmtVendaPizza)) {
-                                echo "Erro ao inserir item do carrinho na tabela vendas_pizzas: " . mysqli_error($conn);
+                                header("Location: index.php?status=error&message=" . urlencode("Erro ao inserir item do carrinho na tabela vendas_pizzas: " . mysqli_error($conn)));
                             }
                             mysqli_stmt_close($stmtVendaPizza);
                         } else {
-                            echo "Erro ao preparar a declaração SQL para inserir item do carrinho na tabela vendas_pizzas: " . mysqli_error($conn);
+                            header("Location: index.php?status=error&message=" . urlencode("Erro ao preparar a declaração SQL para inserir item do carrinho na tabela vendas_pizzas: " . mysqli_error($conn)));
                         }
                     } else {
-                        echo "Erro: ID da pizza é nulo.";
+                        header("Location: index.php?status=error&message=" . urlencode("Erro: ID da pizza é nulo para o sabor '$flavor'."));
                     }
                 }
             }
 
-            echo "Venda finalizada com sucesso!";
+            header("Location: index.php?status=success&message=" . urlencode("Venda finalizada com sucesso!"));
         } else {
-            echo "Erro ao inserir venda.";
+            header("Location: index.php?status=error&message=" . urlencode("Erro ao inserir venda."));
         }
 
         $conn->close();
     } else {
-        echo "Erro: Informações incompletas.";
+        header("Location: index.php?status=error&message=" . urlencode("Erro: Informações incompletas."));
     }
 } else {
-    echo "Método de requisição inválido.";
+    header("Location: index.php?status=error&message=" . urlencode("Método de requisição inválido."));
 }

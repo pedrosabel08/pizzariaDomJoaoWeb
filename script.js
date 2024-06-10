@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 id: Date.now(), // Usar timestamp como ID único
                 size: pizzaSize,
                 border: pizzaBorder,
-                flavors: pizzaFlavors,
+                flavors: pizzaFlavors, // Enviar como array
                 price: totalPrice
             };
     
@@ -137,11 +137,21 @@ document.addEventListener('DOMContentLoaded', function () {
         cartItems.forEach((item, index) => {
             for (const key in item) {
                 if (item.hasOwnProperty(key)) {
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = `cartItems[${index}][${key}]`;
-                    input.value = item[key];
-                    cartInputs.appendChild(input);
+                    if (key === "flavors") {
+                        item[key].forEach((flavor, flavorIndex) => {
+                            const input = document.createElement('input');
+                            input.type = 'hidden';
+                            input.name = `cartItems[${index}][${key}][${flavorIndex}]`;
+                            input.value = flavor;
+                            cartInputs.appendChild(input);
+                        });
+                    } else {
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = `cartItems[${index}][${key}]`;
+                        input.value = item[key];
+                        cartInputs.appendChild(input);
+                    }
                 }
             }
             totalPrice += item.price;
@@ -154,7 +164,32 @@ document.addEventListener('DOMContentLoaded', function () {
         totalPriceInput.value = totalPrice.toFixed(2);
         cartInputs.appendChild(totalPriceInput);
     
+        console.log('Dados do formulário:', cartInputs);
+    
         // Submeter o formulário
         document.querySelector('form').submit();
     });
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status');
+    const message = urlParams.get('message');
+
+    if (status && message) {
+        let backgroundColor = "#10B981"; // Verde para sucesso
+        if (status === 'error') {
+            backgroundColor = "#EF4444"; // Vermelho para erro
+        }
+
+        Toastify({
+            text: decodeURIComponent(message.replace(/\+/g, ' ')),
+            duration: 3000,
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+                background: backgroundColor,
+            },
+        }).showToast();
+    }
 });
