@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('addToCart').addEventListener('click', function () {
         if (pizzaFlavors.length > 0) {
             const totalPrice = pizzaSizePrice + pizzaBorderPrice;
-    
+
             // Criar um objeto para representar o item do carrinho
             const cartItem = {
                 id: Date.now(), // Usar timestamp como ID único
@@ -71,20 +71,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 flavors: pizzaFlavors, // Enviar como array
                 price: totalPrice
             };
-    
+
             // Adicionar o item ao carrinho
             cartItems.push(cartItem);
-    
+
             // Criar o elemento li para exibir no carrinho
             const li = document.createElement('li');
             li.textContent = `Pizza ${pizzaSize} com borda ${pizzaBorder}, sabores: ${pizzaFlavors.join(', ')}, Preço: R$ ${totalPrice.toFixed(2)}`;
-    
+
             document.getElementById('total-price').textContent = `Total: R$ ${totalPrice.toFixed(2)}`;
 
             // Adicionar o item ao carrinho na interface do usuário
             document.getElementById('cartItems').appendChild(li);
             console.log(pizzaSize, pizzaBorder, pizzaFlavors, totalPrice);
-    
+
             // Resetar seleção
             resetSelection();
             console.log("Itens do carrinho", cartItems);
@@ -92,7 +92,6 @@ document.addEventListener('DOMContentLoaded', function () {
             alert('Por favor, selecione pelo menos um sabor.');
         }
     });
-
     function resetSelection() {
         step3.classList.add('hidden');
         step1.classList.remove('hidden');
@@ -129,13 +128,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('finalizeSale').addEventListener('click', function (event) {
         event.preventDefault(); // Evitar envio automático do formulário
-    
+
         // Adicionar inputs para cada item do cartItems
         const cartInputs = document.getElementById('cartInputs');
         cartInputs.innerHTML = ''; // Limpar inputs existentes
-    
+
         let totalPrice = 0;
-    
+
         cartItems.forEach((item, index) => {
             for (const key in item) {
                 if (item.hasOwnProperty(key)) {
@@ -158,16 +157,16 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             totalPrice += item.price;
         });
-    
+
         // Adicionar input para o preço total
         const totalPriceInput = document.createElement('input');
         totalPriceInput.type = 'hidden';
         totalPriceInput.name = 'total_price';
         totalPriceInput.value = totalPrice.toFixed(2);
         cartInputs.appendChild(totalPriceInput);
-    
+
         console.log('Dados do formulário:', cartInputs);
-    
+
         // Submeter o formulário
         document.querySelector('form').submit();
     });
@@ -195,3 +194,5 @@ document.addEventListener('DOMContentLoaded', function () {
         }).showToast();
     }
 });
+
+

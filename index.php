@@ -26,6 +26,9 @@ include ("conexao.php");
 
 
     <header class="w-full h-[420px] bg-orange-300">
+        <div>
+            <button id="login" onclick="window.location.href='login.php'">Login</button>
+        </div>
         <div class="w-full h-full flex flex-col justify-center items-center">
             <img src="./assets/domJoao.jpg" alt="Logo" class="w-40 h-40 rounded-full shadow-lg hover:scale-110">
             <h1 class="text-3xl mt-4 mb-2 font-bold text-black">Pizzaria Dom João</h1>
