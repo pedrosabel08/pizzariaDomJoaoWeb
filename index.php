@@ -12,7 +12,9 @@ include ("conexao.php");
     <link rel="stylesheet" href="./styles/output.css" />
     <link rel="stylesheet" href="./styles/style.css">
 
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -33,18 +35,19 @@ include ("conexao.php");
                 Login
             </button>
             <span id="greeting" style="display: none;">Olá, <span id="cliente-nome"></span></span>
-    <button class="bg-red-500 hover:bg-red-700 text-white py-1 px-4 rounded focus:outline-none focus:shadow-outline"">Sair</button>
+            <button onclick="window.location.href='login.html'"
+                class="bg-red-500 hover:bg-red-700 text-white py-1 px-4 rounded focus:outline-none focus:shadow-outline"">Sair</button>
         </div>
-        <div class="w-full h-full flex flex-col justify-center items-center">
-            <img src="./assets/domJoao.jpg" alt="Logo" class="w-40 h-40 rounded-full shadow-lg hover:scale-110">
-            <h1 class="text-3xl mt-4 mb-2 font-bold text-black">Pizzaria Dom João</h1>
+        <div class=" w-full h-full flex flex-col justify-center items-center">
+                <img src="./assets/domJoao.jpg" alt="Logo" class="w-40 h-40 rounded-full shadow-lg hover:scale-110">
+                <h1 class="text-3xl mt-4 mb-2 font-bold text-black">Pizzaria Dom João</h1>
 
-            <a href="https://www.google.com/maps/search/?api=1&query=%27Rua%20Jo%C3%A3o%20Pessoa,%201726%20Sl%2004%20-%20Velha%20-%20Blumenau%20/%20SC%27"
-                class="text-black font-medium" target="blink">Rua João Pessoa, 1726 Sl 04 - Velha - Blumenau/SC</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=%27Rua%20Jo%C3%A3o%20Pessoa,%201726%20Sl%2004%20-%20Velha%20-%20Blumenau%20/%20SC%27"
+                    class="text-black font-medium" target="blink">Rua João Pessoa, 1726 Sl 04 - Velha - Blumenau/SC</a>
 
-            <div class="bg-green-500 px-4 py-1 rounded-lg mt-5" id="date-span">
-                <span class="text-white font-medium">Seg a Dom - 17:30 as 23:30</span>
-            </div>
+                <div class="bg-green-500 px-4 py-1 rounded-lg mt-5" id="date-span">
+                    <span class="text-white font-medium">Seg a Dom - 17:30 as 23:30</span>
+                </div>
         </div>
     </header>
     <div class="container mx-auto p-4">

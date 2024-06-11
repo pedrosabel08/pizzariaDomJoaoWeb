@@ -22,11 +22,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("sssss", $nome, $sobrenome, $telefone, $email, $senha);
 
         if ($stmt->execute()) {
-            $_SESSION['message'] = "Cadastro de cliente realizado com sucesso!";
-            header("Location: login.html");
-            exit();
+            header("Location: login.html?status=sucess&message=" . urlencode("Cadastro realizado com sucesso!"));
         } else {
-            echo "Erro ao realizar cadastro: " . $stmt->error;
+            header("Location: login.html?status=error&message=" . urlencode("Cadastro não efetuado!"));
         }
 
         $stmt->close();
