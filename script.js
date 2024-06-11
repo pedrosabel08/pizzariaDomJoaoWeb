@@ -193,6 +193,21 @@ document.addEventListener('DOMContentLoaded', function () {
             },
         }).showToast();
     }
+
+        const params = new URLSearchParams(window.location.search);
+        const nomeCliente = params.get('nome');
+    
+        if (nomeCliente) {
+            const loginButton = document.getElementById('login');
+            const greeting = document.getElementById('greeting');
+            const clienteNomeSpan = document.getElementById('cliente-nome');
+    
+            loginButton.style.display = 'none';
+            clienteNomeSpan.textContent = nomeCliente;
+            greeting.style.display = 'inline';
+        }
+    
+    
 });
 
 

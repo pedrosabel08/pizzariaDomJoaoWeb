@@ -12,6 +12,7 @@ include ("conexao.php");
     <link rel="stylesheet" href="./styles/output.css" />
     <link rel="stylesheet" href="./styles/style.css">
 
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -22,12 +23,17 @@ include ("conexao.php");
     <link rel="icon" href="./assets/pizza.png" type="image/png">
 </head>
 
-<body>
+<body class="font-roboto">
 
 
     <header class="w-full h-[420px] bg-orange-300">
-        <div>
-            <button id="login" onclick="window.location.href='login.php'">Login</button>
+        <div class="p-2">
+            <button id="login" onclick="window.location.href='login.html'">
+                <i class="fa-solid fa-user"></i>
+                Login
+            </button>
+            <span id="greeting" style="display: none;">Olá, <span id="cliente-nome"></span></span>
+    <button class="bg-red-500 hover:bg-red-700 text-white py-1 px-4 rounded focus:outline-none focus:shadow-outline"">Sair</button>
         </div>
         <div class="w-full h-full flex flex-col justify-center items-center">
             <img src="./assets/domJoao.jpg" alt="Logo" class="w-40 h-40 rounded-full shadow-lg hover:scale-110">
@@ -252,7 +258,7 @@ include ("conexao.php");
             </div>
         </form>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="script.js"></script>
 </body>

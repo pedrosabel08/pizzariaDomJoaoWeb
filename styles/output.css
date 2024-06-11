@@ -891,6 +891,18 @@ video {
   min-height: 100vh;
 }
 
+.min-h-3 {
+  min-height: 0.75rem;
+}
+
+.min-h-3\.5 {
+  min-height: 0.875rem;
+}
+
+.min-h-full {
+  min-height: 100%;
+}
+
 .w-24 {
   width: 6rem;
 }
@@ -1927,9 +1939,9 @@ video {
   background-color: rgb(59 130 246 / var(--tw-bg-opacity));
 }
 
-.bg-gray-100 {
+.bg-gray-400 {
   --tw-bg-opacity: 1;
-  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
+  background-color: rgb(156 163 175 / var(--tw-bg-opacity));
 }
 
 .bg-green-300 {
@@ -2067,6 +2079,10 @@ video {
      object-fit: scale-down;
 }
 
+.p-2 {
+  padding: 0.5rem;
+}
+
 .p-3 {
   padding: 0.75rem;
 }
@@ -2157,6 +2173,10 @@ video {
 
 .align-super {
   vertical-align: super;
+}
+
+.font-roboto {
+  font-family: Roboto, sans-serif;
 }
 
 .text-2xl {
