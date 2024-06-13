@@ -100,6 +100,45 @@ include ("conexao.php");
                 </button>
             </div>
         </div>
+        <div id="step1" class="mb-8">
+            <h2 class="text-2xl mb-4">Escolha sua bebida:</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <button
+                    class="pizza-size flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500">
+                    <img src="./assets/refrigerante.jpg" alt="Refrigerante" class="w-24 h-24 object-cover rounded-3xl mr-6">
+                    <div class="text-left">
+                        <p class="font-bold text-2xl mb-3">Refrigerante lata</p>
+                    </div>
+                </button>
+                <button
+                    class="pizza-size flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500">
+                    <img src="./assets/refrigerante600.jfif" alt="Refrigerante" class="w-24 h-24 object-cover rounded-3xl mr-6">
+                    <div class="text-left">
+                        <p class="font-bold text-2xl mb-3">Refrigerante 600ml</p>
+                    
+                    </div>
+                </button>
+                <button
+                    class="pizza-size flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500">
+                    <img src="./assets/Refrigerante2lt.jpg" alt="refrigerante2lt"
+                        class="w-24 h-24 object-cover rounded-3xl mr-6">
+                    <div class="text-left">
+                        <p class="font-bold text-2xl mb-3">Refrigerante 2 litros</p>
+                    
+                    </div>
+                </button>
+                <button
+                    class="pizza-size flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500">
+                    <img src="./assets/longneck.png" alt="longneck"
+                        class="w-24 h-24 object-cover rounded-3xl mr-6">
+                    <div class="text-left">
+                        <p class="font-bold text-2xl mb-3">Cervejas long neck</p>
+                        
+                    </div>
+                </button>
+            </div>
+        </div>
+
 
         <!-- Step 2: Borda da Pizza -->
         <div id="step2" class="mb-8 hidden">
@@ -243,6 +282,8 @@ include ("conexao.php");
                 $conn->close();
                 ?>
             </div>
+ <!-- Step 4: Bebidas -->
+
 
 
             <button id="addToCart" class="mt-4 bg-green-500 text-white p-4 rounded-lg">Adicionar ao Carrinho</button>
