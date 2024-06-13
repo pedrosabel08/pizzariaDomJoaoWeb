@@ -3,6 +3,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const step2 = document.getElementById('step2');
     const step3 = document.getElementById('step3');
     const cart = document.getElementById('cartItems');
+    const cartBtn = document.getElementById("cart-btn");
+    const cartModal = document.getElementById("cart-modal")
+    const closeModalBtn = document.getElementById("close-modal-btn")
+    const cartCounter = document.getElementById("cart-count")
+    const totalPriceElement = document.getElementById('total-price');
+
 
     let pizzaSize = '';
     let pizzaSizePrice = 0;
@@ -10,6 +16,25 @@ document.addEventListener('DOMContentLoaded', function () {
     let pizzaBorderPrice = 0;
     let pizzaFlavors = [];
     let maxFlavors = 0;
+    let totalCartPrice = 0;
+
+
+    // Abrir o modal do carrinho
+    cartBtn.addEventListener("click", function () {
+        cartModal.style.display = "flex"
+    })
+
+    // Fechar o modal quando clicar fora
+
+    cartModal.addEventListener("click", function (event) {
+        if (event.target === cartModal) {
+            cartModal.style.display = "none"
+        }
+    })
+
+    closeModalBtn.addEventListener("click", function () {
+        cartModal.style.display = "none"
+    })
 
     // Tamanho da Pizza
     document.querySelectorAll('.pizza-size').forEach(button => {
@@ -79,11 +104,16 @@ document.addEventListener('DOMContentLoaded', function () {
             const li = document.createElement('li');
             li.textContent = `Pizza ${pizzaSize} com borda ${pizzaBorder}, sabores: ${pizzaFlavors.join(', ')}, Preço: R$ ${totalPrice.toFixed(2)}`;
 
-            document.getElementById('total-price').textContent = `Total: R$ ${totalPrice.toFixed(2)}`;
+            // Atualizar o total acumulado
+            totalCartPrice += totalPrice;
+
+            // Exibir o total acumulado
+            totalPriceElement.textContent = `Total: R$ ${totalCartPrice.toFixed(2)}`;
 
             // Adicionar o item ao carrinho na interface do usuário
             document.getElementById('cartItems').appendChild(li);
-            console.log(pizzaSize, pizzaBorder, pizzaFlavors, totalPrice);
+
+            cartCounter.innerHTML = cartItems.length;
 
             // Resetar seleção
             resetSelection();
@@ -194,20 +224,20 @@ document.addEventListener('DOMContentLoaded', function () {
         }).showToast();
     }
 
-        const params = new URLSearchParams(window.location.search);
-        const nomeCliente = params.get('nome');
-    
-        if (nomeCliente) {
-            const loginButton = document.getElementById('login');
-            const greeting = document.getElementById('greeting');
-            const clienteNomeSpan = document.getElementById('cliente-nome');
-    
-            loginButton.style.display = 'none';
-            clienteNomeSpan.textContent = nomeCliente;
-            greeting.style.display = 'inline';
-        }
-    
-    
+    const params = new URLSearchParams(window.location.search);
+    const nomeCliente = params.get('nome');
+
+    if (nomeCliente) {
+        const loginButton = document.getElementById('login');
+        const greeting = document.getElementById('greeting');
+        const clienteNomeSpan = document.getElementById('cliente-nome');
+
+        loginButton.style.display = 'none';
+        clienteNomeSpan.textContent = nomeCliente;
+        greeting.style.display = 'inline';
+    }
+
+
 });
 
 

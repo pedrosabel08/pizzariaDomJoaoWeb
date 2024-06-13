@@ -27,7 +27,6 @@ include ("conexao.php");
 
 <body class="font-roboto">
 
-
     <header class="w-full h-[420px] bg-orange-300">
         <div class="p-2">
             <button id="login" onclick="window.location.href='login.html'">
@@ -36,18 +35,18 @@ include ("conexao.php");
             </button>
             <span id="greeting" style="display: none;">Olá, <span id="cliente-nome"></span></span>
             <button onclick="window.location.href='login.html'"
-                class="bg-red-500 hover:bg-red-700 text-white py-1 px-4 rounded focus:outline-none focus:shadow-outline"">Sair</button>
+                class="bg-red-500 hover:bg-red-700 text-white py-1 px-4 rounded focus:outline-none focus:shadow-outline ml-4">Sair</button>
         </div>
         <div class=" w-full h-full flex flex-col justify-center items-center">
-                <img src="./assets/domJoao.jpg" alt="Logo" class="w-40 h-40 rounded-full shadow-lg hover:scale-110">
-                <h1 class="text-3xl mt-4 mb-2 font-bold text-black">Pizzaria Dom João</h1>
+            <img src="./assets/domJoao.jpg" alt="Logo" class="w-40 h-40 rounded-full shadow-lg hover:scale-110">
+            <h1 class="text-3xl mt-4 mb-2 font-bold text-black">Pizzaria Dom João</h1>
 
-                <a href="https://www.google.com/maps/search/?api=1&query=%27Rua%20Jo%C3%A3o%20Pessoa,%201726%20Sl%2004%20-%20Velha%20-%20Blumenau%20/%20SC%27"
-                    class="text-black font-medium" target="blink">Rua João Pessoa, 1726 Sl 04 - Velha - Blumenau/SC</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=%27Rua%20Jo%C3%A3o%20Pessoa,%201726%20Sl%2004%20-%20Velha%20-%20Blumenau%20/%20SC%27"
+                class="text-black font-medium" target="blink">Rua João Pessoa, 1726 Sl 04 - Velha - Blumenau/SC</a>
 
-                <div class="bg-green-500 px-4 py-1 rounded-lg mt-5" id="date-span">
-                    <span class="text-white font-medium">Seg a Dom - 17:30 as 23:30</span>
-                </div>
+            <div class="bg-green-500 px-4 py-1 rounded-lg mt-5" id="date-span">
+                <span class="text-white font-medium">Seg a Dom - 17:30 as 23:30</span>
+            </div>
         </div>
     </header>
     <div class="container mx-auto p-4">
@@ -248,19 +247,36 @@ include ("conexao.php");
 
             <button id="addToCart" class="mt-4 bg-green-500 text-white p-4 rounded-lg">Adicionar ao Carrinho</button>
         </div>
-
-        <!-- Carrinho -->
-        <form action="finalizar_venda.php" method="post">
-            <div id="cart" class="mt-8">
-                <h2 class="text-2xl mb-4">Carrinho:</h2>
-                <ul id="cartItems" class="list-disc pl-6"></ul>
-                <!-- Inputs para cada item do carrinho -->
-                <div id="cartInputs"></div>
-                <div id="total-price" class="font-bold text-green-700"></div>
-                <button id="finalizeSale">Finalizar Venda</button>
-            </div>
-        </form>
     </div>
+
+    <div class="bg-black/50 w-full h-full fixed top-0 left-0 z-[99] items-center justify-center hidden" id="cart-modal">
+
+        <div class="bg-white p-5 rounded-md min-w-[90%] md:min-w-[600px]">
+            <form action="finalizar_venda.php" method="post">
+                <div id="cart" class="mt-8">
+                    <h2 class="text-2xl mb-4">Carrinho:</h2>
+                    <ul id="cartItems" class="list-disc pl-6"></ul>
+                    <!-- Inputs para cada item do carrinho -->
+                    <div id="cartInputs"></div>
+                    <div id="total-price" class="font-bold text-green-700 mt-4"></div>
+                    <div class="flex items-center justify-between mt-5 w-full mr-14">
+                        <button id="close-modal-btn" type="button"
+                            class="bg-red-500 text-white px-4 py-1 rounded">Fechar</button>
+                        <button id="finalizeSale" type="submit"
+                            class="bg-green-500 text-white px-4 py-1 rounded">Finalizar Pedido</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="w-full bg-red-500 py-3 fixed bottom-0 z-40 flex items-center justify-center">
+        <button class="flex items-center gap-2 text-white font-bold" id="cart-btn">
+            (<span id="cart-count">0</span>)
+            Carrinho
+            <i class="fa fa-cart-plus text-lg text-white"></i>
+        </button>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="script.js"></script>
