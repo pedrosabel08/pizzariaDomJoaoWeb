@@ -231,10 +231,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const loginButton = document.getElementById('login');
         const greeting = document.getElementById('greeting');
         const clienteNomeSpan = document.getElementById('cliente-nome');
+        const buttonSair = document.getElementById('button-sair')
 
         loginButton.style.display = 'none';
         clienteNomeSpan.textContent = nomeCliente;
         greeting.style.display = 'inline';
+        buttonSair.classList.remove('hidden');
     }
 
 

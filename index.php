@@ -34,8 +34,8 @@ include ("conexao.php");
                 Login
             </button>
             <span id="greeting" style="display: none;">Olá, <span id="cliente-nome"></span></span>
-            <button onclick="window.location.href='login.html'"
-                class="bg-red-500 hover:bg-red-700 text-white py-1 px-4 rounded focus:outline-none focus:shadow-outline ml-4">Sair</button>
+            <button onclick="window.location.href='login.html'" id="button-sair"
+                class="bg-red-500 hover:bg-red-700 text-white py-1 px-4 rounded focus:outline-none focus:shadow-outline ml-4 hidden">Sair</button>
         </div>
         <div class=" w-full h-full flex flex-col justify-center items-center">
             <img src="./assets/domJoao.jpg" alt="Logo" class="w-40 h-40 rounded-full shadow-lg hover:scale-110">
