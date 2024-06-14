@@ -86,24 +86,19 @@ document.addEventListener('DOMContentLoaded', function () {
     let cartItems = [];
 
     //Bebidas 
-    modalBebidas.addEventListener('click', function(){
+    modalBebidas.addEventListener('click', function () {
         step4.classList.remove('hidden');
         step3.classList.add('hidden');
     });
 
-    function showDrinks(category) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "fetch_drinks.php", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                document.getElementById("drink-details-container").innerHTML = xhr.responseText;
-                document.getElementById("drink-details-container").style.display = "grid";
-            }
-        };
-        xhr.send("category=" + category);
+    function selectBebidas() {
+        var addBebida = confirm('Deseja adicionar bebida?');
+        if (addBebida) {
+            step4.classList.remove('hidden');
+            step1.classList.add('hidden');
+        }
     }
-    
+
     document.getElementById('addToCart').addEventListener('click', function () {
         if (pizzaFlavors.length > 0) {
             const totalPrice = pizzaSizePrice + pizzaBorderPrice;
@@ -138,10 +133,14 @@ document.addEventListener('DOMContentLoaded', function () {
             // Resetar seleção
             resetSelection();
             console.log("Itens do carrinho", cartItems);
+
+            selectBebidas();
+
         } else {
             alert('Por favor, selecione pelo menos um sabor.');
         }
     });
+
     function resetSelection() {
         step3.classList.add('hidden');
         step1.classList.remove('hidden');
@@ -154,6 +153,11 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.pizza-flavor').forEach(button => button.classList.remove('bg-green-300'));
         document.getElementById('backToStep2').classList.add('hidden');
     }
+
+    document.getElementById('stepBebidas').addEventListener('click', function () {
+        // Ao clicar no botão "Bebidas", perguntar se o usuário deseja adicionar bebidas
+        selectBebidas();
+    });
 
     // Botões para voltar
     document.getElementById('backToStep1').addEventListener('click', function () {
@@ -259,7 +263,45 @@ document.addEventListener('DOMContentLoaded', function () {
         buttonSair.classList.remove('hidden');
     }
 
-
 });
 
+const optionsData = {
+    lata: [
+        { name: 'Coca Cola', price: 'R$ 6,00' },
+        { name: 'Guaraná', price: 'R$ 6,00' },
+        { name: 'Sprite', price: 'R$ 6,00' },
+        { name: 'Fanta', price: 'R$ 6,00' },
+    ],
+    '600ml': [
+        { name: 'Coca Cola', price: 'R$ 8,00' },
+        { name: 'Sprite', price: 'R$ 8,00' },
+        { name: 'Fanta', price: 'R$ 8,00' },
+    ],
+    '2l': [
+        { name: 'Coca Cola', price: 'R$ 15,00' },
+        { name: 'Coca Cola Zero', price: 'R$ 15,00' },
+        { name: 'Guaraná', price: 'R$ 12,00' },
+        { name: 'Sprite', price: 'R$ 12,00' },
+        { name: 'Fanta', price: 'R$ 12,00' },
+    ],
+    agua: [
+        { name: 'Com gás', price: 'R$ 3,50' },
+        { name: 'Sem gás', price: 'R$ 3,50' },
+    ],
+    cerveja: [
+        { name: 'Budweiser', price: 'R$ 10,00' },
+        { name: 'Heineken', price: 'R$ 10,00' },
+    ]
+};
+function showOptions(category) {
+    const optionsContainer = document.getElementById('options');
+    optionsContainer.innerHTML = '';
+
+    optionsData[category].forEach(option => {
+        const optionDiv = document.createElement('div');
+        optionDiv.classList.add('button', 'text-lg', 'p-2', 'border', 'border-gray-300', 'rounded-lg', 'bg-white', 'shadow-sm', 'hover:bg-green-500');
+        optionDiv.textContent = `${option.name} - ${option.price}`;
+        optionsContainer.appendChild(optionDiv);
+    });
+}
 

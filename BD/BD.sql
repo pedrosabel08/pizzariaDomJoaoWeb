@@ -204,6 +204,74 @@ CREATE TABLE IF NOT EXISTS `vendas_pizzas` (
 );
 
 -- -----------------------------------------------------
+-- Table `bd_pizzaria`.`marcaBebidas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`marcaBebidas` (
+  `idmarcaBebidas` INT(11) NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idmarcaBebidas`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`tamanhoBebidas` (
+  `idtamanhoBebidas` INT(11) NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(45) NOT NULL,
+  `volume` DECIMAL(10,2) NOT NULL,
+  PRIMARY KEY (`idtamanhoBebidas`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
+
+
+-- -----------------------------------------------------
+-- Table `bd_pizzaria`.`bebidas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`bebidas` (
+  `idbebidas` INT(11) NOT NULL AUTO_INCREMENT,
+  `nomeBebida` VARCHAR(45) NOT NULL,
+  `marca_id` INT(11) NOT NULL,
+  `tamanho_id` INT(11) NOT NULL,
+  `preco` DECIMAL(10,2) NOT NULL,
+  PRIMARY KEY (`idbebidas`),
+  INDEX `fk_bebidas_marcaBebidas_idx` (`marca_id` ASC),
+  INDEX `fk_bebidas_tamanhoBebidas_idx` (`tamanho_id` ASC),
+  CONSTRAINT `fk_bebidas_marcaBebidas`
+    FOREIGN KEY (`marca_id`)
+    REFERENCES `bd_pizzaria`.`marcaBebidas` (`idmarcaBebidas`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_bebidas_tamanhoBebidas`
+    FOREIGN KEY (`tamanho_id`)
+    REFERENCES `bd_pizzaria`.`tamanhoBebidas` (`idtamanhoBebidas`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
+
+
+-- -----------------------------------------------------
+-- Table `bd_pizzaria`.`vendas_bebidas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`vendas_bebidas` (
+  `idvendas_bebidas` INT(11) NOT NULL AUTO_INCREMENT,
+  `vendas_idvendas` INT(11) NOT NULL,
+  `bebidas_idbebidas` INT(11) NOT NULL,
+  `quantidade` INT(11) NOT NULL,
+  PRIMARY KEY (`idvendas_bebidas`),
+  INDEX `fk_vendas_bebidas_vendas_idx` (`vendas_idvendas` ASC),
+  INDEX `fk_vendas_bebidas_bebidas_idx` (`bebidas_idbebidas` ASC),
+  CONSTRAINT `fk_vendas_bebidas_vendas`
+    FOREIGN KEY (`vendas_idvendas`)
+    REFERENCES `bd_pizzaria`.`vendas` (`idvendas`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_vendas_bebidas_bebidas`
+    FOREIGN KEY (`bebidas_idbebidas`)
+    REFERENCES `bd_pizzaria`.`bebidas` (`idbebidas`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
+-- -----------------------------------------------------
 -- function inserirFormaEntrega
 -- -----------------------------------------------------
 
@@ -964,6 +1032,89 @@ END$$
 
 DELIMITER ;
 
+
+-- -----------------------------------------------------
+-- function inserirMarcaBebidas
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `bd_pizzaria`$$
+CREATE DEFINER=`root`@`localhost` FUNCTION `inserirMarcaBebidas`() RETURNS int(11)
+    DETERMINISTIC
+BEGIN
+INSERT INTO `bd_pizzaria`.`marcaBebidas` (`nome`) 
+VALUES 
+('Coca Cola'), 
+('Guaraná'), 
+('Sprite'), 
+('Fanta'), 
+('Coca Cola Zero'), 
+('Com gás'), 
+('Sem gás'), 
+('Budweiser'), 
+('Heineken');
+
+RETURN 1;
+END$$
+
+DELIMITER ;
+
+
+-- -----------------------------------------------------
+-- function inserirTamanhoBebidas
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `bd_pizzaria`$$
+CREATE DEFINER=`root`@`localhost` FUNCTION `inserirTamanhoBebidas`() RETURNS int(11)
+    DETERMINISTIC
+BEGIN
+INSERT INTO `bd_pizzaria`.`tamanhoBebidas` (`nome`, `volume`) 
+VALUES 
+('Lata', 350), 
+('600ml', 600), 
+('2L', 2000), 
+('Agua mineral', 500), 
+('Cerveja Longneck', 330);
+
+
+RETURN 1;
+END$$
+
+-- -----------------------------------------------------
+-- function inserirBebidas
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `bd_pizzaria`$$
+CREATE DEFINER=`root`@`localhost` FUNCTION `inserirBebidas`() RETURNS int(11)
+    DETERMINISTIC
+BEGIN
+INSERT INTO `bd_pizzaria`.`bebidas` (`nomeBebida`, `marca_id`, `tamanho_id`, `preco`) 
+VALUES 
+('Coca Cola Lata', 1, 1, 6.00),
+('Guaraná Lata', 2, 1, 6.00),
+('Sprite Lata', 3, 1, 6.00),
+('Fanta Lata', 4, 1, 6.00),
+('Coca Cola 600ml', 1, 2, 8.00),
+('Sprite 600ml', 3, 2, 8.00),
+('Fanta 600ml', 4, 2, 8.00),
+('Coca Cola 2L', 1, 3, 15.00),
+('Coca Cola Zero 2L', 5, 3, 15.00),
+('Guaraná 2L', 2, 3, 12.00),
+('Sprite 2L', 3, 3, 12.00),
+('Fanta 2L', 4, 3, 12.00),
+('Agua mineral Com gás', 6, 4, 3.50),
+('Agua mineral Sem gás', 7, 4, 3.50),
+('Budweiser Cerveja Longneck', 8, 5, 10.00),
+('Heineken Cerveja Longneck', 9, 5, 10.00);
+
+
+RETURN 1;
+END$$
+
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
@@ -974,3 +1125,6 @@ select bd_pizzaria.inserirFormaEntrega();
 select bd_pizzaria.inserirProdutos();
 select bd_pizzaria.inserirTamanho();
 select bd_pizzaria.inserirPizzas();
+select bd_pizzaria.inserirMarcaBebidas();
+select bd_pizzaria.inserirTamanhoBebidas();
+select bd_pizzaria.inserirBebidas();

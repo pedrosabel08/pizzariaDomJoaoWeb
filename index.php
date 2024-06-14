@@ -100,206 +100,220 @@ include ("conexao.php");
                 </button>
             </div>
         </div>
-    </div>
-    <!-- Step 2: Borda da Pizza -->
-    <div id="step2" class="mb-8 hidden">
-        <div class="flex items-center mb-4">
-            <button id="backToStep1" class="mr-4 bg-zinc-500 text-white p-3 rounded-full hidden">
-                <i class="fa-solid fa-arrow-left"></i>
-            </button>
-            <h2 class="text-2xl">Escolha os tipos de borda:</h2>
-        </div>
-        <p id="selectedSizeStep2" class="text-lg mb-4"></p> <!-- Exibe o tamanho da pizza escolhida -->
-        <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-8">
-            <button
-                class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
-                data-border="Sem Borda" data-border-price="0" data-id-border="7">
-                <div>
-                    <p>Sem borda</p>
-                </div>
-            </button>
-            <button
-                class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
-                data-border="Catupiry" data-border-price="10" data-id-border="1">
-                <div>
-                    <p>Catupiry</p>
-                    <p class="text-red-500">+ R$10,00</p>
-                </div>
-            </button>
-            <button
-                class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
-                data-border="Cheddar" data-border-price="10" data-id-border="2">
-                <div>
-                    <p>Cheddar</p>
-                    <p class="text-red-500">+ R$10,00</p>
-                </div>
-            </button>
-            <button
-                class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
-                data-border="Cream Cheese" data-border-price="10" data-id-border="3">
-                <div>
-                    <p>Cream Cheese</p>
-                    <p class="text-red-500">+ R$10,00</p>
-                </div>
-            </button>
-            <button
-                class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
-                data-border="Chocolate preto" data-border-price="10" data-id-border="4">
-                <div>
-                    <p>Chocolate Preto</p>
-                    <p class="text-red-500">+ R$10,00</p>
-                </div>
-            </button>
-            <button
-                class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
-                data-border="Chocolate branco" data-border-price="10" data-id-border="5">
-                <div>
-                    <p>Chocolate Branco</p>
-                    <p class="text-red-500">+ R$10,00</p>
-                </div>
-            </button>
-            <button
-                class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
-                data-border="Doce de Leite" data-border-price="10" data-id-border="6">
-                <div>
-                    <p>Doce de leite</p>
-                    <p class="text-red-500">+ R$10,00</p>
-                </div>
-            </button>
-        </div>
-    </div>
 
-    <!-- Step 3: Sabores da Pizza -->
-    <div id="step3" class="mb-8 hidden">
-        <div class="flex items-center mb-4">
-            <button id="backToStep2" class="mr-4 bg-zinc-500 text-white p-3 rounded-full hidden">
-                <i class="fa-solid fa-arrow-left"></i>
-            </button>
-            <h2 class="text-2xl">Escolha os sabores da pizza:</h2>
+        <!-- Step 2: Borda da Pizza -->
+        <div id="step2" class="mb-8 hidden">
+            <div class="flex items-center mb-4">
+                <button id="backToStep1" class="mr-4 bg-zinc-500 text-white p-3 rounded-full hidden">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <h2 class="text-2xl">Escolha os tipos de borda:</h2>
+            </div>
+            <p id="selectedSizeStep2" class="text-lg mb-4"></p> <!-- Exibe o tamanho da pizza escolhida -->
+            <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-8">
+                <button
+                    class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
+                    data-border="Sem Borda" data-border-price="0" data-id-border="7">
+                    <div>
+                        <p>Sem borda</p>
+                    </div>
+                </button>
+                <button
+                    class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
+                    data-border="Catupiry" data-border-price="10" data-id-border="1">
+                    <div>
+                        <p>Catupiry</p>
+                        <p class="text-red-500">+ R$10,00</p>
+                    </div>
+                </button>
+                <button
+                    class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
+                    data-border="Cheddar" data-border-price="10" data-id-border="2">
+                    <div>
+                        <p>Cheddar</p>
+                        <p class="text-red-500">+ R$10,00</p>
+                    </div>
+                </button>
+                <button
+                    class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
+                    data-border="Cream Cheese" data-border-price="10" data-id-border="3">
+                    <div>
+                        <p>Cream Cheese</p>
+                        <p class="text-red-500">+ R$10,00</p>
+                    </div>
+                </button>
+                <button
+                    class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
+                    data-border="Chocolate preto" data-border-price="10" data-id-border="4">
+                    <div>
+                        <p>Chocolate Preto</p>
+                        <p class="text-red-500">+ R$10,00</p>
+                    </div>
+                </button>
+                <button
+                    class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
+                    data-border="Chocolate branco" data-border-price="10" data-id-border="5">
+                    <div>
+                        <p>Chocolate Branco</p>
+                        <p class="text-red-500">+ R$10,00</p>
+                    </div>
+                </button>
+                <button
+                    class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
+                    data-border="Doce de Leite" data-border-price="10" data-id-border="6">
+                    <div>
+                        <p>Doce de leite</p>
+                        <p class="text-red-500">+ R$10,00</p>
+                    </div>
+                </button>
+            </div>
         </div>
-        <p id="selectedSizeStep3" class="text-lg mb-2"></p> <!-- Exibe o tamanho da pizza escolhido -->
-        <p id="selectedBorderStep3" class="text-lg mb-4"></p> <!-- Exibe a borda da pizza escolhida -->
-        <!-- Pizzas Salgadas -->
-        <h3 class="text-xl mb-2 mt-10">Pizzas Salgadas:</h3>
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <?php
-            // Consulta ao banco de dados para recuperar as pizzas salgadas
-            $sql = "SELECT p.idpizzas, p.nomePizza, GROUP_CONCAT(pr.nomeProduto SEPARATOR ', ') AS ingredientes
+
+        <!-- Step 3: Sabores da Pizza -->
+        <div id="step3" class="mb-8 hidden">
+            <div class="flex items-center mb-4">
+                <button id="backToStep2" class="mr-4 bg-zinc-500 text-white p-3 rounded-full hidden">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <h2 class="text-2xl">Escolha os sabores da pizza:</h2>
+            </div>
+            <p id="selectedSizeStep3" class="text-lg mb-2"></p> <!-- Exibe o tamanho da pizza escolhido -->
+            <p id="selectedBorderStep3" class="text-lg mb-4"></p> <!-- Exibe a borda da pizza escolhida -->
+            <!-- Pizzas Salgadas -->
+            <h3 class="text-xl mb-2 mt-10">Pizzas Salgadas:</h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <?php
+                // Consulta ao banco de dados para recuperar as pizzas salgadas
+                $sql = "SELECT p.idpizzas, p.nomePizza, GROUP_CONCAT(pr.nomeProduto SEPARATOR ', ') AS ingredientes
                 FROM pizzas p
                 JOIN pizzas_produtos pp ON p.idpizzas = pp.pizza_id
                 JOIN produtos pr ON pp.produto_id = pr.idprodutos
                 WHERE p.tipoPizza = 'salgada'
                 GROUP BY p.idpizzas";
-            $result = $conn->query($sql);
+                $result = $conn->query($sql);
 
-            if ($result->num_rows > 0) {
-                // Saída dos dados de cada linha
-                while ($row = $result->fetch_assoc()) {
-                    ?>
-                    <button class="pizza-flavor bg-white p-4 rounded-lg shadow-md text-center"
-                        data-flavor="<?php echo htmlspecialchars($row['nomePizza']); ?>"
-                        data-id-flavor="<?php echo $row['idpizzas'] ?>">
-                        <div class="font-bold"><?php echo htmlspecialchars($row['nomePizza']); ?></div>
-                        <div class="text-sm text-gray-600"><?php echo htmlspecialchars($row['ingredientes']); ?></div>
-                    </button>
-                    <?php
+                if ($result->num_rows > 0) {
+                    // Saída dos dados de cada linha
+                    while ($row = $result->fetch_assoc()) {
+                        ?>
+                        <button class="pizza-flavor bg-white p-4 rounded-lg shadow-md text-center"
+                            data-flavor="<?php echo htmlspecialchars($row['nomePizza']); ?>"
+                            data-id-flavor="<?php echo $row['idpizzas'] ?>">
+                            <div class="font-bold"><?php echo htmlspecialchars($row['nomePizza']); ?></div>
+                            <div class="text-sm text-gray-600"><?php echo htmlspecialchars($row['ingredientes']); ?></div>
+                        </button>
+                        <?php
+                    }
+                } else {
+                    echo "<p class='col-span-4'>Nenhuma pizza salgada encontrada.</p>";
                 }
-            } else {
-                echo "<p class='col-span-4'>Nenhuma pizza salgada encontrada.</p>";
-            }
-            ?>
-        </div>
+                ?>
+            </div>
 
-        <!-- Pizzas Doces -->
-        <h3 class="text-xl mb-2 mt-10">Pizzas Doces:</h3>
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <?php
-            // Consulta ao banco de dados para recuperar as pizzas doces
-            $sql = "SELECT p.idpizzas, p.nomePizza, GROUP_CONCAT(pr.nomeProduto SEPARATOR ', ') AS ingredientes
+            <!-- Pizzas Doces -->
+            <h3 class="text-xl mb-2 mt-10">Pizzas Doces:</h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <?php
+                // Consulta ao banco de dados para recuperar as pizzas doces
+                $sql = "SELECT p.idpizzas, p.nomePizza, GROUP_CONCAT(pr.nomeProduto SEPARATOR ', ') AS ingredientes
                 FROM pizzas p
                 JOIN pizzas_produtos pp ON p.idpizzas = pp.pizza_id
                 JOIN produtos pr ON pp.produto_id = pr.idprodutos
                 WHERE p.tipoPizza = 'doce'
                 GROUP BY p.idpizzas";
-            $result = $conn->query($sql);
+                $result = $conn->query($sql);
 
-            if ($result->num_rows > 0) {
-                // Saída dos dados de cada linha
-                while ($row = $result->fetch_assoc()) {
-                    ?>
-                    <button class="pizza-flavor bg-white p-4 rounded-lg shadow-md text-center"
-                        data-flavor="<?php echo htmlspecialchars($row['nomePizza']); ?>"
-                        data-id-flavor="<?php echo $row['idpizzas'] ?>">
-                        <div class="font-bold"><?php echo htmlspecialchars($row['nomePizza']); ?></div>
-                        <div class="text-sm text-gray-600"><?php echo htmlspecialchars($row['ingredientes']); ?></div>
-                    </button>
-                    <?php
+                if ($result->num_rows > 0) {
+                    // Saída dos dados de cada linha
+                    while ($row = $result->fetch_assoc()) {
+                        ?>
+                        <button class="pizza-flavor bg-white p-4 rounded-lg shadow-md text-center"
+                            data-flavor="<?php echo htmlspecialchars($row['nomePizza']); ?>"
+                            data-id-flavor="<?php echo $row['idpizzas'] ?>">
+                            <div class="font-bold"><?php echo htmlspecialchars($row['nomePizza']); ?></div>
+                            <div class="text-sm text-gray-600"><?php echo htmlspecialchars($row['ingredientes']); ?></div>
+                        </button>
+                        <?php
+                    }
+                } else {
+                    echo "<p class='col-span-4'>Nenhuma pizza doce encontrada.</p>";
                 }
-            } else {
-                echo "<p class='col-span-4'>Nenhuma pizza doce encontrada.</p>";
-            }
 
-            // Fechar a conexão
-            $conn->close();
-            ?>
+                // Fechar a conexão
+                $conn->close();
+                ?>
+            </div>
+
+            <div class="flex mt-4 mb-10">
+                <button id="stepBebidas" class="bg-blue-500 text-white p-4 rounded-lg mr-4">Bebidas</button>
+                <button id="addToCart" class=" bg-green-500 text-white p-4 rounded-lg">Adicionar ao Carrinho</button>
+            </div>
+        </div>
+        <!-- Step 4: Bebidas -->
+
+        <div id="step4" class="mb-8 hidden">
+            <h2 class="text-2xl mb-4">Escolha sua bebida:</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                <button
+                    class="flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500"
+                    onclick="showOptions('lata')"
+                    id="bebidasOptions">
+                    <img src="./assets/refrigerante.jpg" alt="Refrigerante"
+                        class="w-24 h-24 object-cover rounded-3xl mr-6">
+                    <div class="text-left">
+                        <p class="font-bold text-2xl mb-3">Refrigerante lata</p>
+                    </div>
+                </button>
+                <button
+                    class="flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500"
+                    onclick="showOptions('600ml')"
+                    id="bebidasOptions">
+                    <img src="./assets/refrigerante600.jfif" alt="Refrigerante"
+                        class="w-24 h-24 object-cover rounded-3xl mr-6">
+                    <div class="text-left">
+                        <p class="font-bold text-2xl mb-3">Refrigerante 600ml</p>
+                    </div>
+                </button>
+                <button
+                    class="flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500"
+                    onclick="showOptions('2l')"
+                    id="bebidasOptions">
+                    <img src="./assets/Refrigerante2lt.jpg" alt="refrigerante2lt"
+                        class="w-24 h-24 object-cover rounded-3xl mr-6">
+                    <div class="text-left">
+                        <p class="font-bold text-2xl mb-3">Refrigerante 2 litros</p>
+
+                    </div>
+                </button>
+                <button
+                    class="flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500"
+                    onclick="showOptions('agua')"
+                    id="bebidasOptions">
+                    <img src="./assets/agua.jpg" alt="longneck" class="w-24 h-24 object-cover rounded-3xl mr-6">
+                    <div class="text-left">
+                        <p class="font-bold text-2xl mb-3">Água Mineral</p>
+
+                    </div>
+                </button>
+                <button 
+                    class="flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500"
+                    onclick="showOptions('cerveja')"
+                    id="bebidasOptions">
+                    <img src="./assets/longneck.png" alt="longneck" class="w-24 h-24 object-cover rounded-3xl mr-6">
+                    <div class="text-left">
+                        <p class="font-bold text-2xl mb-3">Cervejas long neck</p>
+
+                    </div>
+                </button>
+            </div>
+            <div id="options" class="options space-y-2">
+                <!-- Opções de bebidas aparecerão aqui -->
+            </div>
+            <button id="addDrinkToCart" type="submit"
+            class="bg-green-500 text-white px-4 py-1 rounded">Adicionar Bebida ao carrinho</button>
         </div>
 
-        <div class="flex mt-4">
-
-
-            <button id="stepBebidas" class="bg-blue-500 text-white p-4 rounded-lg mr-4">Bebidas</button>
-            <button id="addToCart" class=" bg-green-500 text-white p-4 rounded-lg">Adicionar ao Carrinho</button>
-        </div>
     </div>
-    <!-- Step 4: Bebidas -->
-
-    <div id="step4" class="mb-8 hidden">
-        <h2 class="text-2xl mb-4">Escolha sua bebida:</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-            <button
-                class="flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500">
-                <img src="./assets/refrigerante.jpg" alt="Refrigerante" class="w-24 h-24 object-cover rounded-3xl mr-6">
-                <div class="text-left">
-                    <p class="font-bold text-2xl mb-3">Refrigerante lata</p>
-                </div>
-            </button>
-            <button
-                class="flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500">
-                <img src="./assets/refrigerante600.jfif" alt="Refrigerante"
-                    class="w-24 h-24 object-cover rounded-3xl mr-6">
-                <div class="text-left">
-                    <p class="font-bold text-2xl mb-3">Refrigerante 600ml</p>
-                </div>
-            </button>
-            <button
-                class="flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500">
-                <img src="./assets/Refrigerante2lt.jpg" alt="refrigerante2lt"
-                    class="w-24 h-24 object-cover rounded-3xl mr-6">
-                <div class="text-left">
-                    <p class="font-bold text-2xl mb-3">Refrigerante 2 litros</p>
-
-                </div>
-            </button>
-            <button
-                class="flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500">
-                <img src="./assets/agua.jpg" alt="longneck" class="w-24 h-24 object-cover rounded-3xl mr-6">
-                <div class="text-left">
-                    <p class="font-bold text-2xl mb-3">Água Mineral</p>
-
-                </div>
-            </button>
-            <button
-                class="flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500">
-                <img src="./assets/longneck.png" alt="longneck" class="w-24 h-24 object-cover rounded-3xl mr-6">
-                <div class="text-left">
-                    <p class="font-bold text-2xl mb-3">Cervejas long neck</p>
-
-                </div>
-            </button>
-        </div>
-    </div>
-
-
     <div class="bg-black/50 w-full h-full fixed top-0 left-0 z-[99] items-center justify-center hidden" id="cart-modal">
 
         <div class="bg-white p-5 rounded-md min-w-[90%] md:min-w-[600px]">
