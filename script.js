@@ -2,13 +2,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const step1 = document.getElementById('step1');
     const step2 = document.getElementById('step2');
     const step3 = document.getElementById('step3');
+    const step4 = document.getElementById('step4');
     const cart = document.getElementById('cartItems');
     const cartBtn = document.getElementById("cart-btn");
     const cartModal = document.getElementById("cart-modal")
     const closeModalBtn = document.getElementById("close-modal-btn")
     const cartCounter = document.getElementById("cart-count")
     const totalPriceElement = document.getElementById('total-price');
-
+    const modalBebidas = document.getElementById('stepBebidas');
 
     let pizzaSize = '';
     let pizzaSizePrice = 0;
@@ -84,6 +85,25 @@ document.addEventListener('DOMContentLoaded', function () {
     // Variável global para armazenar os itens do carrinho
     let cartItems = [];
 
+    //Bebidas 
+    modalBebidas.addEventListener('click', function(){
+        step4.classList.remove('hidden');
+        step3.classList.add('hidden');
+    });
+
+    function showDrinks(category) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "fetch_drinks.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                document.getElementById("drink-details-container").innerHTML = xhr.responseText;
+                document.getElementById("drink-details-container").style.display = "grid";
+            }
+        };
+        xhr.send("category=" + category);
+    }
+    
     document.getElementById('addToCart').addEventListener('click', function () {
         if (pizzaFlavors.length > 0) {
             const totalPrice = pizzaSizePrice + pizzaBorderPrice;
