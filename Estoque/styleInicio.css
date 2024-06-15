@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+body {
+    padding: 0;
+    margin: 0;
+    font-family: "Ubuntu", sans-serif;
+
+}
+
+main {
+    display: grid;
+    grid-template-columns: 1fr 530px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+h1 {
+    font-size: 90px;
+}
+
+.container{
+    -webkit-animation-name: container;
+    animation-name: container;
+    -webkit-animation-duration: 2s;
+    animation-duration: 2s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@-webkit-keyframes container {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes container {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.buttons {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.btn {
+    padding: 10px 20px;
+    margin: 10px 0;
+    font-size: 16px;
+    width: 200px;
+    font-size: 20px;
+    border-radius: 10px;
+    border: none;
+    background-color: #e62e2e;
+    color: #ffffff;
+}
+
+.btn:hover {
+    background-color: #d10e0e;
+    cursor: pointer;
+}
+
+img {
+    margin-top: 40%;
+    margin-right: 50px;
+    width: 80%;
+}

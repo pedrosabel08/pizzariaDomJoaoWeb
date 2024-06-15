@@ -254,63 +254,12 @@ include ("conexao.php");
         <div id="step4" class="mb-8 hidden">
             <h2 class="text-2xl mb-4">Escolha sua bebida:</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-                <button
-                    class="flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500"
-                    onclick="showOptions('lata')"
-                    id="bebidasOptions">
-                    <img src="./assets/refrigerante.jpg" alt="Refrigerante"
-                        class="w-24 h-24 object-cover rounded-3xl mr-6">
-                    <div class="text-left">
-                        <p class="font-bold text-2xl mb-3">Refrigerante lata</p>
-                    </div>
-                </button>
-                <button
-                    class="flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500"
-                    onclick="showOptions('600ml')"
-                    id="bebidasOptions">
-                    <img src="./assets/refrigerante600.jfif" alt="Refrigerante"
-                        class="w-24 h-24 object-cover rounded-3xl mr-6">
-                    <div class="text-left">
-                        <p class="font-bold text-2xl mb-3">Refrigerante 600ml</p>
-                    </div>
-                </button>
-                <button
-                    class="flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500"
-                    onclick="showOptions('2l')"
-                    id="bebidasOptions">
-                    <img src="./assets/Refrigerante2lt.jpg" alt="refrigerante2lt"
-                        class="w-24 h-24 object-cover rounded-3xl mr-6">
-                    <div class="text-left">
-                        <p class="font-bold text-2xl mb-3">Refrigerante 2 litros</p>
-
-                    </div>
-                </button>
-                <button
-                    class="flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500"
-                    onclick="showOptions('agua')"
-                    id="bebidasOptions">
-                    <img src="./assets/agua.jpg" alt="longneck" class="w-24 h-24 object-cover rounded-3xl mr-6">
-                    <div class="text-left">
-                        <p class="font-bold text-2xl mb-3">Água Mineral</p>
-
-                    </div>
-                </button>
-                <button 
-                    class="flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500"
-                    onclick="showOptions('cerveja')"
-                    id="bebidasOptions">
-                    <img src="./assets/longneck.png" alt="longneck" class="w-24 h-24 object-cover rounded-3xl mr-6">
-                    <div class="text-left">
-                        <p class="font-bold text-2xl mb-3">Cervejas long neck</p>
-
-                    </div>
-                </button>
             </div>
             <div id="options" class="options space-y-2">
                 <!-- Opções de bebidas aparecerão aqui -->
             </div>
-            <button id="addDrinkToCart" type="submit"
-            class="bg-green-500 text-white px-4 py-1 rounded">Adicionar Bebida ao carrinho</button>
+            <button id="addDrinkToCart" type="submit" class="bg-green-500 text-white px-4 py-1 rounded">Adicionar Bebida
+                ao carrinho</button>
         </div>
 
     </div>

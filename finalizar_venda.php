@@ -38,8 +38,8 @@ function inserirVenda($conn, $formaEntregaId, $total, $clienteId) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["cartItems"]) && is_array($_POST["cartItems"]) && isset($_POST["total_price"])) {
         $totalPrice = $_POST["total_price"];
-        $formaEntregaId = 1;
-        $clienteId = 1;
+        $formaEntregaId = 1;  // Ajuste conforme necessário
+        $clienteId = 1;  // Ajuste conforme necessário
 
         $vendaId = inserirVenda($conn, $formaEntregaId, $totalPrice, $clienteId);
 
@@ -112,7 +112,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $sqlVendaPizza = "INSERT INTO vendas_pizzas (vendas_idvendas, pizzas_idpizzas, tamanho_idtamanho, borda_idbordas_pizza) VALUES (?, ?, ?, ?)";
                         if ($stmtVendaPizza = mysqli_prepare($conn, $sqlVendaPizza)) {
                             mysqli_stmt_bind_param($stmtVendaPizza, "iiii", $vendaId, $pizzaId, $tamanhoId, $bordaId);
-                            if (!mysqli_stmt_execute($stmtVendaPizza)) {
+                            if (mysqli_stmt_execute($stmtVendaPizza)) {
+                                // Atualizar estoque
+                                $sqlUpdateEstoque = "UPDATE produtos p
+                                                     JOIN pizzas_produtos pp ON p.idprodutos = pp.produto_id
+                                                     SET p.quantidade = p.quantidade - pp.quantidade
+                                                     WHERE pp.pizza_id = ?";
+                                if ($stmtUpdateEstoque = mysqli_prepare($conn, $sqlUpdateEstoque)) {
+                                    mysqli_stmt_bind_param($stmtUpdateEstoque, "i", $pizzaId);
+                                    if (!mysqli_stmt_execute($stmtUpdateEstoque)) {
+                                        header("Location: index.php?status=error&message=" . urlencode("Erro ao atualizar estoque: " . mysqli_error($conn)));
+                                    }
+                                    mysqli_stmt_close($stmtUpdateEstoque);
+                                } else {
+                                    header("Location: index.php?status=error&message=" . urlencode("Erro ao preparar a declaração SQL para atualizar estoque: " . mysqli_error($conn)));
+                                }
+                            } else {
                                 header("Location: index.php?status=error&message=" . urlencode("Erro ao inserir item do carrinho na tabela vendas_pizzas: " . mysqli_error($conn)));
                             }
                             mysqli_stmt_close($stmtVendaPizza);
@@ -137,3 +152,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 } else {
     header("Location: index.php?status=error&message=" . urlencode("Método de requisição inválido."));
 }
+?>

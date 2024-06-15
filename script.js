@@ -263,45 +263,90 @@ document.addEventListener('DOMContentLoaded', function () {
         buttonSair.classList.remove('hidden');
     }
 
+    // Função para exibir opções de bebidas baseado na categoria selecionada
+    function showOptions(category) {
+        const optionsDiv = document.getElementById('options');
+        optionsDiv.innerHTML = '';
+
+        // Dados de exemplo para cada categoria
+        const drinksOptions = {
+            lata: [
+                { name: 'Coca Cola', price: 'R$ 6,00' },
+                { name: 'Guaraná', price: 'R$ 6,00' },
+                { name: 'Sprite', price: 'R$ 6,00' },
+                { name: 'Fanta', price: 'R$ 6,00' },
+            ],
+            '600ml': [
+                { name: 'Coca Cola', price: 'R$ 8,00' },
+                { name: 'Sprite', price: 'R$ 8,00' },
+                { name: 'Fanta', price: 'R$ 8,00' },
+            ],
+            '2l': [
+                { name: 'Coca Cola', price: 'R$ 15,00' },
+                { name: 'Coca Cola Zero', price: 'R$ 15,00' },
+                { name: 'Guaraná', price: 'R$ 12,00' },
+                { name: 'Sprite', price: 'R$ 12,00' },
+                { name: 'Fanta', price: 'R$ 12,00' },
+            ],
+            agua: [
+                { name: 'Com gás', price: 'R$ 3,50' },
+                { name: 'Sem gás', price: 'R$ 3,50' },
+            ],
+            cerveja: [
+                { name: 'Budweiser', price: 'R$ 10,00' },
+                { name: 'Heineken', price: 'R$ 10,00' },
+            ]
+        };
+
+        // Gerar opções baseadas na categoria
+        drinksOptions[category].forEach(drink => {
+            const optionButton = document.createElement('button');
+            optionButton.classList.add('bg-white', 'p-2', 'rounded', 'w-full', 'text-left');
+            optionButton.textContent = `${drink.name} - R$ ${drink.price.toFixed(2)}`;
+            optionButton.addEventListener('click', () => {
+                addDrinkToCart(drink);
+            });
+            optionsDiv.appendChild(optionButton);
+        });
+    }
+
+    // Função para adicionar bebida ao carrinho
+    function addDrinkToCart(drink) {
+        // Criar um objeto para representar o item do carrinho
+        const cartItem = {
+            id: Date.now(), // Usar timestamp como ID único
+            type: 'drink',
+            name: drink.name,
+            price: drink.price
+        };
+
+        // Adicionar o item ao carrinho
+        cartItems.push(cartItem);
+
+        // Criar o elemento li para exibir no carrinho
+        const li = document.createElement('li');
+        li.textContent = `${drink.name}, Preço: R$ ${drink.price.toFixed(2)}`;
+
+        // Atualizar o total acumulado
+        totalCartPrice += drink.price;
+
+        // Exibir o total acumulado
+        document.getElementById('totalPrice').textContent = `Total: R$ ${totalCartPrice.toFixed(2)}`;
+
+        // Adicionar o item ao carrinho na interface do usuário
+        document.getElementById('cartItems').appendChild(li);
+
+        // Atualizar contador do carrinho
+        document.getElementById('cartCounter').textContent = cartItems.length;
+
+        console.log("Itens do carrinho", cartItems);
+    }
+
+    document.getElementById('addDrinkToCart').addEventListener('click', function () {
+        // Lógica adicional, se necessário, ao adicionar uma bebida ao carrinho
+        alert('Bebida adicionada ao carrinho!');
+    });
+
 });
 
-const optionsData = {
-    lata: [
-        { name: 'Coca Cola', price: 'R$ 6,00' },
-        { name: 'Guaraná', price: 'R$ 6,00' },
-        { name: 'Sprite', price: 'R$ 6,00' },
-        { name: 'Fanta', price: 'R$ 6,00' },
-    ],
-    '600ml': [
-        { name: 'Coca Cola', price: 'R$ 8,00' },
-        { name: 'Sprite', price: 'R$ 8,00' },
-        { name: 'Fanta', price: 'R$ 8,00' },
-    ],
-    '2l': [
-        { name: 'Coca Cola', price: 'R$ 15,00' },
-        { name: 'Coca Cola Zero', price: 'R$ 15,00' },
-        { name: 'Guaraná', price: 'R$ 12,00' },
-        { name: 'Sprite', price: 'R$ 12,00' },
-        { name: 'Fanta', price: 'R$ 12,00' },
-    ],
-    agua: [
-        { name: 'Com gás', price: 'R$ 3,50' },
-        { name: 'Sem gás', price: 'R$ 3,50' },
-    ],
-    cerveja: [
-        { name: 'Budweiser', price: 'R$ 10,00' },
-        { name: 'Heineken', price: 'R$ 10,00' },
-    ]
-};
-function showOptions(category) {
-    const optionsContainer = document.getElementById('options');
-    optionsContainer.innerHTML = '';
-
-    optionsData[category].forEach(option => {
-        const optionDiv = document.createElement('div');
-        optionDiv.classList.add('button', 'text-lg', 'p-2', 'border', 'border-gray-300', 'rounded-lg', 'bg-white', 'shadow-sm', 'hover:bg-green-500');
-        optionDiv.textContent = `${option.name} - ${option.price}`;
-        optionsContainer.appendChild(optionDiv);
-    });
-}
 

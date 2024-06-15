@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+body {
+    padding: 0;
+    margin: 0;
+    font-family: "Ubuntu", sans-serif;
+}
+
+.tabela h2 {
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+}
+
+th,
+td {
+    border: 1px solid #000000;
+    text-align: left;
+    padding: 8px;
+}
+
+th.unidadeMedida {
+    width: 10%;
+}
+
+tr:hover {
+    background-color: #ffbb00;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+}
+
+main .tabela {
+    grid-column: 1;
+}
+
+.tabela {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-wrapper {
+    max-height: 713px;
+    overflow-y: auto;
+    width: 100%;
+}
+    
+.tabela input {
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.tabela .btn {
+    width: 80px;
+    padding: 5px;
+    margin-left: 3px;
+    margin-top: 3px;
+    border-radius: 5px;
+    font-family: "Ubuntu", sans-serif;
+    color: white;
+    background-color: #000000;
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+}
+
+
+.inserir {
+    grid-column: 2;
+    padding: 20px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-color: #ffffff;
+}
+
+.inserir h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.inserir ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+}
+
+.inserir li {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.inserir label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.inserir input,
+.inserir select {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.inserir .buttons button {
+    background-color: #388ae0;
+    border: none;
+    color: white;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: "Ubuntu", sans-serif;
+}
+
+.inserir .buttons button:hover {
+    background-color: #0056b3;
+    cursor: pointer;
+}
+
+#botoes{
+    display: flex;
+}
+
+#formExcluirProduto{
+    text-align: center;
+    width: 50%;
+}
+
+.inserir button#botaoExcluir {
+    padding: 8px;
+    margin-top: 10px;
+    border-radius: 5px;
+    width: 50%;
+    background-color: #e3342f;
+    border: none;
+    color: white;
+    font-family: "Ubuntu", sans-serif;
+} 
+
+.inserir button#botaoExcluir:hover {
+    background-color: #cc1f1a;
+    cursor: pointer;
+}
+
+#formAlterarProduto{
+    text-align: center;
+    width: 50%;
+}
+
+.inserir button#botaoAlterar {
+    padding: 8px;
+    margin-top: 10px;
+    border-radius: 5px;
+    width: 50%;
+    background-color: #aca000;
+    border: none;
+    color: white;
+    font-family: "Ubuntu", sans-serif;
+} 
+
+.inserir button#botaoAlterar:hover {
+    background-color: #756e02;
+    cursor: pointer;
+}
+
+.selecionada {
+    background-color: #ffbb00;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding-left: 10px;
+    background-color: #000000;
+    color: #ffffff;
+}

@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+body {
+    padding: 0;
+    margin: 0;
+    font-family: "Ubuntu", sans-serif;
+}
+
+.pizzas h2 {
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+}
+
+th,
+td {
+    border: 1px solid #000000;
+    text-align: left;
+    padding: 8px;
+}
+
+td:hover {
+    background-color: #ffbb00;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 1fr 500px;
+}
+
+main .pizzas {
+    grid-column: 1;
+}
+
+.pizzas {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-wrapper {
+    max-height: 713px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.pizzas input {
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.pizzas button {
+    width: 80px;
+    padding: 5px;
+    margin-left: 3px;
+    margin-top: 3px;
+    border-radius: 5px;
+    font-family: "Ubuntu", sans-serif;
+    color: white;
+    background-color: #000000;
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+}
+
+.addPizza {
+    grid-column: 2;
+    padding: 20px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-color: #ffffff;
+}
+
+.addPizza form .Nome, #ingredients-container, .ingredient-row {
+    padding-bottom: 10px;
+}
+
+.Nome {
+    margin-bottom: 10px;
+}
+
+.addPizza input, label, select {
+    padding: 5px;
+}
+
+.addPizza .ingredient-select {
+    width: 30%;
+}
+
+form input#pizza_name {
+    width: 50%;
+}
+
+.addPizza #add-ingredient {
+    margin-bottom: 20px;
+}
+
+.addPizza .ingredient-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.addPizza .ingredient-select,
+.addPizza .ingredient-quantity {
+    margin-right: 10px;
+}
+
+.addPizza .remove-ingredient {
+    background-color: #e3342f;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.addPizza .remove-ingredient:hover {
+    background-color: #cc1f1a;
+}
+
+.addPizza .buttons button {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+    background-color: #388ae0;
+    border: none;
+    color: white;
+    font-family: "Ubuntu", sans-serif;
+}
+
+.addPizza button#botaoExcluir {
+    padding: 8px;
+    margin-top: 10px;
+    border-radius: 5px;
+    width: 20%;
+    background-color: #e3342f;
+    border: none;
+    color: white;
+    font-family: "Ubuntu", sans-serif;
+}
+
+.addPizza button#botaoExcluir:hover {
+    background-color: #cc1f1a;
+    cursor: pointer;
+}
+
+.selecionada {
+    background-color: #e3342f;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding-left: 10px;
+    background-color: #000000;
+    color: #ffffff;
+}
