@@ -264,7 +264,6 @@ include ("conexao.php");
 
     </div>
     <div class="bg-black/50 w-full h-full fixed top-0 left-0 z-[99] items-center justify-center hidden" id="cart-modal">
-
         <div class="bg-white p-5 rounded-md min-w-[90%] md:min-w-[600px]">
             <form action="finalizar_venda.php" method="post">
                 <div id="cart" class="mt-8">
@@ -273,6 +272,26 @@ include ("conexao.php");
                     <!-- Inputs para cada item do carrinho -->
                     <div id="cartInputs"></div>
                     <div id="total-price" class="font-bold text-green-700 mt-4"></div>
+
+                    <div class="mt-4">
+                        <h3 class="text-xl mb-2">Forma de Entrega:</h3>
+                        <input type="radio" id="retirada" name="forma_entrega" value="1" required>
+                        <label for="retirada">Retirada</label><br>
+                        <input type="radio" id="entrega" name="forma_entrega" value="2" required>
+                        <label for="entrega">Entrega</label>
+
+                        <div id="enderecoEntrega" class="mt-4 hidden">
+                            <h3 class="text-lg mb-2">Selecione o Endereço:</h3>
+                            <select name="endereco_id" required>
+                                <?php foreach ($enderecos as $endereco): ?>
+                                    <option value="<?= $endereco['idendereco'] ?>">
+                                        <?= $endereco['rua'] . ', ' . $endereco['numero'] . ', ' . $endereco['cidade'] . ', ' . $endereco['estado'] . ', ' . $endereco['cep'] ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="flex items-center justify-between mt-5 w-full mr-14">
                         <button id="close-modal-btn" type="button"
                             class="bg-red-500 text-white px-4 py-1 rounded">Fechar</button>

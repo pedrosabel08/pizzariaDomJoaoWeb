@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`endereco` (
   `logradouro` VARCHAR(45) NOT NULL,
   `numero` INT(11) NOT NULL,
   `complemento` VARCHAR(45) NULL DEFAULT NULL,
+  `rua` VARCHAR(45) NOT NULL,
   `bairro` VARCHAR(45) NOT NULL,
   `cidade` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idendereco`),

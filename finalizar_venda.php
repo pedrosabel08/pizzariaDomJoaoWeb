@@ -38,7 +38,7 @@ function inserirVenda($conn, $formaEntregaId, $total, $clienteId) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["cartItems"]) && is_array($_POST["cartItems"]) && isset($_POST["total_price"])) {
         $totalPrice = $_POST["total_price"];
-        $formaEntregaId = 1;  // Ajuste conforme necessário
+        $formaEntregaId = $_POST["forma_entrega"];  // Pegando a forma de entrega selecionada
         $clienteId = 1;  // Ajuste conforme necessário
 
         $vendaId = inserirVenda($conn, $formaEntregaId, $totalPrice, $clienteId);

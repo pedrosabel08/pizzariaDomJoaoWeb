@@ -347,6 +347,21 @@ document.addEventListener('DOMContentLoaded', function () {
         alert('Bebida adicionada ao carrinho!');
     });
 
+    const retiradaRadio = document.getElementById('retirada');
+    const entregaRadio = document.getElementById('entrega');
+    const enderecoEntregaDiv = document.getElementById('enderecoEntrega');
+
+    retiradaRadio.addEventListener('change', () => {
+        if (retiradaRadio.checked) {
+            enderecoEntregaDiv.classList.add('hidden');
+        }
+    });
+
+    entregaRadio.addEventListener('change', () => {
+        if (entregaRadio.checked) {
+            enderecoEntregaDiv.classList.remove('hidden');
+        }
+    });
 });
 
 
