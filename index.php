@@ -251,15 +251,101 @@ include ("conexao.php");
         </div>
         <!-- Step 4: Bebidas -->
 
-        <div id="step4" class="mb-8 hidden">
-            <h2 class="text-2xl mb-4">Escolha sua bebida:</h2>
+        <div class="mb-12">
+            <h2 class="text-2xl mb-4">Escolha a bebida:</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                <button
+                    class="bebida-size flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500"
+                    id="lata">
+                    <img src="./assets/Refrigerante.jpg" alt="lata" class="w-24 h-24 object-cover rounded-3xl mr-6">
+                    <div class="text-left">
+                        <p>Refrigerante Lata</p>
+                    </div>
+                </button>
+                <div id="options-1" class="hidden">
+                    <ul>
+                        <li class="flex flex-col">
+                            <button class="text-left" data-bebida-id="1" data-bebida-name="Coca Cola Lata" data-bebida-price="6">Coca cola - R$6,00  </button>
+                            <button class="text-left" data-bebida-id="2" data-bebida-name="Guaraná Lata" data-bebida-price="6">Guaraná - R$6,00</button>
+                            <button class="text-left" data-bebida-id="3" data-bebida-name="Sprite Lata" data-bebida-price="6">Sprite - R$6,00</button>
+                            <button class="text-left" data-bebida-id="4" data-bebida-name="Fanta Lata" data-bebida-price="6">Fanta - R$6,00</button>
+                        </li>
+                    </ul>
+                </div>
+
+                <button
+                    class="bebida-size flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500"
+                    id="600ml">
+                    <img src="./assets/Refrigerante600.jfif" alt="600ml"
+                        class="w-24 h-24 object-cover rounded-3xl mr-6">
+                    <div class="text-left">
+                        <p>Refrigerante 600ml</p>
+                    </div>
+                </button>
+                <div id="options-2" class="hidden">
+                    <ul>
+                        <li class="flex flex-col">
+                            <button class="text-left" data-bebida-id="5" data-bebida-name="Coca Cola 600ml" data-bebida-price="8">Coca cola - R$8,00</button>
+                            <button class="text-left" data-bebida-id="6" data-bebida-name="Sprite 600ml" data-bebida-price="8">Sprite - R$8,00</button>
+                            <button class="text-left" data-bebida-id="7" data-bebida-name="Fanta 600ml" data-bebida-price="8">Fanta - R$8,00</button>
+                        </li>
+                    </ul>
+                </div>
+
+                <button
+                    class="bebida-size flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500"
+                    id="2l">
+                    <img src="./assets/Refrigerante2lt.jpg" alt="2l" class="w-24 h-24 object-cover rounded-3xl mr-6">
+                    <div class="text-left">
+                        <p>Refrigerante 2 Litros</p>
+                    </div>
+                </button>
+                <div id="options-3" class="hidden">
+                    <ul>
+                        <li class="flex flex-col">
+                            <button class="text-left" data-bebida-id="8" data-bebida-name="Coca Cola 2L" data-bebida-price="15">Coca cola - R$15,00</button>
+                            <button class="text-left" data-bebida-id="9" data-bebida-name="Coca Cola zero 2L" data-bebida-price="15">Coca cola zero - R$15,00</button>
+                            <button class="text-left" data-bebida-id="10" data-bebida-name="Guaraná 2L" data-bebida-price="12">Guaraná - R$12,00</button>
+                            <button class="text-left" data-bebida-id="11" data-bebida-name="Sprite 2L" data-bebida-price="12">Sprite - R$12,00</button>
+                            <button class="text-left" data-bebida-id="12" data-bebida-name="Fanta 2L" data-bebida-price="12">Fanta - R$12,00</button>
+                        </li>
+                    </ul>
+                </div>
+
+                <button
+                    class="bebida-size flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500"
+                    id="agua">
+                    <img src="./assets/agua.jpg" alt="agua" class="w-24 h-24 object-cover rounded-3xl mr-6">
+                    <div class="text-left">
+                        <p>Água</p>
+                    </div>
+                </button>
+                <div id="options-4" class="hidden">
+                    <ul>
+                        <li class="flex flex-col">
+                            <button class="text-left" data-bebida-id="13" data-bebida-name="Água com gás" data-bebida-price="3.50">Água com gás - R$3,50</button>
+                            <button class="text-left" data-bebida-id="14" data-bebida-name="Água sem gás" data-bebida-price="3.50">Água sem gás - R$3,50</button>
+                        </li>
+                    </ul>
+                </div>
+
+                <button
+                    class="bebida-size flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500"
+                    id="cerveja">
+                    <img src="./assets/longneck.png" alt="cerveja" class="w-24 h-24 object-cover rounded-3xl mr-6">
+                    <div class="text-left">
+                        <p>Cerveja Longneck</p>
+                    </div>
+                </button>
+                <div id="options-5" class="hidden">
+                    <ul>
+                        <li class="flex flex-col">
+                            <button class="text-left hover:bg-red-500" data-bebida-id="15" data-bebida-name="Cerveja Heineken" data-bebida-price="10">Cerveja Heineken - R$10,00</button>
+                            <button class="text-left hover:bg-red-500" data-bebida-id="16" data-bebida-name="Cerveja Budweiser" data-bebida-price="10">Cerveja Budweiser - R$10,00</button>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div id="options" class="options space-y-2">
-                <!-- Opções de bebidas aparecerão aqui -->
-            </div>
-            <button id="addDrinkToCart" type="submit" class="bg-green-500 text-white px-4 py-1 rounded">Adicionar Bebida
-                ao carrinho</button>
         </div>
 
     </div>
