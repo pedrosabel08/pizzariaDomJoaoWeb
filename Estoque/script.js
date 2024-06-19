@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
             $.ajax({
                 type: "GET",
                 dataType: "json",
-                url: "http://localhost/projeto_pizzariaSite/Estoque/buscaLinhaAJAX.php",
+                url: "http://localhost:8066/projeto_pizzariaSite/Estoque/buscaLinhaAJAX.php",
                 data: { ajid: idProdutoSelecionado },
                 success: function (response) {
                     if (response.length > 0) {
