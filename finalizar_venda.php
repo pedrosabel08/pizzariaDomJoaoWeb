@@ -1,7 +1,7 @@
 <?php
 include("conexao.php");
 
-function inserirVenda($conn, $formaEntregaId, $total, $clienteId) {
+function inserirVenda($conn, $formaEntregaId, $total, $clienteId, $enderecoId) {
     $sqlCheckCliente = "SELECT COUNT(*) FROM clientes WHERE idclientes = ?";
     $stmtCheckCliente = mysqli_prepare($conn, $sqlCheckCliente);
     mysqli_stmt_bind_param($stmtCheckCliente, "i", $clienteId);
@@ -20,9 +20,9 @@ function inserirVenda($conn, $formaEntregaId, $total, $clienteId) {
         }
     }
 
-    $sql = "INSERT INTO vendas (forma_entrega_id, total, data_venda, cliente_id) VALUES (?, ?, NOW(), ?)";
+    $sql = "INSERT INTO vendas (forma_entrega_id, total, data_venda, cliente_id, endereco_id) VALUES (?, ?, NOW(), ?, ?)";
     if ($stmt = mysqli_prepare($conn, $sql)) {
-        mysqli_stmt_bind_param($stmt, "idi", $formaEntregaId, $total, $clienteId);
+        mysqli_stmt_bind_param($stmt, "idii", $formaEntregaId, $total, $clienteId, $enderecoId);
         if (mysqli_stmt_execute($stmt)) {
             return mysqli_insert_id($conn);
         } else {
@@ -35,14 +35,47 @@ function inserirVenda($conn, $formaEntregaId, $total, $clienteId) {
     }
 }
 
+function inserirEndereco($conn, $bairro, $rua, $numero, $complemento, $clienteId){
+    $sqlInsertEndereco = "INSERT INTO endereco (bairro, rua, numero, complemento, cliente_id) VALUES (?,?,?,?,?)";
+    if ($stmt = mysqli_prepare($conn, $sqlInsertEndereco)) {
+        mysqli_stmt_bind_param($stmt, "ssisi", $bairro, $rua, $numero, $complemento, $clienteId);
+        if (mysqli_stmt_execute($stmt)) {
+            return mysqli_insert_id($conn);
+        } else {
+            header("Location: index.php?status=error&message=" . urlencode("Erro ao inserir endereço: " . mysqli_error($conn)));
+            exit();
+        }
+    }
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["cartItems"]) && is_array($_POST["cartItems"]) && isset($_POST["total_price"])) {
+    if (isset($_POST["cartItems"]) && is_array($_POST["cartItems"]) && isset($_POST["total_price"]) &&
+        isset($_POST["bairro"]) && isset($_POST["rua"]) && isset($_POST["numero"]) && isset($_POST["complemento"])
+    ) {
         $totalPrice = $_POST["total_price"];
         $formaEntregaId = $_POST["forma_entrega"];  // Pegando a forma de entrega selecionada
         $clienteId = 1;  // Ajuste conforme necessário
+        $bairro = $_POST["bairro"];
+        $rua = $_POST["rua"];
+        $numero = $_POST["numero"];
+        $complemento = $_POST["complemento"];
 
-        $vendaId = inserirVenda($conn, $formaEntregaId, $totalPrice, $clienteId);
+        if($formaEntregaId == 2){
+            if($bairro == ""){
+                header("Location: index.php?status=error&message=" . urlencode("Informe o bairro."));
+                return;
+            }
+            if($rua == ""){
+                header("Location: index.php?status=error&message=" . urlencode("Informe a rua."));
+                return;
+            }
+            if($numero == ""){
+                header("Location: index.php?status=error&message=" . urlencode("Informe o numero da residência."));
+                return;
+            }
+            $enderecoId = inserirEndereco($conn, $bairro, $rua, $numero, $complemento, $clienteId);
+        }
+        $vendaId = inserirVenda($conn, $formaEntregaId, $totalPrice, $clienteId, $enderecoId);
 
         if ($vendaId !== false) {
             foreach ($_POST["cartItems"] as $item) {

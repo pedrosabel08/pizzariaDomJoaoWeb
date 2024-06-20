@@ -405,20 +405,20 @@ include ("conexao.php");
                         <div style="display:flex;">
                             <div id="bairroEntrega" class="mt-4 hidden">
                                 <h3 class="text-lg mb-2">Bairro</h3>
-                                <input class="border-black border w-30 pl-1" type="text" id="bairro" name="bairro" required>
+                                <input class="border-black border w-30 pl-1" type="text" id="bairro" name="bairro">
                             </div>
                             <div id="ruaEntrega" class="mt-4 ml-4 hidden">
                                 <h3 class="text-lg mb-2">Rua</h3>
-                                <input class="border-black border w-30 pl-1" type="text" id="rua" name="rua" required>
+                                <input class="border-black border w-30 pl-1" type="text" id="rua" name="rua">
                             </div>
                             <div id="numeroEntrega" class="mt-4 ml-4 hidden">
                                 <h3 class="text-lg mb-2">N°</h3>
-                                <input class="border-black border w-14 pl-1" type="number" id="numero" name="numero" required>
+                                <input class="border-black border w-14 pl-1" type="number" id="numero" name="numero">
                             </div>
                         </div>
                         <div id="complementoEntrega" class="mt-4 hidden">
                             <h3 class="text-lg mb-2">Complemento</h3>
-                            <input class="border-black border w-2/3 pl-1" type="text" maxlength="45" id="complemento" name="complemento" required>
+                            <input class="border-black border w-2/3 pl-1" type="text" maxlength="45" id="complemento" name="complemento">
                         </div>
                     </div>
 
