@@ -260,16 +260,28 @@ document.addEventListener('DOMContentLoaded', function () {
     const retiradaRadio = document.getElementById('retirada');
     const entregaRadio = document.getElementById('entrega');
     const enderecoEntregaDiv = document.getElementById('enderecoEntrega');
+    const bairroEntregaDiv = document.getElementById('bairroEntrega');
+    const ruaEntregaDiv = document.getElementById('ruaEntrega');
+    const numeroEntregaDiv = document.getElementById('numeroEntrega');
+    const complementoEntregaDiv = document.getElementById('complementoEntrega');
 
     retiradaRadio.addEventListener('change', () => {
         if (retiradaRadio.checked) {
             enderecoEntregaDiv.classList.add('hidden');
+            bairroEntregaDiv.classList.add('hidden');
+            ruaEntregaDiv.classList.add('hidden');
+            numeroEntregaDiv.classList.add('hidden');
+            complementoEntregaDiv.classList.add('hidden');
         }
     });
 
     entregaRadio.addEventListener('change', () => {
         if (entregaRadio.checked) {
             enderecoEntregaDiv.classList.remove('hidden');
+            bairroEntregaDiv.classList.remove('hidden');
+            ruaEntregaDiv.classList.remove('hidden');
+            numeroEntregaDiv.classList.remove('hidden');
+            complementoEntregaDiv.classList.remove('hidden');
         }
     });
 
@@ -359,4 +371,18 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-
+function buscaEndereco(cep) {
+    if(cep.length == 8){
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "https://viacep.com.br/ws/"+cep+"/json/",
+            success: function (data) {
+                if(data.bairro != null){
+                    document.getElementById('bairro').value = data.bairro;
+                    document.getElementById('rua').value = data.logradouro;
+                }
+            }
+        });
+    }
+}
