@@ -1,25 +1,8 @@
 <?php
-include("conexao.php");
+include ("conexao.php");
 
-function inserirVenda($conn, $formaEntregaId, $total, $clienteId, $enderecoId) {
-    $sqlCheckCliente = "SELECT COUNT(*) FROM clientes WHERE idclientes = ?";
-    $stmtCheckCliente = mysqli_prepare($conn, $sqlCheckCliente);
-    mysqli_stmt_bind_param($stmtCheckCliente, "i", $clienteId);
-    mysqli_stmt_execute($stmtCheckCliente);
-    mysqli_stmt_bind_result($stmtCheckCliente, $clienteCount);
-    mysqli_stmt_fetch($stmtCheckCliente);
-    mysqli_stmt_close($stmtCheckCliente);
-
-    if ($clienteCount == 0) {
-        $sqlInsertCliente = "INSERT INTO clientes (nome, email, telefone) VALUES ('Cliente Fictício', 'teste@teste.com', '0000-0000')";
-        if (mysqli_query($conn, $sqlInsertCliente)) {
-            $clienteId = mysqli_insert_id($conn);
-        } else {
-            header("Location: index.php?status=error&message=" . urlencode("Erro ao inserir cliente fictício: " . mysqli_error($conn)));
-            exit();
-        }
-    }
-
+function inserirVenda($conn, $formaEntregaId, $total, $clienteId, $enderecoId)
+{
     $sql = "INSERT INTO vendas (forma_entrega_id, total, data_venda, cliente_id, endereco_id) VALUES (?, ?, NOW(), ?, ?)";
     if ($stmt = mysqli_prepare($conn, $sql)) {
         mysqli_stmt_bind_param($stmt, "idii", $formaEntregaId, $total, $clienteId, $enderecoId);
@@ -35,7 +18,8 @@ function inserirVenda($conn, $formaEntregaId, $total, $clienteId, $enderecoId) {
     }
 }
 
-function inserirEndereco($conn, $bairro, $rua, $numero, $complemento, $clienteId){
+function inserirEndereco($conn, $bairro, $rua, $numero, $complemento, $clienteId)
+{
     $sqlInsertEndereco = "INSERT INTO endereco (bairro, rua, numero, complemento, cliente_id) VALUES (?,?,?,?,?)";
     if ($stmt = mysqli_prepare($conn, $sqlInsertEndereco)) {
         mysqli_stmt_bind_param($stmt, "ssisi", $bairro, $rua, $numero, $complemento, $clienteId);
@@ -49,27 +33,29 @@ function inserirEndereco($conn, $bairro, $rua, $numero, $complemento, $clienteId
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["cartItems"]) && is_array($_POST["cartItems"]) && isset($_POST["total_price"]) &&
+    if (
+        isset($_POST["cartItems"]) && is_array($_POST["cartItems"]) && isset($_POST["total_price"]) &&
         isset($_POST["bairro"]) && isset($_POST["rua"]) && isset($_POST["numero"]) && isset($_POST["complemento"])
     ) {
         $totalPrice = $_POST["total_price"];
-        $formaEntregaId = $_POST["forma_entrega"];  // Pegando a forma de entrega selecionada
-        $clienteId = 1;  // Ajuste conforme necessário
+        $formaEntregaId = $_POST["forma_entrega"];
+        $clienteId = $_POST["cliente_id"];
+        echo $cliente_id;
         $bairro = $_POST["bairro"];
         $rua = $_POST["rua"];
         $numero = $_POST["numero"];
         $complemento = $_POST["complemento"];
 
-        if($formaEntregaId == 2){
-            if($bairro == ""){
+        if ($formaEntregaId == 2) {
+            if ($bairro == "") {
                 header("Location: index.php?status=error&message=" . urlencode("Informe o bairro."));
                 return;
             }
-            if($rua == ""){
+            if ($rua == "") {
                 header("Location: index.php?status=error&message=" . urlencode("Informe a rua."));
                 return;
             }
-            if($numero == ""){
+            if ($numero == "") {
                 header("Location: index.php?status=error&message=" . urlencode("Informe o numero da residência."));
                 return;
             }

@@ -244,6 +244,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const params = new URLSearchParams(window.location.search);
     const nomeCliente = params.get('nome');
+    const clienteId = params.get('idCliente');
+
+    const clientIdInput = document.getElementById('cliente_id');
+
+    if (clientIdInput) {
+        clientIdInput.value = clienteId;
+        console.log(clienteId);
+    }
+
 
     if (nomeCliente) {
         const loginButton = document.getElementById('login');
@@ -372,13 +381,13 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function buscaEndereco(cep) {
-    if(cep.length == 8){
+    if (cep.length == 8) {
         $.ajax({
             type: "GET",
             dataType: "json",
-            url: "https://viacep.com.br/ws/"+cep+"/json/",
+            url: "https://viacep.com.br/ws/" + cep + "/json/",
             success: function (data) {
-                if(data.bairro != null){
+                if (data.bairro != null) {
                     document.getElementById('bairro').value = data.bairro;
                     document.getElementById('rua').value = data.logradouro;
                 }
