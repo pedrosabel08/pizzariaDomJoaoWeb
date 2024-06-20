@@ -153,6 +153,7 @@ CREATE TABLE IF NOT EXISTS `vendas` (
   `total` DECIMAL(10,2) NOT NULL,
   `cliente_id` INT(11) NOT NULL,
   `forma_entrega_id` INT(11) NOT NULL,
+  `endereco_id` INT(11) NOT NULL,
   PRIMARY KEY (`idvendas`),
   INDEX `fk_vendas_clientes_idx` (`cliente_id` ASC),
   INDEX `fk_vendas_forma_entrega_idx` (`forma_entrega_id` ASC),
@@ -164,6 +165,11 @@ CREATE TABLE IF NOT EXISTS `vendas` (
   CONSTRAINT `fk_vendas_forma_entrega`
     FOREIGN KEY (`forma_entrega_id`)
     REFERENCES `forma_entrega` (`idforma_entrega`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+      CONSTRAINT `fk_vendas_endereco`
+    FOREIGN KEY (`endereco_id`)
+    REFERENCES `endereco` (`idendereco`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
