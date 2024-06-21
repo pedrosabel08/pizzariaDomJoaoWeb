@@ -112,6 +112,10 @@ document.addEventListener('DOMContentLoaded', function () {
             const li = document.createElement('li');
             li.textContent = `Pizza ${pizzaSize} com borda ${pizzaBorder}, sabores: ${pizzaFlavors.join(', ')}, Preço: R$ ${totalPrice.toFixed(2)}`;
 
+            const botaoMenos = '<button><img class="ml-4" src="./assets/menos.png"></button>';
+            const inputQtde = '<input id=qtdeItem class="ml-2 w-5" type=text size=2 maxlength=2>';
+            const botaoMais = '<button><img class="ml-2" src="./assets/mais.png"></button>';
+
             // Atualizar o total acumulado
             totalCartPrice += totalPrice;
 
@@ -119,6 +123,9 @@ document.addEventListener('DOMContentLoaded', function () {
             totalPriceElement.textContent = `Total: R$ ${totalCartPrice.toFixed(2)}`;
 
             // Adicionar o item ao carrinho na interface do usuário
+            li.innerHTML += botaoMenos;
+            li.innerHTML += inputQtde;
+            li.innerHTML += botaoMais;
             document.getElementById('cartItems').appendChild(li);
 
             cartCounter.innerHTML = cartItems.length;
