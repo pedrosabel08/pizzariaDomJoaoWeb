@@ -27,7 +27,7 @@ include ("conexao.php");
 
 <body class="font-roboto">
 
-    <header class="w-full h-[420px] bg-orange-300 relative">
+    <header class="w-full h-auto bg-orange-300 relative">
         <div class="p-2 flex justify-between items-center">
             <div>
                 <button id="login" onclick="window.location.href='login.html'">
@@ -50,7 +50,7 @@ include ("conexao.php");
             <h1 class="text-3xl mt-4 mb-2 font-bold text-black">Pizzaria Dom João</h1>
             <a href="https://www.google.com/maps/search/?api=1&query=%27Rua%20Jo%C3%A3o%20Pessoa,%201726%20Sl%2004%20-%20Velha%20-%20Blumenau%20/%20SC%27"
                 class="text-black font-medium" target="blink">Rua João Pessoa, 1726 Sl 04 - Velha - Blumenau/SC</a>
-            <div class="bg-green-500 px-4 py-1 rounded-lg mt-5" id="date-span">
+            <div class="bg-green-500 px-4 py-1 rounded-lg my-5" id="date-span">
                 <span class="text-white font-medium">Seg a Dom - 17:30 as 23:30</span>
             </div>
         </div>

@@ -245,6 +245,36 @@ document.addEventListener('DOMContentLoaded', function () {
 
         console.log('Dados do formulário:', cartInputs);
 
+        const isOpen = checkRestaurantOpen();
+        if (!isOpen) {
+            Toastify({
+                text: "Ops, o restaurante está fechado",
+                duration: 3000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: "right", // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                style: {
+                  background: "#ef4444",
+                },
+              }).showToast();
+            return;
+        }
+        if(clienteId === null) {
+            Toastify({
+                text: "Faça login ou cadastro para realizar o pedido",
+                duration: 3000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: "right", // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                style: {
+                  background: "#ef4444",
+                },
+              }).showToast();
+            return;
+        }
+
         document.getElementById('cartForm').submit();
     });
 
@@ -486,7 +516,33 @@ document.addEventListener('DOMContentLoaded', function () {
             alert('Por favor, selecione uma forma de entrega.');
         }
     });
+
+
 });
+
+function checkRestaurantOpen() {
+    const data = new Date();
+    const hora = data.getHours();
+    const minutos = data.getMinutes();
+
+    const totalMinutos = hora * 60 + minutos;
+
+    const horaAbertura = 17 * 60 + 30;
+    const horaFechamento = 23 * 60 + 30;
+
+    return totalMinutos >= horaAbertura && totalMinutos < horaFechamento;
+}
+
+const spanItem = document.getElementById("date-span");
+const isOpen = checkRestaurantOpen();
+
+if (isOpen) {
+    spanItem.classList.remove("bg-red-500");
+    spanItem.classList.add("bg-green-500")
+} else {
+    spanItem.classList.remove("bg-green-500");
+    spanItem.classList.add("bg-red-500")
+}
 
 function buscaEndereco(cep) {
     if (cep.length == 8) {
