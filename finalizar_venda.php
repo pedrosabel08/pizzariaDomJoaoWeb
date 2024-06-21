@@ -70,12 +70,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $flavors = $item["flavors"];
                 $price = $item["price"];
 
-                // Garantir que flavors seja um array
                 if (!is_array($flavors)) {
                     $flavors = explode(',', $flavors);
                 }
 
-                // Obter ID da borda
                 $sqlBorda = "SELECT idbordas_pizza FROM bordas_pizza WHERE nome = ?";
                 if ($stmtBorda = mysqli_prepare($conn, $sqlBorda)) {
                     mysqli_stmt_bind_param($stmtBorda, "s", $border);
@@ -92,7 +90,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     continue;
                 }
 
-                // Obter ID do tamanho
                 $sqlTamanho = "SELECT idtamanho FROM tamanho WHERE nome = ?";
                 if ($stmtTamanho = mysqli_prepare($conn, $sqlTamanho)) {
                     mysqli_stmt_bind_param($stmtTamanho, "s", $size);
@@ -110,7 +107,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
 
                 foreach ($flavors as $flavor) {
-                    // Obter ID da pizza
                     $sqlPizza = "SELECT idpizzas FROM pizzas WHERE nomePizza = ?";
                     if ($stmtPizza = mysqli_prepare($conn, $sqlPizza)) {
                         mysqli_stmt_bind_param($stmtPizza, "s", $flavor);
@@ -128,12 +124,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     }
 
                     if ($pizzaId !== null) {
-                        // Inserir item na tabela vendas_pizzas
                         $sqlVendaPizza = "INSERT INTO vendas_pizzas (vendas_idvendas, pizzas_idpizzas, tamanho_idtamanho, borda_idbordas_pizza) VALUES (?, ?, ?, ?)";
                         if ($stmtVendaPizza = mysqli_prepare($conn, $sqlVendaPizza)) {
                             mysqli_stmt_bind_param($stmtVendaPizza, "iiii", $vendaId, $pizzaId, $tamanhoId, $bordaId);
                             if (mysqli_stmt_execute($stmtVendaPizza)) {
-                                // Atualizar estoque
                                 $sqlUpdateEstoque = "UPDATE produtos p
                                                      JOIN pizzas_produtos pp ON p.idprodutos = pp.produto_id
                                                      SET p.quantidade = p.quantidade - pp.quantidade

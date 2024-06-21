@@ -3,13 +3,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const step2 = document.getElementById('step2');
     const step3 = document.getElementById('step3');
     const step4 = document.getElementById('step4');
-    const cart = document.getElementById('cartItems');
     const cartBtn = document.getElementById("cart-btn");
     const cartModal = document.getElementById("cart-modal")
     const closeModalBtn = document.getElementById("close-modal-btn")
-    const cartCounter = document.getElementById("cart-count")
     const totalPriceElement = document.getElementById('total-price');
-    const modalBebidas = document.getElementById('stepBebidas');
 
     let pizzaSize = '';
     let pizzaSizePrice = 0;
@@ -20,13 +17,10 @@ document.addEventListener('DOMContentLoaded', function () {
     let totalCartPrice = 0;
 
 
-    // Abrir o modal do carrinho
     cartBtn.addEventListener("click", function () {
         cartModal.style.display = "flex"
         console.log(totalCartPrice)
     })
-
-    // Fechar o modal quando clicar fora
 
     cartModal.addEventListener("click", function (event) {
         if (event.target === cartModal) {
@@ -38,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function () {
         cartModal.style.display = "none"
     })
 
-    // Tamanho da Pizza
     document.querySelectorAll('.pizza-size').forEach(button => {
         button.addEventListener('click', function () {
             pizzaSize = this.dataset.size;
@@ -46,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
             maxFlavors = parseInt(this.dataset.sabores);
             step1.classList.add('hidden');
             step2.classList.remove('hidden');
+            step4.classList.add('hidden')
             document.getElementById('selectedSizeStep2').textContent = `Tamanho escolhido: ${pizzaSize}`;
             document.getElementById('backToStep1').classList.remove('hidden');
             console.log('Selected size:', pizzaSize);
@@ -53,20 +47,19 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Borda da Pizza
     document.querySelectorAll('.pizza-border').forEach(button => {
         button.addEventListener('click', function () {
             pizzaBorder = this.dataset.border;
             pizzaBorderPrice = parseFloat(this.dataset.borderPrice);
             step2.classList.add('hidden');
             step3.classList.remove('hidden');
+            step4.classList.add('hidden')
             document.getElementById('selectedSizeStep3').textContent = `Tamanho escolhido: ${pizzaSize}`;
             document.getElementById('selectedBorderStep3').textContent = `Borda escolhida: ${pizzaBorder}`;
             document.getElementById('backToStep2').classList.remove('hidden');
         });
     });
 
-    // Sabores da Pizza
     document.querySelectorAll('.pizza-flavor').forEach(button => {
         button.addEventListener('click', function () {
             const flavor = this.dataset.flavor;
@@ -83,66 +76,111 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
-    // Variável global para armazenar os itens do carrinho
     let cartItems = [];
-
-    //Bebidas 
-    modalBebidas.addEventListener('click', function () {
-        step4.classList.remove('hidden');
-        step3.classList.add('hidden');
-    });
 
     document.getElementById('addToCart').addEventListener('click', function () {
         if (pizzaFlavors.length > 0) {
             const totalPrice = pizzaSizePrice + pizzaBorderPrice;
 
-            // Criar um objeto para representar o item do carrinho
             const cartItem = {
-                id: Date.now(), // Usar timestamp como ID único
+                id: Date.now(),
                 size: pizzaSize,
                 border: pizzaBorder,
-                flavors: pizzaFlavors, // Enviar como array
-                price: totalPrice
+                flavors: pizzaFlavors,
+                price: totalPrice,
+                quantity: 1
             };
 
-            // Adicionar o item ao carrinho
             cartItems.push(cartItem);
 
-            // Criar o elemento li para exibir no carrinho
             const li = document.createElement('li');
             li.textContent = `Pizza ${pizzaSize} com borda ${pizzaBorder}, sabores: ${pizzaFlavors.join(', ')}, Preço: R$ ${totalPrice.toFixed(2)}`;
 
-            const botaoMenos = '<button><img class="ml-4" src="./assets/menos.png"></button>';
-            const inputQtde = '<input id=qtdeItem class="ml-2 w-5" type=text size=2 maxlength=2>';
-            const botaoMais = '<button><img class="ml-2" src="./assets/mais.png"></button>';
+            const botaoMenos = document.createElement('button');
+            botaoMenos.innerHTML = '<img class="ml-4" src="./assets/menos.png">';
+            const inputQtde = document.createElement('input');
+            inputQtde.className = 'ml-2 w-5';
+            inputQtde.type = 'text';
+            inputQtde.size = 2;
+            inputQtde.maxLength = 2;
+            inputQtde.value = 1;
+            const botaoMais = document.createElement('button');
+            botaoMais.innerHTML = '<img class="ml-2" src="./assets/mais.png">';
 
-            // Atualizar o total acumulado
+            botaoMenos.addEventListener('click', function () {
+                if (cartItem.quantity > 1) {
+                    cartItem.quantity -= 1;
+                    inputQtde.value = cartItem.quantity;
+                    totalCartPrice -= cartItem.price;
+                    totalPriceElement.textContent = `Total: R$ ${totalCartPrice.toFixed(2)}`;
+                } else {
+                    totalCartPrice -= cartItem.price;
+                    totalPriceElement.textContent = `Total: R$ ${totalCartPrice.toFixed(2)}`;
+                    cartItems = cartItems.filter(item => item.id !== cartItem.id);
+                    li.remove();
+                    cartCounter.innerHTML = cartItems.length;
+                }
+            });
+
+            botaoMais.addEventListener('click', function () {
+                cartItem.quantity += 1;
+                inputQtde.value = cartItem.quantity;
+                totalCartPrice += cartItem.price;
+                totalPriceElement.textContent = `Total: R$ ${totalCartPrice.toFixed(2)}`;
+            });
+
+            inputQtde.addEventListener('input', function () {
+                const newQuantity = parseInt(inputQtde.value);
+                if (!isNaN(newQuantity) && newQuantity > 0) {
+                    const difference = newQuantity - cartItem.quantity;
+                    cartItem.quantity = newQuantity;
+                    totalCartPrice += difference * cartItem.price;
+                    totalPriceElement.textContent = `Total: R$ ${totalCartPrice.toFixed(2)}`;
+                } else if (newQuantity === 0) {
+                    totalCartPrice -= cartItem.quantity * cartItem.price;
+                    totalPriceElement.textContent = `Total: R$ ${totalCartPrice.toFixed(2)}`;
+                    cartItems = cartItems.filter(item => item.id !== cartItem.id);
+                    li.remove();
+                    cartCounter.innerHTML = cartItems.length;
+                } else {
+                    inputQtde.value = cartItem.quantity;
+                }
+            });
+
             totalCartPrice += totalPrice;
 
-            // Exibir o total acumulado
             totalPriceElement.textContent = `Total: R$ ${totalCartPrice.toFixed(2)}`;
 
-            // Adicionar o item ao carrinho na interface do usuário
-            li.innerHTML += botaoMenos;
-            li.innerHTML += inputQtde;
-            li.innerHTML += botaoMais;
+            li.appendChild(botaoMenos);
+            li.appendChild(inputQtde);
+            li.appendChild(botaoMais);
             document.getElementById('cartItems').appendChild(li);
 
-            cartCounter.innerHTML = cartItems.length;
-
-            // Resetar seleção
             resetSelection();
             console.log("Itens do carrinho", cartItems);
-
-
+            alertAdd();
         } else {
             alert('Por favor, selecione pelo menos um sabor.');
         }
     });
 
+    function alertAdd() {
+        Toastify({
+            text: `Pizza adicionada ao carrinho!`,
+            duration: 3000,
+            close: true,
+            gravity: "top",
+            position: "left",
+            backgroundColor: "linear-gradient(to right, #3256a8, #3e9cab)",
+            className: "info",
+            stopOnFocus: true
+        }).showToast();
+    }
+
     function resetSelection() {
         step3.classList.add('hidden');
         step1.classList.remove('hidden');
+        step4.classList.remove('hidden');
         pizzaSize = '';
         pizzaSizePrice = 0;
         pizzaBorder = '';
@@ -153,10 +191,10 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('backToStep2').classList.add('hidden');
     }
 
-    // Botões para voltar
     document.getElementById('backToStep1').addEventListener('click', function () {
         step2.classList.add('hidden');
         step1.classList.remove('hidden');
+        step4.classList.remove('hidden');
         this.classList.add('hidden');
     });
 
@@ -167,34 +205,21 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.getElementById('finalizeSale').addEventListener('click', function () {
-        // Converter os detalhes do carrinho para uma string JSON
         const cartItemsJSON = JSON.stringify(cartItems);
 
-        // Adicionar os detalhes do carrinho ao campo hidden do formulário
         document.getElementById('cartItems').value = cartItemsJSON;
     });
 
     document.getElementById('finalizeSale').addEventListener('click', function (event) {
-        event.preventDefault(); // Evitar envio automático do formulário
+        event.preventDefault();
 
-        // Adicionar inputs para cada item do cartItems
         const cartInputs = document.getElementById('cartInputs');
-        cartInputs.innerHTML = ''; // Limpar inputs existentes
-
+        cartInputs.innerHTML = '';
         cartItems.forEach((item, index) => {
-            // Adicionar inputs para cada atributo do item
             for (const key in item) {
                 if (item.hasOwnProperty(key)) {
-                    // Incluir o ID da bebida se o atributo for 'bebidaId'
-                    if (key === "bebidaId") {
-                        const inputBebidaId = document.createElement('input');
-                        inputBebidaId.type = 'hidden';
-                        inputBebidaId.name = `cartItems[${index}][${key}]`;
-                        inputBebidaId.value = item[key];
-                        cartInputs.appendChild(inputBebidaId);
-                    } else if (key === "flavors") {
+                    if (key === "flavors") {
                         item[key].forEach((flavor, flavorIndex) => {
-                            // Criar inputs para os sabores (caso existam)
                             const input = document.createElement('input');
                             input.type = 'hidden';
                             input.name = `cartItems[${index}][${key}][${flavorIndex}]`;
@@ -202,7 +227,6 @@ document.addEventListener('DOMContentLoaded', function () {
                             cartInputs.appendChild(input);
                         });
                     } else {
-                        // Criar inputs para outros atributos do item
                         const input = document.createElement('input');
                         input.type = 'hidden';
                         input.name = `cartItems[${index}][${key}]`;
@@ -213,36 +237,35 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // Adicionar input para o preço total usando totalCartPrice
         const totalPriceInput = document.createElement('input');
         totalPriceInput.type = 'hidden';
         totalPriceInput.name = 'total_price';
-        totalPriceInput.value = totalCartPrice.toFixed(2); // Usando totalCartPrice
+        totalPriceInput.value = totalCartPrice.toFixed(2);
         cartInputs.appendChild(totalPriceInput);
 
         console.log('Dados do formulário:', cartInputs);
 
-        // Submeter o formulário
-        document.querySelector('form').submit();
+        document.getElementById('cartForm').submit();
     });
+
 
     const urlParams = new URLSearchParams(window.location.search);
     const status = urlParams.get('status');
     const message = urlParams.get('message');
 
     if (status && message) {
-        let backgroundColor = "#10B981"; // Verde para sucesso
+        let backgroundColor = "#10B981";
         if (status === 'error') {
-            backgroundColor = "#EF4444"; // Vermelho para erro
+            backgroundColor = "#EF4444";
         }
 
         Toastify({
             text: decodeURIComponent(message.replace(/\+/g, ' ')),
             duration: 3000,
             close: true,
-            gravity: "top", // `top` or `bottom`
-            position: "right", // `left`, `center` or `right`
-            stopOnFocus: true, // Prevents dismissing of toast on hover
+            gravity: "top",
+            position: "right",
+            stopOnFocus: true,
             style: {
                 background: backgroundColor,
             },
@@ -329,61 +352,139 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelectorAll('.bebida-size button').forEach(button => {
         button.addEventListener('click', function () {
-            // Obtenha o id do botão pai (lata, 600ml, 2l, agua, cerveja)
             var parentId = this.parentNode.id;
-            // Encontre o div de opções correspondente com base no id do botão pai
             var optionsDiv = document.getElementById('options-' + parentId.substr(-1));
-            // Exiba as opções relacionadas a esse botão
             optionsDiv.classList.remove('hidden');
         });
     });
 
-    // Função para adicionar um item ao carrinho
     function addToCart(bebidaId, bebidaName, bebidaPrice) {
-        // Verificar se a bebida já está no carrinho
         const existingItem = cartItems.find(item => item.id === bebidaId);
 
         if (existingItem) {
-            // Se a bebida já está no carrinho, incrementar a quantidade
             existingItem.quantity++;
-            // Atualizar o texto do li existente no carrinho
             const existingLi = document.querySelector(`#cartItems li[data-id="${bebidaId}"]`);
-            existingLi.textContent = `${existingItem.nome} - R$${existingItem.preco.toFixed(2)} - ${existingItem.quantity}`;
+            existingLi.querySelector('.item-text').textContent = `${existingItem.nome} - R$${existingItem.preco.toFixed(2)}`;
         } else {
-            // Se a bebida não está no carrinho, adicionar como um novo item
             const item = {
                 id: bebidaId,
                 nome: bebidaName,
                 preco: parseFloat(bebidaPrice),
                 quantity: 1
             };
-            // Adicione o item ao carrinho
             cartItems.push(item);
             console.log(cartItems);
-            // Exiba o item no carrinho
             const li = document.createElement('li');
-            li.textContent = `${item.nome} - R$${item.preco.toFixed(2)} - ${item.quantity}`;
-            li.setAttribute('data-id', bebidaId); // Adicionar um atributo para identificação do item
+            li.setAttribute('data-id', bebidaId);
+
+            const itemText = document.createElement('span');
+            itemText.classList.add('item-text');
+            itemText.textContent = `${item.nome} - R$${item.preco.toFixed(2)}`;
+
+            const botaoMenos = document.createElement('button');
+            botaoMenos.innerHTML = '<img class="ml-4" src="./assets/menos.png">';
+            const inputQtde = document.createElement('input');
+            inputQtde.className = 'ml-2 w-5 text-center';
+            inputQtde.type = 'text';
+            inputQtde.size = 2;
+            inputQtde.maxLength = 2;
+            inputQtde.value = item.quantity;
+            const botaoMais = document.createElement('button');
+            botaoMais.innerHTML = '<img class="ml-2" src="./assets/mais.png">';
+
+            botaoMenos.addEventListener('click', function () {
+                if (item.quantity > 1) {
+                    item.quantity--;
+                    inputQtde.value = item.quantity;
+                    totalCartPrice -= item.preco;
+                    totalPriceElement.textContent = `Total: R$ ${totalCartPrice.toFixed(2)}`;
+                    itemText.textContent = `${item.nome} - R$${item.preco.toFixed(2)}`;
+                } else {
+                    totalCartPrice -= item.preco;
+                    totalPriceElement.textContent = `Total: R$ ${totalCartPrice.toFixed(2)}`;
+                    cartItems = cartItems.filter(cartItem => cartItem.id !== item.id);
+                    li.remove();
+                }
+            });
+
+            botaoMais.addEventListener('click', function () {
+                item.quantity++;
+                inputQtde.value = item.quantity;
+                totalCartPrice += item.preco;
+                totalPriceElement.textContent = `Total: R$ ${totalCartPrice.toFixed(2)}`;
+                itemText.textContent = `${item.nome} - R$${item.preco.toFixed(2)}`;
+            });
+
+            inputQtde.addEventListener('input', function () {
+                const newQuantity = parseInt(inputQtde.value);
+                if (!isNaN(newQuantity) && newQuantity > 0) {
+                    const difference = newQuantity - item.quantity;
+                    item.quantity = newQuantity;
+                    totalCartPrice += difference * item.preco;
+                    totalPriceElement.textContent = `Total: R$ ${totalCartPrice.toFixed(2)}`;
+                    itemText.textContent = `${item.nome} - R$${item.preco.toFixed(2)}`;
+                } else if (newQuantity === 0) {
+                    totalCartPrice -= item.quantity * item.preco;
+                    totalPriceElement.textContent = `Total: R$ ${totalCartPrice.toFixed(2)}`;
+                    cartItems = cartItems.filter(cartItem => cartItem.id !== item.id);
+                    li.remove();
+                } else {
+                    inputQtde.value = item.quantity;
+                }
+            });
+
+            li.appendChild(itemText);
+            li.appendChild(botaoMenos);
+            li.appendChild(inputQtde);
+            li.appendChild(botaoMais);
             document.getElementById('cartItems').appendChild(li);
         }
 
-        // Atualizar o preço total do carrinho
         totalCartPrice += parseFloat(bebidaPrice);
         totalPriceElement.textContent = `Total: R$ ${totalCartPrice.toFixed(2)}`;
 
-        cartCounter.innerHTML = cartItems.length;
+        alertAddBebida();
+
     }
 
-    // Adicione um evento de clique a todos os botões dentro dos elementos de opções
     document.querySelectorAll('[id^=options] button').forEach(button => {
         button.addEventListener('click', function () {
-            // Obtenha o ID, nome e preço da bebida deste botão usando os atributos de dados (data)
             var bebidaId = this.getAttribute('data-bebida-id');
             var bebidaName = this.getAttribute('data-bebida-name');
             var bebidaPrice = this.getAttribute('data-bebida-price');
-            // Adicione a bebida ao carrinho
             addToCart(bebidaId, bebidaName, bebidaPrice);
         });
+    })
+
+    function alertAddBebida() {
+        Toastify({
+            text: `Bebida adicionada ao carrinho!`,
+            duration: 3000,
+            close: true,
+            gravity: "top",
+            position: "left",
+            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+            className: "info",
+            stopOnFocus: true
+        }).showToast();
+    }
+
+
+    document.getElementById('cartForm').addEventListener('submit', function (event) {
+        const entregaOptions = document.getElementsByName('forma_entrega');
+        let entregaSelected = false;
+
+        for (let i = 0; i < entregaOptions.length; i++) {
+            if (entregaOptions[i].checked) {
+                entregaSelected = true;
+                break;
+            }
+        }
+
+        if (!entregaSelected) {
+            event.preventDefault();
+            alert('Por favor, selecione uma forma de entrega.');
+        }
     });
 });
 

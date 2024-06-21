@@ -15,18 +15,18 @@ document.addEventListener('DOMContentLoaded', function () {
     const message = urlParams.get('message');
 
     if (status && message) {
-        let backgroundColor = "#10B981"; // Verde para sucesso
+        let backgroundColor = "#10B981";
         if (status === 'error') {
-            backgroundColor = "#EF4444"; // Vermelho para erro
+            backgroundColor = "#EF4444";
         }
 
         Toastify({
             text: decodeURIComponent(message.replace(/\+/g, ' ')),
             duration: 3000,
             close: true,
-            gravity: "top", // `top` or `bottom`
-            position: "right", // `left`, `center` or `right`
-            stopOnFocus: true, // Prevents dismissing of toast on hover
+            gravity: "top",
+            position: "right",
+            stopOnFocus: true,
             style: {
                 background: backgroundColor,
             },

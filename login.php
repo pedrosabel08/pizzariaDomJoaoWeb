@@ -6,7 +6,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = htmlspecialchars(trim($_POST['email']));
     $senha = htmlspecialchars(trim($_POST['senha']));
 
-    // Buscar o cliente pelo email e senha
     $sql = "SELECT idclientes, nome FROM clientes WHERE email = ? AND senha = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $email, $senha);

@@ -27,23 +27,29 @@ include ("conexao.php");
 
 <body class="font-roboto">
 
-    <header class="w-full h-[420px] bg-orange-300">
-        <div class="p-2">
-            <button id="login" onclick="window.location.href='login.html'">
-                <i class="fa-solid fa-user"></i>
-                Login
-            </button>
-            <span id="greeting" style="display: none;">Olá, <span id="cliente-nome"></span></span>
-            <button onclick="window.location.href='login.html'" id="button-sair"
-                class="bg-red-500 hover:bg-red-700 text-white py-1 px-4 rounded focus:outline-none focus:shadow-outline ml-4 hidden">Sair</button>
+    <header class="w-full h-[420px] bg-orange-300 relative">
+        <div class="p-2 flex justify-between items-center">
+            <div>
+                <button id="login" onclick="window.location.href='login.html'">
+                    <i class="fa-solid fa-user"></i>
+                    Login
+                </button>
+                <span id="greeting" style="display: none;">Olá, <span id="cliente-nome"></span></span>
+                <button onclick="window.location.href='login.html'" id="button-sair"
+                    class="bg-red-500 hover:bg-red-700 text-white py-1 px-4 rounded focus:outline-none focus:shadow-outline ml-4 hidden">Sair</button>
+            </div>
+            <div class="absolute top-0 right-0 p-3" id="cart-container">
+                <button class="flex items-center gap-2 font-bold" id="cart-btn">
+                    <i class="fa fa-cart-plus text-3xl"></i>
+                    <span class="hidden">Carrinho</span>
+                </button>
+            </div>
         </div>
-        <div class=" w-full h-full flex flex-col justify-center items-center">
+        <div class="w-full h-full flex flex-col justify-center items-center">
             <img src="./assets/domJoao.jpg" alt="Logo" class="w-40 h-40 rounded-full shadow-lg hover:scale-110">
             <h1 class="text-3xl mt-4 mb-2 font-bold text-black">Pizzaria Dom João</h1>
-
             <a href="https://www.google.com/maps/search/?api=1&query=%27Rua%20Jo%C3%A3o%20Pessoa,%201726%20Sl%2004%20-%20Velha%20-%20Blumenau%20/%20SC%27"
                 class="text-black font-medium" target="blink">Rua João Pessoa, 1726 Sl 04 - Velha - Blumenau/SC</a>
-
             <div class="bg-green-500 px-4 py-1 rounded-lg mt-5" id="date-span">
                 <span class="text-white font-medium">Seg a Dom - 17:30 as 23:30</span>
             </div>
@@ -56,9 +62,8 @@ include ("conexao.php");
         <div id="step1" class="mb-8">
             <h2 class="text-2xl mb-4">Escolha o tamanho da pizza:</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <button
-                    class="pizza-size flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-red-500"
-                    data-size="Baby" data-sabores="1" data-price="29.90" data-id-size="2">
+                <button class="pizza-size flex items-center bg-white p-4 rounded-lg shadow-md" data-size="Baby"
+                    data-sabores="1" data-price="29.90" data-id-size="2">
                     <img src="./assets/pizzaBaby.jpg" alt="pizzaBaby" class="w-24 h-24 object-cover rounded-3xl mr-6">
                     <div class="text-left">
                         <p class="font-bold text-2xl mb-3">Baby</p>
@@ -66,9 +71,8 @@ include ("conexao.php");
                         <p class="text-[16px] text-red-700 font-medium">A partir de R$ 29,90</p>
                     </div>
                 </button>
-                <button
-                    class="pizza-size flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500"
-                    data-size="Média" data-sabores="2" data-price="58.90" data-id-size="3">
+                <button class="pizza-size flex items-center bg-white p-4 rounded-lg shadow-md" data-size="Média"
+                    data-sabores="2" data-price="58.90" data-id-size="3">
                     <img src="./assets/pizzaMedia.jpg" alt="pizzaMedia" class="w-24 h-24 object-cover rounded-3xl mr-6">
                     <div class="text-left">
                         <p class="font-bold text-2xl mb-3">Média</p>
@@ -76,9 +80,8 @@ include ("conexao.php");
                         <p class="text-[16px] text-red-700 font-medium">A partir de R$ 58,90</p>
                     </div>
                 </button>
-                <button
-                    class="pizza-size flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500"
-                    data-size="Grande" data-sabores="3" data-price="76.90" data-id-size="4">
+                <button class="pizza-size flex items-center bg-white p-4 rounded-lg shadow-md" data-size="Grande"
+                    data-sabores="3" data-price="76.90" data-id-size="4">
                     <img src="./assets/pizzaGrande.jpg" alt="pizzaGrande"
                         class="w-24 h-24 object-cover rounded-3xl mr-6">
                     <div class="text-left">
@@ -87,9 +90,8 @@ include ("conexao.php");
                         <p class="text-[16px] text-red-700 font-medium">A partir de R$ 76,90</p>
                     </div>
                 </button>
-                <button
-                    class="pizza-size flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500"
-                    data-size="Gigante" data-sabores="4" data-price="87.90" data-id-size="5">
+                <button class="pizza-size flex items-center bg-white p-4 rounded-lg shadow-md" data-size="Gigante"
+                    data-sabores="4" data-price="87.90" data-id-size="5">
                     <img src="./assets/pizzaGigante.jpg" alt="pizzaGigante"
                         class="w-24 h-24 object-cover rounded-3xl mr-6">
                     <div class="text-left">
@@ -109,58 +111,51 @@ include ("conexao.php");
                 </button>
                 <h2 class="text-2xl">Escolha os tipos de borda:</h2>
             </div>
-            <p id="selectedSizeStep2" class="text-lg mb-4"></p> <!-- Exibe o tamanho da pizza escolhida -->
+            <p id="selectedSizeStep2" class="text-lg mb-4"></p>
             <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-8">
-                <button
-                    class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
-                    data-border="Sem Borda" data-border-price="0" data-id-border="7">
+                <button class="pizza-border bg-white p-4 rounded-lg shadow-md text-center" data-border="Sem Borda"
+                    data-border-price="0" data-id-border="7">
                     <div>
                         <p>Sem borda</p>
                     </div>
                 </button>
-                <button
-                    class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
-                    data-border="Catupiry" data-border-price="10" data-id-border="1">
+                <button class="pizza-border bg-white p-4 rounded-lg shadow-md text-center" data-border="Catupiry"
+                    data-border-price="10" data-id-border="1">
                     <div>
                         <p>Catupiry</p>
                         <p class="text-red-500">+ R$10,00</p>
                     </div>
                 </button>
-                <button
-                    class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
-                    data-border="Cheddar" data-border-price="10" data-id-border="2">
+                <button class="pizza-border bg-white p-4 rounded-lg shadow-md text-center" data-border="Cheddar"
+                    data-border-price="10" data-id-border="2">
                     <div>
                         <p>Cheddar</p>
                         <p class="text-red-500">+ R$10,00</p>
                     </div>
                 </button>
-                <button
-                    class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
-                    data-border="Cream Cheese" data-border-price="10" data-id-border="3">
+                <button class="pizza-border bg-white p-4 rounded-lg shadow-md text-center" data-border="Cream Cheese"
+                    data-border-price="10" data-id-border="3">
                     <div>
                         <p>Cream Cheese</p>
                         <p class="text-red-500">+ R$10,00</p>
                     </div>
                 </button>
-                <button
-                    class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
-                    data-border="Chocolate preto" data-border-price="10" data-id-border="4">
+                <button class="pizza-border bg-white p-4 rounded-lg shadow-md text-center" data-border="Chocolate preto"
+                    data-border-price="10" data-id-border="4">
                     <div>
                         <p>Chocolate Preto</p>
                         <p class="text-red-500">+ R$10,00</p>
                     </div>
                 </button>
-                <button
-                    class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
+                <button class="pizza-border bg-white p-4 rounded-lg shadow-md text-center"
                     data-border="Chocolate branco" data-border-price="10" data-id-border="5">
                     <div>
                         <p>Chocolate Branco</p>
                         <p class="text-red-500">+ R$10,00</p>
                     </div>
                 </button>
-                <button
-                    class="pizza-border bg-white p-4 rounded-lg shadow-md text-center hover:border-solid hover:border-2 hover:border-red-500"
-                    data-border="Doce de Leite" data-border-price="10" data-id-border="6">
+                <button class="pizza-border bg-white p-4 rounded-lg shadow-md text-center" data-border="Doce de Leite"
+                    data-border-price="10" data-id-border="6">
                     <div>
                         <p>Doce de leite</p>
                         <p class="text-red-500">+ R$10,00</p>
@@ -177,13 +172,11 @@ include ("conexao.php");
                 </button>
                 <h2 class="text-2xl">Escolha os sabores da pizza:</h2>
             </div>
-            <p id="selectedSizeStep3" class="text-lg mb-2"></p> <!-- Exibe o tamanho da pizza escolhido -->
-            <p id="selectedBorderStep3" class="text-lg mb-4"></p> <!-- Exibe a borda da pizza escolhida -->
-            <!-- Pizzas Salgadas -->
+            <p id="selectedSizeStep3" class="text-lg mb-2"></p>
+            <p id="selectedBorderStep3" class="text-lg mb-4"></p>
             <h3 class="text-xl mb-2 mt-10">Pizzas Salgadas:</h3>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 <?php
-                // Consulta ao banco de dados para recuperar as pizzas salgadas
                 $sql = "SELECT p.idpizzas, p.nomePizza, GROUP_CONCAT(pr.nomeProduto SEPARATOR ', ') AS ingredientes
                 FROM pizzas p
                 JOIN pizzas_produtos pp ON p.idpizzas = pp.pizza_id
@@ -193,7 +186,6 @@ include ("conexao.php");
                 $result = $conn->query($sql);
 
                 if ($result->num_rows > 0) {
-                    // Saída dos dados de cada linha
                     while ($row = $result->fetch_assoc()) {
                         ?>
                         <button class="pizza-flavor bg-white p-4 rounded-lg shadow-md text-center"
@@ -210,11 +202,9 @@ include ("conexao.php");
                 ?>
             </div>
 
-            <!-- Pizzas Doces -->
             <h3 class="text-xl mb-2 mt-10">Pizzas Doces:</h3>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 <?php
-                // Consulta ao banco de dados para recuperar as pizzas doces
                 $sql = "SELECT p.idpizzas, p.nomePizza, GROUP_CONCAT(pr.nomeProduto SEPARATOR ', ') AS ingredientes
                 FROM pizzas p
                 JOIN pizzas_produtos pp ON p.idpizzas = pp.pizza_id
@@ -224,7 +214,6 @@ include ("conexao.php");
                 $result = $conn->query($sql);
 
                 if ($result->num_rows > 0) {
-                    // Saída dos dados de cada linha
                     while ($row = $result->fetch_assoc()) {
                         ?>
                         <button class="pizza-flavor bg-white p-4 rounded-lg shadow-md text-center"
@@ -239,25 +228,19 @@ include ("conexao.php");
                     echo "<p class='col-span-4'>Nenhuma pizza doce encontrada.</p>";
                 }
 
-                // Fechar a conexão
                 $conn->close();
                 ?>
             </div>
 
-            <div class="flex mt-4 mb-10">
-                <button id="stepBebidas" class="bg-blue-500 text-white p-4 rounded-lg mr-4">Bebidas</button>
-                <button id="addToCart" class=" bg-green-500 text-white p-4 rounded-lg">Adicionar ao Carrinho</button>
-            </div>
+            <button id="addToCart" class=" bg-green-500 text-white p-4 rounded-lg mt-6">Adicionar ao Carrinho</button>
         </div>
-        <!-- Step 4: Bebidas -->
 
-        <div class="mb-12">
+        <!-- Step 4: Bebidas -->
+        <div class="mb-12" id="step4">
             <h2 class="text-2xl mb-4">Escolha a bebida:</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
                 <div>
-                    <button
-                        class="bebida-size flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500 w-full"
-                        id="lata">
+                    <button class="bebida-size flex items-center bg-white p-4 rounded-lg shadow-md w-full" id="lata">
                         <img src="./assets/Refrigerante.jpg" alt="lata" class="w-24 h-24 object-cover rounded-3xl mr-6">
                         <div class="text-left">
                             <p>Refrigerante Lata</p>
@@ -280,9 +263,7 @@ include ("conexao.php");
                 </div>
 
                 <div>
-                    <button
-                        class="bebida-size flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500 w-full"
-                        id="600ml">
+                    <button class="bebida-size flex items-center bg-white p-4 rounded-lg shadow-md w-full" id="600ml">
                         <img src="./assets/Refrigerante600.jfif" alt="600ml"
                             class="w-24 h-24 object-cover rounded-3xl mr-6">
                         <div class="text-left">
@@ -304,9 +285,7 @@ include ("conexao.php");
                 </div>
 
                 <div>
-                    <button
-                        class="bebida-size flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500 w-full"
-                        id="2l">
+                    <button class="bebida-size flex items-center bg-white p-4 rounded-lg shadow-md w-full" id="2l">
                         <img src="./assets/Refrigerante2lt.jpg" alt="2l"
                             class="w-24 h-24 object-cover rounded-3xl mr-6">
                         <div class="text-left">
@@ -333,9 +312,7 @@ include ("conexao.php");
                 </div>
 
                 <div>
-                    <button
-                        class="bebida-size flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500 w-full"
-                        id="agua">
+                    <button class="bebida-size flex items-center bg-white p-4 rounded-lg shadow-md w-full" id="agua">
                         <img src="./assets/agua.jpg" alt="agua" class="w-24 h-24 object-cover rounded-3xl mr-6">
                         <div class="text-left">
                             <p>Água</p>
@@ -356,9 +333,7 @@ include ("conexao.php");
                 </div>
 
                 <div>
-                    <button
-                        class="bebida-size flex items-center bg-white p-4 rounded-lg shadow-md hover:border-solid hover:border-2 hover:border-red-500 w-full"
-                        id="cerveja">
+                    <button class="bebida-size flex items-center bg-white p-4 rounded-lg shadow-md w-full" id="cerveja">
                         <img src="./assets/longneck.png" alt="cerveja" class="w-24 h-24 object-cover rounded-3xl mr-6">
                         <div class="text-left">
                             <p>Cerveja Longneck</p>
@@ -383,25 +358,25 @@ include ("conexao.php");
     </div>
     <div class="bg-black/50 w-full h-full fixed top-0 left-0 z-[99] items-center justify-center hidden" id="cart-modal">
         <div class="bg-white p-5 rounded-md min-w-[90%] md:min-w-[600px]">
-            <form action="finalizar_venda.php" method="post">
+            <form id="cartForm" action="finalizar_venda.php" method="post">
                 <div id="cart" class="mt-8">
                     <h2 class="text-2xl mb-4">Carrinho:</h2>
                     <ul id="cartItems" class="list-disc pl-6"></ul>
-                    <!-- Inputs para cada item do carrinho -->
                     <div id="cartInputs"></div>
                     <div id="total-price" class="font-bold text-green-700 mt-4"></div>
                     <input type="hidden" name="cliente_id" id="cliente_id">
 
                     <div class="mt-4">
                         <h3 class="text-xl mb-2">Forma de Entrega:</h3>
-                        <input type="radio" id="retirada" name="forma_entrega" value="1" required>
+                        <input type="radio" id="retirada" name="forma_entrega" value="1">
                         <label for="retirada">Retirada</label><br>
-                        <input type="radio" id="entrega" name="forma_entrega" value="2" required>
+                        <input type="radio" id="entrega" name="forma_entrega" value="2">
                         <label for="entrega">Entrega</label>
 
                         <div id="enderecoEntrega" class="mt-4 hidden">
                             <h3 class="text-lg mb-2">CEP:</h3>
-                            <input class="border-black border w-20 pl-1" onkeyup="buscaEndereco(this.value);" type="number" id="cep" name="cep" required>
+                            <input class="border-black border w-20 pl-1" onkeyup="buscaEndereco(this.value);"
+                                type="number" id="cep" name="cep" required>
                         </div>
                         <div style="display:flex;">
                             <div id="bairroEntrega" class="mt-4 hidden">
@@ -419,7 +394,8 @@ include ("conexao.php");
                         </div>
                         <div id="complementoEntrega" class="mt-4 hidden">
                             <h3 class="text-lg mb-2">Complemento</h3>
-                            <input class="border-black border w-2/3 pl-1" type="text" maxlength="45" id="complemento" name="complemento">
+                            <input class="border-black border w-2/3 pl-1" type="text" maxlength="45" id="complemento"
+                                name="complemento">
                         </div>
                     </div>
 
@@ -434,14 +410,10 @@ include ("conexao.php");
         </div>
     </div>
 
-    <footer class="w-full bg-red-500 py-3 fixed bottom-0 z-40 flex items-center justify-center">
-        <button class="flex items-center gap-2 text-white font-bold" id="cart-btn">
-            (<span id="cart-count">0</span>)
-            Carrinho
-            <i class="fa fa-cart-plus text-lg text-white"></i>
-        </button>
+    <footer class="bg-gray-300 flex items-center flex-col py-2">
+        <p class="font-medium text-sm">Desenvolvido por Arthur, Pedro e Vitor</p>
+        <p class="font-medium text-sm">SENAI-SC </p>
     </footer>
-
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="script.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
