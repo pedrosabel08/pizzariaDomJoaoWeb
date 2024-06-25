@@ -64,6 +64,20 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("Nenhuma linha selecionada para alterar.");
         }
     });
+
+        const lowStockThreshold = 100;
+        const rows = document.querySelectorAll('#tabelaEstoque .linha-tabela');
+
+        rows.forEach(row => {
+            const quantityCell = row.cells[1];
+            const quantity = parseInt(quantityCell.textContent);
+
+            if (quantity <= lowStockThreshold) {
+                row.classList.add('low-stock');
+            } else {
+                row.classList.add('normal-stock');
+            }
+        });
 });
 
 function filterTable() {

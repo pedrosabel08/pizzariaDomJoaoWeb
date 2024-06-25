@@ -191,10 +191,17 @@ table {
 }
 
 footer {
-    position: fixed;
-    bottom: 0;
     width: 100%;
     padding-left: 10px;
+    padding: 5px;
     background-color: #000000;
     color: #ffffff;
+}
+
+.low-stock {
+    background-color: #ffce48;
+}
+
+.normal-stock {
+    background-color: white;
 }
