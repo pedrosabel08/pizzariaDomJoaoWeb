@@ -796,7 +796,7 @@ BEGIN
     INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (3, 'Alho Frito', '500', 1, '2025-05-20');
 
     -- Óleo
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (4, 'Óleo', '10', 2, '2025-05-20');
+    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (4, 'Óleo', '10000', 2, '2025-05-20');
 
     -- Orégano
     INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (5, 'Orégano', '2000', 1, '2025-05-20');
@@ -1032,7 +1032,7 @@ CREATE DEFINER=`root`@`localhost` FUNCTION `inserirUnidadeMedida`() RETURNS int(
     DETERMINISTIC
 BEGIN
 	INSERT INTO unidademedida (idunidademedida, nome) VALUES (1, 'Gramas');
-	INSERT INTO unidademedida (idunidademedida, nome) VALUES (2, 'Litros');
+	INSERT INTO unidademedida (idunidademedida, nome) VALUES (2, 'ML');
 
 RETURN 1;
 END$$

@@ -1,4 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
+
+    const tabelaEstoque = document.getElementById('tabelaEstoque');
+    const linhasTabela2 = tabelaEstoque.querySelectorAll('tr.linha-tabela');
+
+    linhasTabela2.forEach(linha => {
+        const tdQuantidade = linha.querySelector('td:nth-child(2)');
+        if (tdQuantidade.textContent === "500") {
+          console.log(linha);
+          linha.style.backgroundColor = '#f7f1cd';        }
+      });
     var linhasTabela = document.querySelectorAll(".linha-tabela");
 
     linhasTabela.forEach(function (linha) {
@@ -65,19 +75,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-        const lowStockThreshold = 100;
-        const rows = document.querySelectorAll('#tabelaEstoque .linha-tabela');
+    const lowStockThreshold = 100;
+    const rows = document.querySelectorAll('#tabelaEstoque .linha-tabela');
 
-        rows.forEach(row => {
-            const quantityCell = row.cells[1];
-            const quantity = parseInt(quantityCell.textContent);
+    rows.forEach(row => {
+        const quantityCell = row.cells[1];
+        const quantity = parseInt(quantityCell.textContent);
 
-            if (quantity <= lowStockThreshold) {
-                row.classList.add('low-stock');
-            } else {
-                row.classList.add('normal-stock');
-            }
-        });
+        if (quantity <= lowStockThreshold) {
+            row.classList.add('low-stock');
+        } else {
+            row.classList.add('normal-stock');
+        }
+    });
 });
 
 function filterTable() {

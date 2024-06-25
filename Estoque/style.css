@@ -46,7 +46,9 @@ main .tabela {
     align-items: flex-start;
     width: 100%;
     max-width: 80%;
+    height: 80vh;
     margin: 0 auto;
+    margin-bottom: 50px;
 }
 
 table {
@@ -55,7 +57,6 @@ table {
 }
 
 .table-wrapper {
-    max-height: 713px;
     overflow-y: auto;
     width: 100%;
 }
