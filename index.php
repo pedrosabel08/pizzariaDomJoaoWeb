@@ -359,38 +359,36 @@ include ("conexao.php");
     <div class="bg-black/50 w-full h-full fixed top-0 left-0 z-[99] items-center justify-center hidden" id="cart-modal">
         <div class="bg-white p-5 rounded-md min-w-[90%] md:min-w-[600px]">
             <form id="cartForm" action="finalizar_venda.php" method="post">
-                <div id="cart" class="mt-8">
-                    <h2 class="text-2xl mb-4">Carrinho:</h2>
+                <div id="cart" class="mt-2">
+                    <h2 class="text-2xl mb-2">Carrinho:</h2>
                     <ul id="cartItems" class="list-disc pl-6"></ul>
                     <div id="cartInputs"></div>
                     <div id="total-price" class="font-bold text-green-700 mt-4"></div>
                     <input type="hidden" name="cliente_id" id="cliente_id">
 
-                    <div class="mt-4">
+                    <div class="mt-2">
                         <h3 class="text-xl mb-2">Forma de Entrega:</h3>
                         <input type="radio" id="retirada" name="forma_entrega" value="1">
                         <label for="retirada">Retirada</label><br>
                         <input type="radio" id="entrega" name="forma_entrega" value="2">
                         <label for="entrega">Entrega</label>
 
-                        <div id="enderecoEntrega" class="mt-4 hidden">
+                        <div id="enderecoEntrega" class="mt-2 hidden">
                             <h3 class="text-lg mb-2">CEP:</h3>
                             <input class="border-black border w-20 pl-1" onkeyup="buscaEndereco(this.value);"
-                                type="number" id="cep" name="cep" required>
+                            type="number" id="cep" name="cep" required>
                         </div>
-                        <div style="display:flex;">
-                            <div id="bairroEntrega" class="mt-4 hidden">
-                                <h3 class="text-lg mb-2">Bairro</h3>
-                                <input class="border-black border w-30 pl-1" type="text" id="bairro" name="bairro">
-                            </div>
-                            <div id="ruaEntrega" class="mt-4 ml-4 hidden">
-                                <h3 class="text-lg mb-2">Rua</h3>
-                                <input class="border-black border w-30 pl-1" type="text" id="rua" name="rua">
-                            </div>
-                            <div id="numeroEntrega" class="mt-4 ml-4 hidden">
-                                <h3 class="text-lg mb-2">N°</h3>
-                                <input class="border-black border w-14 pl-1" type="number" id="numero" name="numero">
-                            </div>
+                        <div id="bairroEntrega" class="mt-2 hidden">
+                            <h3 class="text-lg mb-2">Bairro</h3>
+                            <input class="border-black border w-30 pl-1" type="text" id="bairro" name="bairro">
+                        </div>
+                        <div id="ruaEntrega" class="mt-2 hidden">
+                            <h3 class="text-lg mb-2">Rua</h3>
+                            <input class="border-black border w-30 pl-1" type="text" id="rua" name="rua">
+                        </div>
+                        <div id="numeroEntrega" class="mt-2 hidden">
+                            <h3 class="text-lg mb-2">N°</h3>
+                            <input class="border-black border w-14 pl-1" type="number" id="numero" name="numero">
                         </div>
                         <div id="complementoEntrega" class="mt-4 hidden">
                             <h3 class="text-lg mb-2">Complemento</h3>
