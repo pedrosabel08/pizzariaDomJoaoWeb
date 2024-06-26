@@ -1,14 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-
-    const tabelaEstoque = document.getElementById('tabelaEstoque');
-    const linhasTabela2 = tabelaEstoque.querySelectorAll('tr.linha-tabela');
-
-    linhasTabela2.forEach(linha => {
-        const tdQuantidade = linha.querySelector('td:nth-child(2)');
-        if (tdQuantidade.textContent === "500") {
-          console.log(linha);
-          linha.style.backgroundColor = '#f7f1cd';        }
-      });
     var linhasTabela = document.querySelectorAll(".linha-tabela");
 
     linhasTabela.forEach(function (linha) {
@@ -75,14 +65,109 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    const lowStockThreshold = 100;
+    const quantidade = {
+        'Temperos': {
+            'Molho de tomate': 18000,
+            'Alho': 300,
+            'Alho Frito': 1500,
+            'Orégano': 600,
+            'Manjericão': 300,
+            'Molho de pimenta': 1500,
+            'Pimenta biquinho': 600,
+            'Canela': 300,
+            'Geleia de pimenta': 900
+        },
+        'Queijos': {
+            'Queijo Mussarela': 45000,
+            'Parmesão': 6000,
+            'Catupiry': 4500,
+            'Provolone': 3000,
+            'Cream Cheese': 1500,
+            'Cheddar': 1500,
+            'Queijo brie': 1500,
+            'Gorgonzola': 1500
+        },
+        'Carnes': {
+            'Bacon': 6000,
+            'Carne Moída': 9000,
+            'Calabresa': 15000,
+            'Chester': 3000,
+            'Frango': 15000,
+            'Lombo': 6000,
+            'Peito de Peru': 4500,
+            'Presunto': 9000,
+            'Salame Italiano': 3000,
+            'Pepperoni': 6000,
+            'Coração': 3000,
+            'Tiras de Carne': 6000,
+            'Linguiça Blumenau': 3000,
+            'Strogonoff de carne': 3000,
+            'Strogonoff de frango': 3000,
+            'Camarão': 1500,
+            'Mignon': 1500,
+            'Filé': 1500,
+            'Carne seca desfiada': 1500,
+            'Costelinha suína desfiada': 1500
+        },
+        'Enlatados': {
+            'Atum': 4500,
+            'Milho': 300,
+            'Palmito': 3000,
+            'Azeitona': 1500,
+            'Azeitonas pretas': 1500,
+            'Champignon': 1500
+        },
+        'Vegetais': {
+            'Cebola': 6000,
+            'Brócolis': 3000,
+            'Tomate': 15000,
+            'Tomate seco': 3000,
+            'Rúcula': 1500,
+            'Morango': 1500,
+            'Banana': 1500,
+            'Cereja': 1500
+        },
+        'Outros': {
+            'Óleo': 3000,
+            'Barbecue': 3000,
+            'Creme de Leite': 6000,
+            'Doritos': 1500,
+            'Granulado': 600,
+            'Confetti': 600,
+            'Creme de coco': 1500,
+            'Goiabada': 1500,
+            'Sonho de valsa': 1500,
+            'Capuccino': 1500,
+            'Doce de leite': 1500,
+            'Amendoim': 1500,
+            'Coco ralado': 1500,
+            'Marshmallow': 1500,
+            'Leite Condensado': 6000,
+            'Chocolate Preto': 3000,
+            'Chocolate Branco': 3000
+        }
+    };
+
     const rows = document.querySelectorAll('#tabelaEstoque .linha-tabela');
 
     rows.forEach(row => {
         const quantityCell = row.cells[1];
         const quantity = parseInt(quantityCell.textContent);
+        const productName = row.cells[0].textContent.trim();
+        let category = '';
 
-        if (quantity <= lowStockThreshold) {
+        // Encontra a categoria do produto
+        for (const cat in quantidade) {
+            if (quantidade[cat].hasOwnProperty(productName)) {
+                category = cat;
+                break;
+            }
+        }
+
+        const quantidadeTotal = quantidade[category][productName];
+        const percentagemAtual = (quantity / quantidadeTotal) * 100;
+
+        if (percentagemAtual <= 20) {
             row.classList.add('low-stock');
         } else {
             row.classList.add('normal-stock');
