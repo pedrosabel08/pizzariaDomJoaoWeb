@@ -144,7 +144,9 @@ document.addEventListener("DOMContentLoaded", function () {
             'Marshmallow': 1500,
             'Leite Condensado': 6000,
             'Chocolate Preto': 3000,
-            'Chocolate Branco': 3000
+            'Chocolate Branco': 3000,
+            'Batata Palha': 800,
+            'Ovo': 3000
         }
     };
 

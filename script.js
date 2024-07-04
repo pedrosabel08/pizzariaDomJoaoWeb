@@ -255,12 +255,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 position: "right", // `left`, `center` or `right`
                 stopOnFocus: true, // Prevents dismissing of toast on hover
                 style: {
-                  background: "#ef4444",
+                    background: "#ef4444",
                 },
-              }).showToast();
+            }).showToast();
             return;
         }
-        if(clienteId === null) {
+        if (clienteId === null) {
             Toastify({
                 text: "Faça login ou cadastro para realizar o pedido",
                 duration: 3000,
@@ -269,9 +269,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 position: "right", // `left`, `center` or `right`
                 stopOnFocus: true, // Prevents dismissing of toast on hover
                 style: {
-                  background: "#ef4444",
+                    background: "#ef4444",
                 },
-              }).showToast();
+            }).showToast();
             return;
         }
 
@@ -516,8 +516,24 @@ document.addEventListener('DOMContentLoaded', function () {
             alert('Por favor, selecione uma forma de entrega.');
         }
     });
+    
+    document.getElementById('cartForm').addEventListener('submit', function (event) {
 
+        const pagamentoOptions = document.getElementsByName('forma_pagamento');
+        let pagamentoSelected = false;
 
+        for (let i = 0; i < pagamentoOptions.length; i++) {
+            if (pagamentoOptions[i].checked) {
+                pagamentoSelected = true;
+                break;
+            }
+        }
+
+        if (!pagamentoSelected) {
+            event.preventDefault();
+            alert('Por favor, selecione uma forma de pagamento.');
+        }
+    });
 });
 
 function checkRestaurantOpen() {

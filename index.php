@@ -368,15 +368,19 @@ include ("conexao.php");
 
                     <div class="mt-2">
                         <h3 class="text-xl mb-2">Forma de Entrega:</h3>
-                        <input type="radio" id="retirada" name="forma_entrega" value="1">
-                        <label for="retirada">Retirada</label><br>
-                        <input type="radio" id="entrega" name="forma_entrega" value="2">
-                        <label for="entrega">Entrega</label>
+                        <div class="flex items-center mb-2">
+                            <input type="radio" id="retirada" name="forma_entrega" value="1">
+                            <label for="retirada" class="ml-2">Retirada</label>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <input type="radio" id="entrega" name="forma_entrega" value="2">
+                            <label for="entrega" class="ml-2">Entrega</label>
+                        </div>
 
                         <div id="enderecoEntrega" class="mt-2 hidden">
                             <h3 class="text-lg mb-2">CEP:</h3>
                             <input class="border-black border w-20 pl-1" onkeyup="buscaEndereco(this.value);"
-                            type="number" id="cep" name="cep" required>
+                                type="number" id="cep" name="cep" required>
                         </div>
                         <div id="bairroEntrega" class="mt-2 hidden">
                             <h3 class="text-lg mb-2">Bairro</h3>
@@ -397,6 +401,25 @@ include ("conexao.php");
                         </div>
                     </div>
 
+                    <div class="mt-2">
+                        <h3 class="text-xl mb-2">Forma de pagamento:</h3>
+                        <div class="flex items-center mb-2">
+                            <input type="radio" id="pix" name="forma_pagamento" value="1">
+                            <label for="pix" class="ml-2">Pix</label>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <input type="radio" id="debito" name="forma_pagamento" value="2">
+                            <label for="debito" class="ml-2">Cartão de débito</label>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <input type="radio" id="credito" name="forma_pagamento" value="3">
+                            <label for="credito" class="ml-2">Cartão de crédito</label>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <input type="radio" id="dinheiro" name="forma_pagamento" value="4">
+                            <label for="dinheiro" class="ml-2">Dinheiro</label>
+                        </div>
+                    </div>
                     <div class="flex items-center justify-between mt-5 w-full mr-14">
                         <button id="close-modal-btn" type="button"
                             class="bg-red-500 text-white px-4 py-1 rounded">Fechar</button>

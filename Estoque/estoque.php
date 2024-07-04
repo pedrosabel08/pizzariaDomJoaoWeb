@@ -74,6 +74,23 @@ $conn->close();
                         </tr>
                     <?php endforeach; ?>
                 </table>
+
+                <table id="tabelaBebida">
+                    <tr>
+                        <th>Nome do Produto</th>
+                        <th>Quantidade</th>
+                        <th class="unidadeMedida">Unidade Medida</th>
+                        <th>Validade</th>
+                    </tr>
+                    <?php foreach ($data as $produto): ?>
+                        <tr class="linha-tabela" data-id="<?php echo $produto['idprodutos']; ?>">
+                            <td><?php echo $produto['nomeProduto']; ?></td>
+                            <td><?php echo $produto['quantidade']; ?></td>
+                            <td><?php echo $produto['unidadeMedida']; ?></td>
+                            <td><?php echo $produto['validade']; ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
             </div>
         </div>
         <div class="inserir">
@@ -125,9 +142,6 @@ $conn->close();
             </div>
         </div>
     </main>
-    <footer>
-        <p>&copy; Arthur, Pedro e Vitor</p>
-    </footer>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="script.js"></script>
 </body>

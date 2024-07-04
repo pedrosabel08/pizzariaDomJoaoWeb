@@ -1,11 +1,11 @@
 <?php
 include ("conexao.php");
 
-function inserirVenda($conn, $formaEntregaId, $total, $clienteId, $enderecoId)
+function inserirVenda($conn, $formaEntregaId, $total, $clienteId, $enderecoId, $formaPagamentoId)
 {
-    $sql = "INSERT INTO vendas (forma_entrega_id, total, data_venda, cliente_id, endereco_id) VALUES (?, ?, NOW(), ?, ?)";
+    $sql = "INSERT INTO vendas (forma_entrega_id, total, data_venda, cliente_id, endereco_id, forma_pagamento_id) VALUES (?, ?, NOW(), ?, ?, ?)";
     if ($stmt = mysqli_prepare($conn, $sql)) {
-        mysqli_stmt_bind_param($stmt, "idii", $formaEntregaId, $total, $clienteId, $enderecoId);
+        mysqli_stmt_bind_param($stmt, "idiii", $formaEntregaId, $total, $clienteId, $enderecoId, $formaPagamentoId);
         if (mysqli_stmt_execute($stmt)) {
             return mysqli_insert_id($conn);
         } else {
@@ -40,11 +40,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $totalPrice = $_POST["total_price"];
         $formaEntregaId = $_POST["forma_entrega"];
         $clienteId = $_POST["cliente_id"];
-        echo $cliente_id;
         $bairro = $_POST["bairro"];
         $rua = $_POST["rua"];
         $numero = $_POST["numero"];
         $complemento = $_POST["complemento"];
+        $formaPagamentoId = $_POST["forma_pagamento"];
 
         if ($formaEntregaId == 2) {
             if ($bairro == "") {
@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             $enderecoId = inserirEndereco($conn, $bairro, $rua, $numero, $complemento, $clienteId);
         }
-        $vendaId = inserirVenda($conn, $formaEntregaId, $totalPrice, $clienteId, $enderecoId);
+        $vendaId = inserirVenda($conn, $formaEntregaId, $totalPrice, $clienteId, $enderecoId, $formaPagamentoId);
 
         if ($vendaId !== false) {
             foreach ($_POST["cartItems"] as $item) {

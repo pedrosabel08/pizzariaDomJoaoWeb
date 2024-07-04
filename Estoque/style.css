@@ -51,16 +51,20 @@ main .tabela {
     margin-bottom: 50px;
 }
 
+.table-wrapper {
+    overflow-y: auto;
+    width: 100%;
+}
+
+.table-section {
+    margin-bottom: 20px;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
 }
 
-.table-wrapper {
-    overflow-y: auto;
-    width: 100%;
-}
-    
 .tabela input {
     padding: 5px;
     margin-bottom: 10px;
@@ -82,6 +86,9 @@ table {
     left: 0;
 }
 
+.table-section h3 {
+    margin-top: 0;
+}
 
 .inserir {
     grid-column: 2;
@@ -141,11 +148,11 @@ table {
     cursor: pointer;
 }
 
-#botoes{
+#botoes {
     display: flex;
 }
 
-#formExcluirProduto{
+#formExcluirProduto {
     text-align: center;
     width: 50%;
 }
@@ -159,14 +166,14 @@ table {
     border: none;
     color: white;
     font-family: "Ubuntu", sans-serif;
-} 
+}
 
 .inserir button#botaoExcluir:hover {
     background-color: #cc1f1a;
     cursor: pointer;
 }
 
-#formAlterarProduto{
+#formAlterarProduto {
     text-align: center;
     width: 50%;
 }
@@ -180,7 +187,7 @@ table {
     border: none;
     color: white;
     font-family: "Ubuntu", sans-serif;
-} 
+}
 
 .inserir button#botaoAlterar:hover {
     background-color: #756e02;
