@@ -48,7 +48,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="" type="image/x-icon">
+    <link rel="icon" href="./assets/caixa.png" type="image/png">
     <title>Estoque</title>
 </head>
 
