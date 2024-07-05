@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+    padding: 0;
+    margin: 0;
+    font-family: "Noto Sans", sans-serif;
+}
+
+table {
+    width: 70%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: left;
+}
+
+form#report-form {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+}
+
+label,
+input,
+button {
+    margin: 5px;
+}
+
+.tabela {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+button {
+    cursor: pointer;
+}
+
+button#back {
+    padding: 6px;
+    border-radius: 15px;
+    border: 2px solid black;
+    background-color: #ff3b3b;
+    width: 100px;
+}
+
+button#back:hover {
+    background-color: #f76060;
+    font-weight: 600;
+}
+
+button.first-button,
+button#download-pdf {
+    padding: 8px 20px;
+    color: black;
+    border-radius: 30px;
+    border: 2px solid black;
+    transition: 0.2s all ease;
+    font-weight: 400;
+    width: 200px;
+    background-color: #f7bf05;
+
+}
+
+button.first-button:hover,#download-pdf:hover {
+    background-color: #f3d264;
+    color: black;
+    font-weight: 600;
+}
+
+
+h1 {
+    font-size: 38px;
+}
+
+label {
+    font-size: 20px;
+}
+
+input {
+    padding: 5px;
+}

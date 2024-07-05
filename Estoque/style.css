@@ -72,18 +72,33 @@ table {
     font-size: 16px;
 }
 
-.tabela .btn {
-    width: 80px;
-    padding: 5px;
-    margin-left: 3px;
-    margin-top: 3px;
-    border-radius: 5px;
+.buttons {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.btn {
+    width: 100px;
+    border-radius: 30px;
+    padding: 6px;
     font-family: "Ubuntu", sans-serif;
-    color: white;
-    background-color: #000000;
+    color: black;
+    background-color: #ff3b3b;
     cursor: pointer;
-    position: absolute;
-    left: 0;
+    margin-right: 10px;
+    border: 2px solid black;
+    transition: 0.3 all ease;
+}
+
+.btn:nth-child(2) {
+    width: 200px;
+}
+
+.btn:hover {
+    background-color: #f76060;
+    font-weight: 600;
+
 }
 
 .table-section h3 {

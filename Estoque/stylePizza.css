@@ -63,18 +63,27 @@ table {
     font-size: 16px;
 }
 
-.pizzas button {
-    width: 80px;
-    padding: 5px;
-    margin-left: 3px;
-    margin-top: 3px;
-    border-radius: 5px;
+.buttons {
+    padding: 10px;
+}
+
+.btn {
+    width: 100px;
+    border-radius: 30px;
+    padding: 6px;
     font-family: "Ubuntu", sans-serif;
-    color: white;
-    background-color: #000000;
+    color: black;
+    background-color: #ff3b3b;
     cursor: pointer;
-    position: absolute;
-    left: 0;
+    margin-right: 10px;
+    border: 2px solid black;
+    transition: 0.3 all ease;
+}
+
+.btn:hover {
+    background-color: #f76060;
+    font-weight: 600;
+
 }
 
 .addPizza {
@@ -85,7 +94,9 @@ table {
     background-color: #ffffff;
 }
 
-.addPizza form .Nome, #ingredients-container, .ingredient-row {
+.addPizza form .Nome,
+#ingredients-container,
+.ingredient-row {
     padding-bottom: 10px;
 }
 
@@ -93,7 +104,9 @@ table {
     margin-bottom: 10px;
 }
 
-.addPizza input, label, select {
+.addPizza input,
+label,
+select {
     padding: 5px;
 }
 

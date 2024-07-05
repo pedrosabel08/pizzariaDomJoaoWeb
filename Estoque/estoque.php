@@ -48,13 +48,19 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="" type="image/x-icon">
     <title>Estoque</title>
 </head>
 
 <body>
+    <div class="buttons">
+        <button class="btn" onclick="window.location.href='produtos.html'">Voltar</button>
+        <button class="btn" onclick="window.location.href='relatorio.html'">Relatórios de venda</button>
+    </div>
+
     <main>
+
         <div class="tabela">
-            <button class="btn" onclick="window.location.href='produtos.html'">Voltar</button>
             <h2>Estoque</h2>
             <input type="text" id="filterInput" onkeyup="filterTable()" placeholder="Filtrar por:">
             <div class="table-wrapper">
@@ -75,22 +81,6 @@ $conn->close();
                     <?php endforeach; ?>
                 </table>
 
-                <table id="tabelaBebida">
-                    <tr>
-                        <th>Nome do Produto</th>
-                        <th>Quantidade</th>
-                        <th class="unidadeMedida">Unidade Medida</th>
-                        <th>Validade</th>
-                    </tr>
-                    <?php foreach ($data as $produto): ?>
-                        <tr class="linha-tabela" data-id="<?php echo $produto['idprodutos']; ?>">
-                            <td><?php echo $produto['nomeProduto']; ?></td>
-                            <td><?php echo $produto['quantidade']; ?></td>
-                            <td><?php echo $produto['unidadeMedida']; ?></td>
-                            <td><?php echo $produto['validade']; ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </table>
             </div>
         </div>
         <div class="inserir">

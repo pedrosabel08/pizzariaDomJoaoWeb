@@ -46,9 +46,12 @@ $conn->close();
 </head>
 
 <body>
+    <div class="buttons">
+        <button class="btn" onclick="window.location.href='produtos.html'">Voltar</button>
+    </div>
+
     <main>
         <div class="pizzas">
-            <button class="btn" onclick="window.location.href='produtos.html'">Voltar</button>
             <h2>Pizzas Cadastradas</h2>
             <input type="text" id="filterInput" onkeyup="filterTable()" placeholder="Filtrar por:">
             <div class="table-wrapper">

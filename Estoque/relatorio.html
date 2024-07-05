@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Relatórios de Venda</title>
+    <link rel="stylesheet" href="styleRelatorio.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+</head>
+
+<body>
+    <button id="back" onclick="window.location.href='produtos.html'">Voltar</button>
+    <form id="report-form">
+        <h1>Relatórios de Venda</h1>
+        <label for="date">Selecione a Data:</label>
+        <input type="date" id="date" name="date" required>
+        <div class="buttons">
+            <button type="submit" class="first-button">Buscar</button>
+            <button type="button" id="download-pdf">Download PDF</button>
+        </div>
+    </form>
+
+    <div class="tabela">
+
+        <table id="sales-table">
+            <thead>
+                <tr>
+                    <th>ID Venda</th>
+                    <th>ID Pizza</th>
+                    <th>ID Tamanho</th>
+                    <th>ID Borda</th>
+                    <th>Total</th>
+                    <th>Data da Venda</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Os dados serão inseridos aqui via JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="scriptRelatorio.js"></script>
+</body>
+
+</html>
