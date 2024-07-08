@@ -1,11 +1,11 @@
-document.getElementById('show-signup').addEventListener('click', function () {
-    document.getElementById('login-form').classList.add('hidden');
-    document.getElementById('signup-form').classList.remove('hidden');
+document.getElementById('showSignup').addEventListener('click', function () {
+    document.getElementById('login').classList.add('hidden');
+    document.getElementById('signup').classList.remove('hidden');
 });
 
-document.getElementById('show-login').addEventListener('click', function () {
-    document.getElementById('login-form').classList.remove('hidden');
-    document.getElementById('signup-form').classList.add('hidden');
+document.getElementById('showLogin').addEventListener('click', function () {
+    document.getElementById('signup').classList.add('hidden');
+    document.getElementById('login').classList.remove('hidden');
 });
 
 document.addEventListener('DOMContentLoaded', function () {

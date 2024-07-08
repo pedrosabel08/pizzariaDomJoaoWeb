@@ -145,6 +145,15 @@ CREATE TABLE IF NOT EXISTS `bordas_pizza` (
 );
 
 -- -----------------------------------------------------
+-- Table `bd_pizzaria`.`formaPagamento`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `forma_pagamento` (
+  `idforma_pagamento` INT(11) NOT NULL AUTO_INCREMENT,
+  `tipo` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idforma_pagamento`)
+);
+
+-- -----------------------------------------------------
 -- Table `bd_pizzaria`.`vendas`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `vendas` (
@@ -154,6 +163,7 @@ CREATE TABLE IF NOT EXISTS `vendas` (
   `cliente_id` INT(11) NOT NULL,
   `forma_entrega_id` INT(11) NOT NULL,
   `endereco_id` INT(11) NULL,
+  `forma_pagamento_id` INT(11) NULL,
   PRIMARY KEY (`idvendas`),
   INDEX `fk_vendas_clientes_idx` (`cliente_id` ASC),
   INDEX `fk_vendas_forma_entrega_idx` (`forma_entrega_id` ASC),
@@ -162,14 +172,19 @@ CREATE TABLE IF NOT EXISTS `vendas` (
     REFERENCES `clientes` (`idclientes`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_vendas_forma_entrega`
+    CONSTRAINT `fk_vendas_forma_entrega`
     FOREIGN KEY (`forma_entrega_id`)
     REFERENCES `forma_entrega` (`idforma_entrega`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-      CONSTRAINT `fk_vendas_endereco`
+	CONSTRAINT `fk_vendas_endereco`
     FOREIGN KEY (`endereco_id`)
     REFERENCES `endereco` (`idendereco`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+	CONSTRAINT `fk_vendas_forma_pagamento`
+    FOREIGN KEY (`forma_pagamento_id`)
+    REFERENCES `forma_pagamento` (`idforma_pagamento`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
@@ -1120,6 +1135,40 @@ VALUES
 RETURN 1;
 END$$
 
+-- -----------------------------------------------------
+-- function inserirFormaPagamento
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `bd_pizzaria`$$
+CREATE DEFINER=`root`@`localhost` FUNCTION `inserirFormaPagamento`() RETURNS int(11)
+    DETERMINISTIC
+BEGIN
+INSERT INTO `bd_pizzaria`.`forma_pagamento` (`tipo`) 
+VALUES 
+('Pix'), 
+('Débito'), 
+('Crédito'), 
+('Dinheiro');
+
+RETURN 1;
+END$$
+
+-- -----------------------------------------------------
+-- function inserirUsuarios
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `bd_pizzaria`$$
+CREATE DEFINER=`root`@`localhost` FUNCTION `inserirUsuarios`() RETURNS int(11)
+    DETERMINISTIC
+BEGIN
+INSERT INTO `bd_pizzaria`.`clientes` (`nome`,`sobrenome`, `telefone`, `email`, `senha`) 
+VALUES 
+('Pedro', 'Sabel', '47999160344', 'pedrosabel08@gmail.com', '12345');
+
+RETURN 1;
+END$$
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
@@ -1135,3 +1184,5 @@ select bd_pizzaria.inserirPizzas();
 select bd_pizzaria.inserirMarcaBebidas();
 select bd_pizzaria.inserirTamanhoBebidas();
 select bd_pizzaria.inserirBebidas();
+select bd_pizzaria.inserirFormaPagamento();
+select bd_pizzaria.inserirUsuarios();
