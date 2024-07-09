@@ -53,7 +53,7 @@ $conn->close();
     <main>
         <div class="pizzas">
             <h2>Pizzas Cadastradas</h2>
-            <input type="text" id="filterInput" onkeyup="filterTable()" placeholder="Filtrar por:">
+            <input type="text" id="filterInput" onkeyup="filterTable()" placeholder="Nome da Pizza:">
             <div class="table-wrapper">
                 <table id="tabelaPizzas">
                     <thead>

@@ -24,7 +24,7 @@ document.getElementById('report-form').addEventListener('submit', function (e) {
         .catch(error => console.error('Error fetching sales:', error));
 });
 
-document.getElementById('download-pdf').addEventListener('click', function() {
+document.getElementById('download-pdf').addEventListener('click', function () {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 

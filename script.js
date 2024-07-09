@@ -543,7 +543,7 @@ function checkRestaurantOpen() {
 
     const totalMinutos = hora * 60 + minutos;
 
-    const horaAbertura = 11 * 60 + 30;
+    const horaAbertura = 17 * 60 + 30;
     const horaFechamento = 23 * 60 + 30;
 
     return totalMinutos >= horaAbertura && totalMinutos < horaFechamento;

@@ -81,4 +81,5 @@ img {
     margin-top: 40%;
     margin-right: 50px;
     width: 80%;
+    object-fit: cover;
 }

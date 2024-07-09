@@ -19,7 +19,7 @@ td {
     padding: 8px;
 }
 
-td:hover {
+tr:hover {
     background-color: #ffbb00;
 }
 
@@ -173,10 +173,6 @@ form input#pizza_name {
 .addPizza button#botaoExcluir:hover {
     background-color: #cc1f1a;
     cursor: pointer;
-}
-
-.selecionada {
-    background-color: #e3342f;
 }
 
 footer {

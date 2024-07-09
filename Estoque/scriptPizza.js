@@ -87,7 +87,7 @@ function filterTable() {
         const tds = row.getElementsByTagName('td');
         let display = false;
 
-        if (tds[0].textContent.toLowerCase().indexOf(filter) > -1) {
+        if (tds[1].textContent.toLowerCase().indexOf(filter) > -1) {
             display = true;
         }
 
