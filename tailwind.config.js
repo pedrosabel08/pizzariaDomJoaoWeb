@@ -6,6 +6,9 @@ module.exports = {
       fontFamily: {
         roboto: ['Roboto', 'sans-serif'],
       },
+      transitionDuration: {
+        '3000': '3000ms',
+      },
     },
   },
   plugins: [],

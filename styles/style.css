@@ -18,3 +18,19 @@ input[type=number] {
     -moz-appearance: textfield;
     appearance: textfield;
 }
+
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: white;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    transition: .5s;
+}
+

@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     cartBtn.addEventListener("click", function () {
         cartModal.style.display = "flex"
-        console.log(totalCartPrice)
     })
 
     cartModal.addEventListener("click", function (event) {
