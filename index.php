@@ -21,7 +21,7 @@ include("conexao.php");
     <link rel="icon" href="./assets/pizza.png" type="image/png">
 </head>
 
-<body class="font-roboto">
+<body id="corpo" class="font-roboto">
 
     <header class="w-full h-auto bg-orange-300 relative">
         <div class="p-2 flex justify-between items-center">
@@ -316,7 +316,8 @@ include("conexao.php");
         </div>
 
     </div>
-    <div class="modal hidden" id="cart-modal">
+    <div class="modal hidden w-full" id="cart-modal">
+        <div class="overlay" id="overlay" onclick="fecha()"></div>
         <div class="bg-white p-5 rounded-md min-w-[90%] md:min-w-[600px] sidebar">
             <form id="cartForm" action="finalizar_venda.php" method="post">
                 <div id="cart" class="mt-2">

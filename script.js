@@ -19,6 +19,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     cartBtn.addEventListener("click", function () {
         cartModal.style.display = "flex"
+        cartModal.style.justifyContent = "center"
+        document.getElementById('corpo').style.position = "fixed"
+        document.getElementById('corpo').style.width = "100%"
     })
 
     cartModal.addEventListener("click", function (event) {
@@ -573,4 +576,8 @@ function buscaEndereco(cep) {
             }
         });
     }
+}
+
+function fecha() {
+    document.getElementById("cart-modal").style.display = "none"
 }
