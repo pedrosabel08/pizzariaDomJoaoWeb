@@ -27,11 +27,13 @@ document.addEventListener('DOMContentLoaded', function () {
     cartModal.addEventListener("click", function (event) {
         if (event.target === cartModal) {
             cartModal.style.display = "none"
+            document.getElementById('corpo').style.position = "absolute"
         }
     })
 
     closeModalBtn.addEventListener("click", function () {
         cartModal.style.display = "none"
+        document.getElementById('corpo').style.position = "absolute"
     })
 
     document.querySelectorAll('.pizza-size').forEach(button => {
@@ -580,4 +582,5 @@ function buscaEndereco(cep) {
 
 function fecha() {
     document.getElementById("cart-modal").style.display = "none"
+    document.getElementById('corpo').style.position = "absolute"
 }
