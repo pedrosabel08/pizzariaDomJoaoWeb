@@ -293,6 +293,13 @@ CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`vendas_bebidas` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
+
+
+CREATE TABLE IF NOT EXISTS status_venda (
+	idstatus INT AUTO_INCREMENT PRIMARY KEY,
+    nome_status VARCHAR(50)
+    );
+
 -- -----------------------------------------------------
 -- function inserirFormaEntrega
 -- -----------------------------------------------------
@@ -1186,3 +1193,12 @@ select bd_pizzaria.inserirTamanhoBebidas();
 select bd_pizzaria.inserirBebidas();
 select bd_pizzaria.inserirFormaPagamento();
 select bd_pizzaria.inserirUsuarios();
+
+
+alter table vendas add column status_id INT
+ALTER TABLE vendas add constraint status_venda foreign key (status_id) references status_venda (idstatus)
+
+INSERT INTO status_venda (nome_status) values
+('Não começou'),
+('Em andamento'),
+('Finalizado')
