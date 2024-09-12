@@ -1,11 +1,18 @@
 <?php
-include ("conexao.php");
+include("conexao.php");
 
 function inserirVenda($conn, $formaEntregaId, $total, $clienteId, $enderecoId, $formaPagamentoId)
 {
-    $sql = "INSERT INTO vendas (forma_entrega_id, total, data_venda, cliente_id, endereco_id, forma_pagamento_id) VALUES (?, ?, NOW(), ?, ?, ?)";
+    // Adicionamos o campo 'status_id' na consulta SQL e definimos o valor como 1
+    $sql = "INSERT INTO vendas (forma_entrega_id, total, data_venda, cliente_id, endereco_id, forma_pagamento_id, status_id) VALUES (?, ?, NOW(), ?, ?, ?, ?)";
+
+    // Valor 1 para o status "Não começou"
+    $statusId = 1;
+
     if ($stmt = mysqli_prepare($conn, $sql)) {
-        mysqli_stmt_bind_param($stmt, "idiii", $formaEntregaId, $total, $clienteId, $enderecoId, $formaPagamentoId);
+        // Incluímos o status_id no 'bind_param' (último parâmetro 'i' representa o status_id)
+        mysqli_stmt_bind_param($stmt, "idiiii", $formaEntregaId, $total, $clienteId, $enderecoId, $formaPagamentoId, $statusId);
+
         if (mysqli_stmt_execute($stmt)) {
             return mysqli_insert_id($conn);
         } else {
@@ -166,4 +173,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 } else {
     header("Location: index.php?status=error&message=" . urlencode("Método de requisição inválido."));
 }
-?>
