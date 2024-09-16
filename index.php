@@ -326,6 +326,7 @@ include("conexao.php");
                     <div id="cartInputs"></div>
                     <div id="total-price" class="font-bold text-green-700 mt-4"></div>
                     <input type="hidden" name="cliente_id" id="cliente_id">
+                    <input type="hidden" name="cliente_nome" id="cliente_nome">
 
                     <div class="mt-2">
                         <h3 class="text-xl mb-2">Forma de Entrega:</h3>

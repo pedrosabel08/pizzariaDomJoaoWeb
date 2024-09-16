@@ -52,18 +52,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $numero = $_POST["numero"];
         $complemento = $_POST["complemento"];
         $formaPagamentoId = $_POST["forma_pagamento"];
+        $nomeCliente = $_POST["cliente_nome"];
 
         if ($formaEntregaId == 2) {
             if ($bairro == "") {
-                header("Location: index.php?status=error&message=" . urlencode("Informe o bairro."));
+                header("Location: index.php?idCliente=".$clienteId."&nome=".$nomeCliente."&status=error&message=" . urlencode("Informe o bairro."));
                 return;
             }
             if ($rua == "") {
-                header("Location: index.php?status=error&message=" . urlencode("Informe a rua."));
+                header("Location: index.php?idCliente=".$clienteId."&nome=".$nomeCliente."&status=error&message=" . urlencode("Informe a rua."));
                 return;
             }
             if ($numero == "") {
-                header("Location: index.php?status=error&message=" . urlencode("Informe o numero da residência."));
+                header("Location: index.php?idCliente=".$clienteId."&nome=".$nomeCliente."&status=error&message=" . urlencode("Informe o numero da residência."));
                 return;
             }
             $enderecoId = inserirEndereco($conn, $bairro, $rua, $numero, $complemento, $clienteId);
@@ -89,11 +90,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         mysqli_stmt_fetch($stmtBorda);
                         mysqli_stmt_close($stmtBorda);
                     } else {
-                        header("Location: index.php?status=error&message=" . urlencode("Erro ao executar a consulta SQL para obter o ID da borda: " . mysqli_error($conn)));
+                        header("Location: index.php?idCliente=".$clienteId."&nome=".$nomeCliente."&status=error&message=" . urlencode("Erro ao executar a consulta SQL para obter o ID da borda: " . mysqli_error($conn)));
                         continue;
                     }
                 } else {
-                    header("Location: index.php?status=error&message=" . urlencode("Erro ao preparar a declaração SQL para obter o ID da borda: " . mysqli_error($conn)));
+                    header("Location: index.php?idCliente=".$clienteId."&nome=".$nomeCliente."&status=error&message=" . urlencode("Erro ao preparar a declaração SQL para obter o ID da borda: " . mysqli_error($conn)));
                     continue;
                 }
 
@@ -105,11 +106,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         mysqli_stmt_fetch($stmtTamanho);
                         mysqli_stmt_close($stmtTamanho);
                     } else {
-                        header("Location: index.php?status=error&message=" . urlencode("Erro ao executar a consulta SQL para obter o ID do tamanho: " . mysqli_error($conn)));
+                        header("Location: index.php?idCliente=".$clienteId."&nome=".$nomeCliente."&status=error&message=" . urlencode("Erro ao executar a consulta SQL para obter o ID do tamanho: " . mysqli_error($conn)));
                         continue;
                     }
                 } else {
-                    header("Location: index.php?status=error&message=" . urlencode("Erro ao preparar a declaração SQL para obter o ID do tamanho: " . mysqli_error($conn)));
+                    header("Location: index.php?idCliente=".$clienteId."&nome=".$nomeCliente."&status=error&message=" . urlencode("Erro ao preparar a declaração SQL para obter o ID do tamanho: " . mysqli_error($conn)));
                     continue;
                 }
 
@@ -122,11 +123,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             mysqli_stmt_fetch($stmtPizza);
                             mysqli_stmt_close($stmtPizza);
                         } else {
-                            header("Location: index.php?status=error&message=" . urlencode("Erro ao executar a consulta SQL para obter o ID da pizza: " . mysqli_error($conn)));
+                            header("Location: index.php?idCliente=".$clienteId."&nome=".$nomeCliente."&status=error&message=" . urlencode("Erro ao executar a consulta SQL para obter o ID da pizza: " . mysqli_error($conn)));
                             continue;
                         }
                     } else {
-                        header("Location: index.php?status=error&message=" . urlencode("Erro ao preparar a declaração SQL para obter o ID da pizza: " . mysqli_error($conn)));
+                        header("Location: index.php?idCliente=".$clienteId."&nome=".$nomeCliente."&status=error&message=" . urlencode("Erro ao preparar a declaração SQL para obter o ID da pizza: " . mysqli_error($conn)));
                         continue;
                     }
 
@@ -142,33 +143,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 if ($stmtUpdateEstoque = mysqli_prepare($conn, $sqlUpdateEstoque)) {
                                     mysqli_stmt_bind_param($stmtUpdateEstoque, "i", $pizzaId);
                                     if (!mysqli_stmt_execute($stmtUpdateEstoque)) {
-                                        header("Location: index.php?status=error&message=" . urlencode("Erro ao atualizar estoque: " . mysqli_error($conn)));
+                                        header("Location: index.php?idCliente=".$clienteId."&nome=".$nomeCliente."&status=error&message=" . urlencode("Erro ao atualizar estoque: " . mysqli_error($conn)));
                                     }
                                     mysqli_stmt_close($stmtUpdateEstoque);
                                 } else {
-                                    header("Location: index.php?status=error&message=" . urlencode("Erro ao preparar a declaração SQL para atualizar estoque: " . mysqli_error($conn)));
+                                    header("Location: index.php?idCliente=".$clienteId."&nome=".$nomeCliente."&status=error&message=" . urlencode("Erro ao preparar a declaração SQL para atualizar estoque: " . mysqli_error($conn)));
                                 }
                             } else {
-                                header("Location: index.php?status=error&message=" . urlencode("Erro ao inserir item do carrinho na tabela vendas_pizzas: " . mysqli_error($conn)));
+                                header("Location: index.php?idCliente=".$clienteId."&nome=".$nomeCliente."&status=error&message=" . urlencode("Erro ao inserir item do carrinho na tabela vendas_pizzas: " . mysqli_error($conn)));
                             }
                             mysqli_stmt_close($stmtVendaPizza);
                         } else {
-                            header("Location: index.php?status=error&message=" . urlencode("Erro ao preparar a declaração SQL para inserir item do carrinho na tabela vendas_pizzas: " . mysqli_error($conn)));
+                            header("Location: index.php?idCliente=".$clienteId."&nome=".$nomeCliente."&status=error&message=" . urlencode("Erro ao preparar a declaração SQL para inserir item do carrinho na tabela vendas_pizzas: " . mysqli_error($conn)));
                         }
                     } else {
-                        header("Location: index.php?status=error&message=" . urlencode("Erro: ID da pizza é nulo para o sabor '$flavor'."));
+                        header("Location: index.php?idCliente=".$clienteId."&nome=".$nomeCliente."&status=error&message=" . urlencode("Erro: ID da pizza é nulo para o sabor '$flavor'."));
                     }
                 }
             }
 
-            header("Location: index.php?status=success&message=" . urlencode("Venda finalizada com sucesso!"));
-        } else {
-            header("Location: index.php?status=error&message=" . urlencode("Erro ao inserir venda."));
+            header("Location: index.php?idCliente=".$clienteId."&nome=".$nomeCliente."&status=success&message=" . urlencode("Venda finalizada com sucesso!"));
+        } else { 
+            header("Location: index.php?idCliente=".$clienteId."&nome=".$nomeCliente."&status=error&message=" . urlencode("Erro ao inserir venda."));
         }
 
         $conn->close();
     } else {
-        header("Location: index.php?status=error&message=" . urlencode("Erro: Informações incompletas."));
+        header("Location: index.php?idCliente=".$clienteId."&nome=".$nomeCliente."&status=error&message=" . urlencode("Erro: Informações incompletas."));
     }
 } else {
     header("Location: index.php?status=error&message=" . urlencode("Método de requisição inválido."));
