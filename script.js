@@ -590,19 +590,12 @@ function buscaEndereco(cep) {
 
                     // Chama o backend PHP para calcular a taxa de entrega
                     calcularTaxaEntrega(enderecoCliente);
-                } else {
-                    alert('CEP inválido');
                 }
-            },
-            error: function () {
-                alert('Erro ao buscar o endereço. Verifique o CEP e tente novamente.');
             }
+
         });
-    } else {
-        alert('CEP inválido. O CEP deve conter 8 dígitos.');
     }
 }
-
 // Função que chama o PHP para calcular a taxa de entrega
 function calcularTaxaEntrega(enderecoCliente) {
     $.ajax({
