@@ -339,6 +339,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const ruaEntregaDiv = document.getElementById('ruaEntrega');
     const numeroEntregaDiv = document.getElementById('numeroEntrega');
     const complementoEntregaDiv = document.getElementById('complementoEntrega');
+    const taxaEntregaDiv = document.getElementById('taxaEntrega');
 
     retiradaRadio.addEventListener('change', () => {
         if (retiradaRadio.checked) {
@@ -347,6 +348,8 @@ document.addEventListener('DOMContentLoaded', function () {
             ruaEntregaDiv.classList.add('hidden');
             numeroEntregaDiv.classList.add('hidden');
             complementoEntregaDiv.classList.add('hidden');
+            taxaEntregaDiv.classList.add('hidden');
+
         }
     });
 
@@ -357,6 +360,7 @@ document.addEventListener('DOMContentLoaded', function () {
             ruaEntregaDiv.classList.remove('hidden');
             numeroEntregaDiv.classList.remove('hidden');
             complementoEntregaDiv.classList.remove('hidden');
+            taxaEntregaDiv.classList.remove('hidden');
         }
     });
 
@@ -522,7 +526,7 @@ document.addEventListener('DOMContentLoaded', function () {
             alert('Por favor, selecione uma forma de entrega.');
         }
     });
-    
+
     document.getElementById('cartForm').addEventListener('submit', function (event) {
 
         const pagamentoOptions = document.getElementsByName('forma_pagamento');
@@ -566,6 +570,10 @@ if (isOpen) {
     spanItem.classList.add("bg-red-500")
 }
 
+
+const enderecoPizzaria = 'R. Francisco Vahldieck, 236 - Fortaleza, Blumenau - SC, 89056-000'; // Endereço fixo da pizzaria
+
+// Função que busca o endereço pelo CEP e calcula a taxa de entrega
 function buscaEndereco(cep) {
     if (cep.length == 8) {
         $.ajax({
@@ -573,14 +581,52 @@ function buscaEndereco(cep) {
             dataType: "json",
             url: "https://viacep.com.br/ws/" + cep + "/json/",
             success: function (data) {
-                if (data.bairro != null) {
+                if (!data.erro) {
+                    // Preenche os campos de endereço
                     document.getElementById('bairro').value = data.bairro;
                     document.getElementById('rua').value = data.logradouro;
+
+                    const enderecoCliente = `${data.logradouro}, ${data.bairro}, ${data.localidade}, ${data.uf}`;
+
+                    // Chama o backend PHP para calcular a taxa de entrega
+                    calcularTaxaEntrega(enderecoCliente);
+                } else {
+                    alert('CEP inválido');
                 }
+            },
+            error: function () {
+                alert('Erro ao buscar o endereço. Verifique o CEP e tente novamente.');
             }
         });
+    } else {
+        alert('CEP inválido. O CEP deve conter 8 dígitos.');
     }
 }
+
+// Função que chama o PHP para calcular a taxa de entrega
+function calcularTaxaEntrega(enderecoCliente) {
+    $.ajax({
+        url: 'http://localhost:8066/pizzariaDomJoaoWeb/taxaEntrega.php',
+        method: 'GET',
+        data: {
+            enderecoCliente: enderecoCliente,
+            enderecoPizzaria: enderecoPizzaria
+        },
+        success: function (response) {
+            if (response.status === 'success') {
+                console.log('Distância: ' + response.distanciaMetros + ' metros');
+                console.log('Taxa de entrega: R$ ' + response.taxaEntrega);
+                document.getElementById('calcTaxaEntrega').value = `R$ ${response.taxaEntrega}`;
+            } else {
+                console.error(response.message);
+            }
+        },
+        error: function (err) {
+            console.error('Erro na requisição: ', err);
+        }
+    });
+}
+
 
 function fecha() {
     document.getElementById("cart-modal").style.display = "none"

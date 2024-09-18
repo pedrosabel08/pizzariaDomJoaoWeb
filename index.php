@@ -17,6 +17,8 @@ include("conexao.php");
 
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD75y85lHmcaYraJsfSMtk245adprAqWFw&libraries=places"></script>
+
     <title>Pizzaria</title>
     <link rel="icon" href="./assets/pizza.png" type="image/png">
 </head>
@@ -169,10 +171,10 @@ include("conexao.php");
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                 ?>
-            <button class="pizza-flavor bg-white p-4 rounded-lg shadow-md text-center border-2 border-red-500" data-flavor="<?php echo htmlspecialchars($row['nomePizza']); ?>" data-id-flavor="<?php echo $row['idpizzas'] ?>">
-    <div class="font-bold"><?php echo htmlspecialchars($row['nomePizza']); ?></div>
-    <div class="text-sm text-gray-600"><?php echo htmlspecialchars($row['ingredientes']); ?></div>
-    </button>
+                        <button class="pizza-flavor bg-white p-4 rounded-lg shadow-md text-center border-2 border-red-500" data-flavor="<?php echo htmlspecialchars($row['nomePizza']); ?>" data-id-flavor="<?php echo $row['idpizzas'] ?>">
+                            <div class="font-bold"><?php echo htmlspecialchars($row['nomePizza']); ?></div>
+                            <div class="text-sm text-gray-600"><?php echo htmlspecialchars($row['ingredientes']); ?></div>
+                        </button>
 
                 <?php
                     }
@@ -358,6 +360,10 @@ include("conexao.php");
                         <div id="complementoEntrega" class="mt-4 hidden">
                             <h3 class="text-lg mb-2">Complemento</h3>
                             <input class="border-black border w-2/3 pl-1" type="text" maxlength="45" id="complemento" name="complemento">
+                        </div>
+                        <div id="taxaEntrega" class="mt-4 hidden">
+                            <h3 class="text-lg mb-2">Taxa de Entrega</h3>
+                            <input class="border-black border w-2/3 pl-1" type="text" maxlength="45" id="calcTaxaEntrega" name="calcTaxaEntrega" readonly>
                         </div>
                     </div>
 
