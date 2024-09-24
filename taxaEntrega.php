@@ -11,8 +11,8 @@ if (isset($_GET['enderecoCliente']) && isset($_GET['enderecoPizzaria'])) {
     $enderecoCliente = $_GET['enderecoCliente'];
     $enderecoPizzaria = $_GET['enderecoPizzaria'];
 
-    // Função para obter coordenadas a partir do endereço
-    function obterCoordenadas($endereco, $apiKey) {
+    function obterCoordenadas($endereco, $apiKey)
+    {
         $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($endereco) . "&key=" . $apiKey;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -28,7 +28,6 @@ if (isset($_GET['enderecoCliente']) && isset($_GET['enderecoPizzaria'])) {
         }
     }
 
-    // Obter coordenadas da pizzaria e do cliente
     $coordenadasPizzaria = obterCoordenadas($enderecoPizzaria, $googleApiKey);
     $coordenadasCliente = obterCoordenadas($enderecoCliente, $googleApiKey);
 
@@ -36,7 +35,6 @@ if (isset($_GET['enderecoCliente']) && isset($_GET['enderecoPizzaria'])) {
         $origem = "{$coordenadasPizzaria['lat']},{$coordenadasPizzaria['lng']}";
         $destino = "{$coordenadasCliente['lat']},{$coordenadasCliente['lng']}";
 
-        // URL para o cálculo de distância
         $urlDistancia = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=$origem&destinations=$destino&key=$googleApiKey";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $urlDistancia);
@@ -49,10 +47,9 @@ if (isset($_GET['enderecoCliente']) && isset($_GET['enderecoPizzaria'])) {
         if (isset($dataDistancia['rows'][0]['elements'][0]['distance']['value'])) {
             $distanciaMetros = $dataDistancia['rows'][0]['elements'][0]['distance']['value'];
             $distanciaKm = $distanciaMetros / 1000;
-            $taxaBase = 5;
+            $taxaBase = 7;
 
-            // Calcula a taxa de entrega
-            if ($distanciaKm <= 5) {
+            if ($distanciaKm <= 7) {
                 $taxaEntrega = $taxaBase;
             } else {
                 $taxaAdicional = ($distanciaKm - 5) * 2;
@@ -75,4 +72,3 @@ if (isset($_GET['enderecoCliente']) && isset($_GET['enderecoPizzaria'])) {
 } else {
     echo json_encode(['status' => 'error', 'message' => 'Parâmetros inválidos.']);
 }
-?>
