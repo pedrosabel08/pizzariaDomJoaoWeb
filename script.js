@@ -241,11 +241,19 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
+        // Pegar o valor da taxa de entrega
+        const deliveryFee = parseFloat(document.getElementById('calcTaxaEntrega').value) || 0;
+
+        // Calcular o total com a taxa de entrega
+        const totalWithDelivery = totalCartPrice + deliveryFee;
+
+        // Criar o campo de input para o preço total (com taxa de entrega)
         const totalPriceInput = document.createElement('input');
         totalPriceInput.type = 'hidden';
         totalPriceInput.name = 'total_price';
-        totalPriceInput.value = totalCartPrice.toFixed(2);
+        totalPriceInput.value = totalWithDelivery.toFixed(2); // Incluindo a taxa de entrega
         cartInputs.appendChild(totalPriceInput);
+
 
         console.log('Dados do formulário:', cartInputs);
 
@@ -616,7 +624,7 @@ function calcularTaxaEntrega(enderecoCliente) {
             if (response.status === 'success') {
                 console.log('Distância: ' + response.distanciaMetros + ' metros');
                 console.log('Taxa de entrega: R$ ' + response.taxaEntrega);
-                document.getElementById('calcTaxaEntrega').value = `R$ ${response.taxaEntrega}`;
+                document.getElementById('calcTaxaEntrega').value = `${response.taxaEntrega}`;
             } else {
                 console.error(response.message);
             }
