@@ -1,5 +1,16 @@
 <?php
+session_start();
+
 include("conexao.php");
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    // Se não estiver logado, redirecionar para a página de login
+    header("Location: login.html");
+    exit();
+}
+
+$cliente_id = $_SESSION['cliente_id'];
+
 ?>
 
 
@@ -12,7 +23,8 @@ include("conexao.php");
     <link rel="stylesheet" href="./styles/output.css" />
     <link rel="stylesheet" href="./styles/style.css">
 
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -31,7 +43,14 @@ include("conexao.php");
                     <i class="fa-solid fa-user"></i>
                     Login
                 </button>
-                <span id="greeting" style="display: none;">Olá, <span id="cliente-nome"></span></span>
+                <button id="menuButton" style="display: none;">Olá,&nbsp; <span id="cliente-nome"></button>
+                <div id="menu" class="hidden">
+                    <a href="infos.php" id="editProfile"><i class="fa-regular fa-user"></i>Editar Informações</a>
+                    <hr>
+                    <a href="myPedidos.php" id="pedidos"><i class="fa-solid fa-list"></i>Meus pedidos</a>
+                    <hr>
+                    <a href="#" id="logout"><i class="fa-solid fa-right-from-bracket"></i>Sair</a>
+                </div>
                 <button onclick="window.location.href='login.html'" id="button-sair" class="bg-red-500 hover:bg-red-700 text-white py-1 px-4 rounded focus:outline-none focus:shadow-outline ml-4 hidden">Sair</button>
             </div>
             <div class="absolute top-0 right-0 p-3" id="cart-container">
@@ -368,87 +387,87 @@ include("conexao.php");
                     <div class="mt-2">
                         <h3 class="text-xl mb-2">Forma de pagamento:</h3>
                         <div class="flex items-center mb-2">
-                        <input type="radio" id="pix" name="forma_pagamento" value="1" onchange="gerarQRCode()">
-                        <label for="pix" class="ml-2">Pix</label>
+                            <input type="radio" id="pix" name="forma_pagamento" value="1" onchange="gerarQRCode()">
+                            <label for="pix" class="ml-2">Pix</label>
+                        </div>
+                        <!-- Container para o QR Code -->
+                        <div id="qrcode" class="mt-4"></div>
                     </div>
-                     <!-- Container para o QR Code -->
-                    <div id="qrcode" class="mt-4"></div>
+
+                    <script>
+                        function gerarQRCode() {
+                            // Aqui você deve substituir pelo código do seu pagamento Pix
+                            const pixCode = 'assets/Untitled.png'; // Exemplo de código Pix
+
+                            // Limpa o QR Code anterior
+                            $('#qrcode').empty();
+
+                            // Gera o QR Code
+                            $('#qrcode').qrcode({
+                                text: pixCode,
+                                width: 200,
+                                height: 200
+                            });
+                        }
+                    </script>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" id="debito" name="forma_pagamento" value="2">
+                        <label for="debito" class="ml-2">Cartão de débito</label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" id="credito" name="forma_pagamento" value="3">
+                        <label for="credito" class="ml-2">Cartão de crédito</label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" id="dinheiro" name="forma_pagamento" value="4" onchange="toggleTrocoOptions()">
+                        <label for="dinheiro" class="ml-2">Dinheiro</label>
                     </div>
 
-<script>
-                    function gerarQRCode() {
-                    // Aqui você deve substituir pelo código do seu pagamento Pix
-                    const pixCode = 'assets/Untitled.png'; // Exemplo de código Pix
-
-                    // Limpa o QR Code anterior
-                     $('#qrcode').empty();
-
-                    // Gera o QR Code
-                    $('#qrcode').qrcode({
-                     text: pixCode,
-                     width: 200,
-                    height: 200
-    });
-}
-</script>
-                        <div class="flex items-center mb-2">
-                            <input type="radio" id="debito" name="forma_pagamento" value="2">
-                            <label for="debito" class="ml-2">Cartão de débito</label>
-                        </div>
-                        <div class="flex items-center mb-2">
-                            <input type="radio" id="credito" name="forma_pagamento" value="3">
-                            <label for="credito" class="ml-2">Cartão de crédito</label>
-                        </div>
-                        <div class="flex items-center mb-2">
-                            <input type="radio" id="dinheiro" name="forma_pagamento" value="4" onchange="toggleTrocoOptions()">
-                            <label for="dinheiro" class="ml-2">Dinheiro</label>
-                        </div>
-
-<!-- Opções para precisar de troco -->
-                        <div class="flex items-center mb-2" id="trocoOptions" style="display: none;">
-                            <label class="mr-2">Precisa de troco?</label>
-                            <input type="radio" id="trocoSim" name="precisaTroco" value="sim" onchange="toggleTrocoInput()">
-                            <label for="trocoSim" class="ml-2">Sim</label>
-                            <input type="radio" id="trocoNao" name="precisaTroco" value="nao" onchange="toggleTrocoInput()">
-                            <label for="trocoNao" class="ml-2">Não</label>
-                        </div>
-
-<!-- Caixa de entrada para o valor do troco -->
-                        <div id="trocoContainer" class="mt-2" style="display: none;">
-                            <label for="valorTroco" class="mr-2">Troco para?</label>
-                            <input type="number" id="valorTroco" placeholder="Informe o valor do troco">
-                        </div>
-
-<script>
-    function toggleTrocoOptions() {
-        const trocoOptions = document.getElementById('trocoOptions');
-        trocoOptions.style.display = 'block'; // Exibe as opções de troco
-        document.getElementById('trocoSim').checked = false; // Limpa a seleção
-        document.getElementById('trocoNao').checked = false; // Limpa a seleção
-        toggleTrocoInput(); // Limpa a entrada de troco
-}
-
-function toggleTrocoInput() {
-        const trocoContainer = document.getElementById('trocoContainer');
-        const precisaTrocoSim = document.getElementById('trocoSim').checked;
-
-        if (precisaTrocoSim) {
-         trocoContainer.style.display = 'block'; // Mostra a caixa de entrada
-        } else {
-        trocoContainer.style.display = 'none'; // Esconde a caixa de entrada
-        document.getElementById('valorTroco').value = ''; // Limpa o valor do troco
-    }
-}
-</script>
-
+                    <!-- Opções para precisar de troco -->
+                    <div class="flex items-center mb-2" id="trocoOptions" style="display: none;">
+                        <label class="mr-2">Precisa de troco?</label>
+                        <input type="radio" id="trocoSim" name="precisaTroco" value="sim" onchange="toggleTrocoInput()">
+                        <label for="trocoSim" class="ml-2">Sim</label>
+                        <input type="radio" id="trocoNao" name="precisaTroco" value="nao" onchange="toggleTrocoInput()">
+                        <label for="trocoNao" class="ml-2">Não</label>
                     </div>
-                    <div class="flex items-center justify-between mt-5 w-full mr-14">
-                        <button id="close-modal-btn" type="button" class="bg-red-500 text-white px-4 py-1 rounded">Fechar</button>
-                        <button id="finalizeSale" type="submit" class="bg-green-500 text-white px-4 py-1 rounded">Finalizar Pedido</button>
+
+                    <!-- Caixa de entrada para o valor do troco -->
+                    <div id="trocoContainer" class="mt-2" style="display: none;">
+                        <label for="valorTroco" class="mr-2">Troco para?</label>
+                        <input type="number" id="valorTroco" placeholder="Informe o valor do troco">
                     </div>
+
+                    <script>
+                        function toggleTrocoOptions() {
+                            const trocoOptions = document.getElementById('trocoOptions');
+                            trocoOptions.style.display = 'block'; // Exibe as opções de troco
+                            document.getElementById('trocoSim').checked = false; // Limpa a seleção
+                            document.getElementById('trocoNao').checked = false; // Limpa a seleção
+                            toggleTrocoInput(); // Limpa a entrada de troco
+                        }
+
+                        function toggleTrocoInput() {
+                            const trocoContainer = document.getElementById('trocoContainer');
+                            const precisaTrocoSim = document.getElementById('trocoSim').checked;
+
+                            if (precisaTrocoSim) {
+                                trocoContainer.style.display = 'block'; // Mostra a caixa de entrada
+                            } else {
+                                trocoContainer.style.display = 'none'; // Esconde a caixa de entrada
+                                document.getElementById('valorTroco').value = ''; // Limpa o valor do troco
+                            }
+                        }
+                    </script>
+
                 </div>
-            </form>
+                <div class="flex items-center justify-between mt-5 w-full mr-14">
+                    <button id="close-modal-btn" type="button" class="bg-red-500 text-white px-4 py-1 rounded">Fechar</button>
+                    <button id="finalizeSale" type="submit" class="bg-green-500 text-white px-4 py-1 rounded">Finalizar Pedido</button>
+                </div>
         </div>
+        </form>
+    </div>
     </div>
 
     <footer class="bg-gray-300 flex items-center flex-col py-2">
@@ -463,4 +482,4 @@ function toggleTrocoInput() {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
 
-</html>     
+</html>

@@ -328,7 +328,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (nomeCliente) {
         const loginButton = document.getElementById('login');
-        const greeting = document.getElementById('greeting');
+        const menuButton = document.getElementById('menuButton');
         const clienteNomeSpan = document.getElementById('cliente-nome');
         const clienteNomeInput = document.getElementById('cliente_nome');
         const buttonSair = document.getElementById('button-sair')
@@ -336,7 +336,7 @@ document.addEventListener('DOMContentLoaded', function () {
         loginButton.style.display = 'none';
         clienteNomeSpan.textContent = nomeCliente;
         clienteNomeInput.value = nomeCliente
-        greeting.style.display = 'inline';
+        menuButton.style.display = 'inline';
         buttonSair.classList.remove('hidden');
     }
 
@@ -633,3 +633,22 @@ function fecha() {
     document.getElementById("cart-modal").style.display = "none"
     document.getElementById('corpo').style.position = "absolute"
 }
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.getElementById('menuButton').addEventListener('click', function () {
+        const menu = document.getElementById('menu');
+        menu.classList.toggle('hidden');
+    });
+
+    window.addEventListener('click', function (event) {
+        const menu = document.getElementById('menu');
+        const button = document.getElementById('menuButton');
+
+        if (!button.contains(event.target) && !menu.contains(event.target)) {
+            menu.classList.add('hidden');
+        }
+    });
+
+});

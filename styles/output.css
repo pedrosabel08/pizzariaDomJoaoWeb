@@ -769,6 +769,10 @@ video {
   margin-right: 3.5rem;
 }
 
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
 .mr-4 {
   margin-right: 1rem;
 }
@@ -795,10 +799,6 @@ video {
 
 .mt-6 {
   margin-top: 1.5rem;
-}
-
-.mr-2 {
-  margin-right: 0.5rem;
 }
 
 .box-border {
@@ -2856,6 +2856,42 @@ input[type=number] {
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 1;
+}
+
+.hidden {
+  display: none;
+}
+
+#menu {
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  position: absolute;
+  left: 10px;
+  z-index: 1;
+  width: 200px;
+  margin-top: 20px;
+  min-width: 10rem;
+  padding: .5rem 0;
+  transition: .3s all ease;
+}
+
+#menu a {
+  display: block;
+  padding: 5px;
+  text-decoration: none;
+  color: black;
+  font-size: 0.85rem;
+  padding: .25rem 1.5rem;
+  border-radius: 2px;
+  transition: .3s all ease;
+}
+
+#menu a i {
+  margin-right: 10px;
+}
+
+#menu a:hover {
+  background-color: #ccc;
 }
 
 @media (min-width: 640px) {
