@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       fontFamily: {
         roboto: ['Roboto', 'sans-serif'],
+        nunito: ['Nunito', 'sans-serif'],
       },
       transitionDuration: {
         '3000': '3000ms',
