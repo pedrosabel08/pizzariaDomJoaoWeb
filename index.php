@@ -365,13 +365,32 @@ include("conexao.php");
                             <input class="border-black border w-2/3 pl-1" type="text" maxlength="45" id="calcTaxaEntrega" name="calcTaxaEntrega" readonly>
                         </div>
                     </div>
-
                     <div class="mt-2">
                         <h3 class="text-xl mb-2">Forma de pagamento:</h3>
                         <div class="flex items-center mb-2">
-                            <input type="radio" id="pix" name="forma_pagamento" value="1">
-                            <label for="pix" class="ml-2">Pix</label>
-                        </div>
+                        <input type="radio" id="pix" name="forma_pagamento" value="1" onchange="gerarQRCode()">
+                        <label for="pix" class="ml-2">Pix</label>
+                    </div>
+                     <!-- Container para o QR Code -->
+                    <div id="qrcode" class="mt-4"></div>
+                    </div>
+
+<script>
+                    function gerarQRCode() {
+                    // Aqui você deve substituir pelo código do seu pagamento Pix
+                    const pixCode = 'assets/Untitled.png'; // Exemplo de código Pix
+
+                    // Limpa o QR Code anterior
+                     $('#qrcode').empty();
+
+                    // Gera o QR Code
+                    $('#qrcode').qrcode({
+                     text: pixCode,
+                     width: 200,
+                    height: 200
+    });
+}
+</script>
                         <div class="flex items-center mb-2">
                             <input type="radio" id="debito" name="forma_pagamento" value="2">
                             <label for="debito" class="ml-2">Cartão de débito</label>
@@ -381,9 +400,47 @@ include("conexao.php");
                             <label for="credito" class="ml-2">Cartão de crédito</label>
                         </div>
                         <div class="flex items-center mb-2">
-                            <input type="radio" id="dinheiro" name="forma_pagamento" value="4">
+                            <input type="radio" id="dinheiro" name="forma_pagamento" value="4" onchange="toggleTrocoOptions()">
                             <label for="dinheiro" class="ml-2">Dinheiro</label>
                         </div>
+
+<!-- Opções para precisar de troco -->
+                        <div class="flex items-center mb-2" id="trocoOptions" style="display: none;">
+                            <label class="mr-2">Precisa de troco?</label>
+                            <input type="radio" id="trocoSim" name="precisaTroco" value="sim" onchange="toggleTrocoInput()">
+                            <label for="trocoSim" class="ml-2">Sim</label>
+                            <input type="radio" id="trocoNao" name="precisaTroco" value="nao" onchange="toggleTrocoInput()">
+                            <label for="trocoNao" class="ml-2">Não</label>
+                        </div>
+
+<!-- Caixa de entrada para o valor do troco -->
+                        <div id="trocoContainer" class="mt-2" style="display: none;">
+                            <label for="valorTroco" class="mr-2">Troco para?</label>
+                            <input type="number" id="valorTroco" placeholder="Informe o valor do troco">
+                        </div>
+
+<script>
+    function toggleTrocoOptions() {
+        const trocoOptions = document.getElementById('trocoOptions');
+        trocoOptions.style.display = 'block'; // Exibe as opções de troco
+        document.getElementById('trocoSim').checked = false; // Limpa a seleção
+        document.getElementById('trocoNao').checked = false; // Limpa a seleção
+        toggleTrocoInput(); // Limpa a entrada de troco
+}
+
+function toggleTrocoInput() {
+        const trocoContainer = document.getElementById('trocoContainer');
+        const precisaTrocoSim = document.getElementById('trocoSim').checked;
+
+        if (precisaTrocoSim) {
+         trocoContainer.style.display = 'block'; // Mostra a caixa de entrada
+        } else {
+        trocoContainer.style.display = 'none'; // Esconde a caixa de entrada
+        document.getElementById('valorTroco').value = ''; // Limpa o valor do troco
+    }
+}
+</script>
+
                     </div>
                     <div class="flex items-center justify-between mt-5 w-full mr-14">
                         <button id="close-modal-btn" type="button" class="bg-red-500 text-white px-4 py-1 rounded">Fechar</button>
@@ -403,5 +460,7 @@ include("conexao.php");
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
 
-</html>
+</html>     
