@@ -95,7 +95,7 @@ $conn->close();
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script src="./script/scriptUsuario.js"></script>
+    <script src="scriptUsuario.js"></script>
 </body>
 
 </html>
