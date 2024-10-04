@@ -375,27 +375,27 @@ document.addEventListener('DOMContentLoaded', function () {
     const cerveja = document.getElementById('cerveja');
     const options5 = document.getElementById('options-5');
     cerveja.addEventListener('click', function () {
-        options5.classList.remove('hidden');
+        options5.classList.toggle('hidden');
     })
     const agua = document.getElementById('agua');
     const options4 = document.getElementById('options-4');
     agua.addEventListener('click', function () {
-        options4.classList.remove('hidden');
+        options4.classList.toggle('hidden');
     })
     const doisL = document.getElementById('2l');
     const options3 = document.getElementById('options-3');
     doisL.addEventListener('click', function () {
-        options3.classList.remove('hidden');
+        options3.classList.toggle('hidden');
     })
     const seiscentosMl = document.getElementById('600ml');
     const options2 = document.getElementById('options-2');
     seiscentosMl.addEventListener('click', function () {
-        options2.classList.remove('hidden');
+        options2.classList.toggle('hidden');
     })
     const lata = document.getElementById('lata');
     const options1 = document.getElementById('options-1');
     lata.addEventListener('click', function () {
-        options1.classList.remove('hidden');
+        options1.classList.toggle('hidden');
     })
 
     document.querySelectorAll('.bebida-size button').forEach(button => {
