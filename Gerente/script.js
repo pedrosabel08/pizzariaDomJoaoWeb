@@ -1,3 +1,18 @@
+const modal = document.getElementById('modal');
+var close = document.getElementsByClassName("close")[0];
+
+close.onclick = function () {
+    modal.style.display = "none";
+    limparCampos();
+};
+
+window.onclick = function (event) {
+    // Verificar se o clique foi fora do modal de imagem
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+};
+
 document.addEventListener("DOMContentLoaded", function () {
     function atualizarTabela() {
         fetch('pedidos.php') // Caminho para o seu script PHP
@@ -29,12 +44,39 @@ document.addEventListener("DOMContentLoaded", function () {
                     // Adiciona a linha à tabela
                     tabela.appendChild(tr);
                 });
+
+                // Adiciona o evento de clique nas linhas da tabela
+                const linhasTabela = document.querySelectorAll('.linha-tabela');
+                linhasTabela.forEach(linha => {
+                    linha.addEventListener('click', function () {
+                        modal.style.display = "flex";
+                        var idPedidoSelecionado = this.getAttribute('data-id');
+
+                        // Realiza a requisição AJAX ao clicar na linha
+                        $.ajax({
+                            type: "GET",
+                            dataType: "json",
+                            url: "http://localhost:8066/pizzariaDomJoaoWeb/gerente/buscaAJAX.php", // Substitua pelo caminho correto do seu script PHP
+                            data: { ajid: idPedidoSelecionado },
+                            success: function (response) {
+                                if (response.length > 0) {
+
+
+                                } else {
+                                    console.log("Nenhuma venda encontrada.");
+                                }
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                console.error("Erro na requisição AJAX: " + textStatus, errorThrown);
+                            }
+                        });
+                    });
+                });
             })
             .catch(error => console.error('Erro ao atualizar a tabela:', error));
     }
 
-    // Atualiza a tabela a cada 5 segundos
-    setInterval(atualizarTabela, 5000);
+    atualizarTabela();
 });
 
 var ctx = document.getElementById('statusChart').getContext('2d');
