@@ -5,11 +5,12 @@ class Conexao
     private $username = "root";
     private $password = "";
     private $dbname = "bd_pizzaria";
+    private $port = "3307";
     private $conn;
 
     public function __construct()
     {
-        $this->conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
+        $this->conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname, $this->port);
 
         if ($this->conn->connect_error) {
             die("Conexão falhou: " . $this->conn->connect_error);

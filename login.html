@@ -50,7 +50,7 @@
 
             <div id="signup" class="hidden space-y-6">
                 <h2 class="text-2xl font-bold text-center">Cadastro</h2>
-                <form action="cadastro.php" method="post" class="space-y-6">
+                <form id="formCadastro" action="cadastro.php" method="post" class="space-y-6">
                     <div>
                         <label for="nome" class="block text-sm font-medium text-gray-700">Nome</label>
                         <input id="nome" name="nome" type="text" required
@@ -67,28 +67,44 @@
                             class="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:ring-blue-500 focus:border-blue-500">
                     </div>
                     <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                        <input id="email" name="email" type="email" required
+                        <label for="emailCad" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input id="emailCad" name="emailCad" type="text" required
                             class="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:ring-blue-500 focus:border-blue-500">
                     </div>
                     <div>
-                        <label for="senha" class="block text-sm font-medium text-gray-700">Senha</label>
-                        <input id="senha" name="senha" type="password" required
+                        <label for="senhaCad" class="block text-sm font-medium text-gray-700">Senha</label>
+                        <input id="senhaCad" name="senhaCad" type="password" required
                             class="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:ring-blue-500 focus:border-blue-500">
                     </div>
                     <div>
-                        <button type="submit"
-                            class="w-full px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Cadastro</button>
+                        <input type="button"
+                            class="w-full px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700"
+                            onclick="exibeVerificacao();" value="Cadastro"></input>
                     </div>
                 </form>
                 <div class="text-center">
                     <button id="showLogin" class="text-blue-600 hover:underline">Já tem uma conta? Login</button>
                 </div>
             </div>
+            <div id="verify" class="hidden space-y-6">
+                <h2 class="text-2xl font-bold text-center">Verificação</h2>
+                <div>
+                    <label for="token" class="block text-sm font-medium text-gray-700">Código de verificação</label>
+                    <input id="token" name="token" type="text" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <input type="button"
+                        class="w-full px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700"
+                        onclick="validateVerificationCode();" value="Confirmar"></input>
+                </div>
+                <div id="statusToken"></div>
+            </div>
         </div>
     </div>
 
     <script src="scriptLogin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </body>
 
 </html>
