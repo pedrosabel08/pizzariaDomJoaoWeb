@@ -34,6 +34,7 @@ if ($result->num_rows > 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestão de Pedidos - Gerente</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -89,48 +90,29 @@ if ($result->num_rows > 0) {
                 <?php endforeach; ?>
             </tbody>
         </table>
-    </main>
 
-    <!-- Modal para os Detalhes do Pedido -->
-    <div id="order-details-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2>Detalhes do Pedido</h2>
-            <div class="order-info">
-                <p><strong>ID Pedido:</strong> <span id="modal-order-id"></span></p>
-                <p><strong>Cliente:</strong> <span id="modal-customer-name"></span></p>
-                <p><strong>Data:</strong> <span id="modal-order-date"></span></p>
-                <p><strong>Status:</strong> <span id="modal-order-status"></span></p>
-                <p><strong>Valor Total:</strong> <span id="modal-order-total"></span></p>
-            </div>
-
-            <div class="order-items">
-                <h3>Itens do Pedido</h3>
-                <ul id="modal-order-items">
-                    <!-- Itens do pedido serão carregados dinamicamente -->
-                </ul>
-            </div>
-
-            <div class="status-update">
-                <h3>Atualizar Status</h3>
-                <select id="update-status">
-                    <option value="pendente">Pendente</option>
-                    <option value="preparando">Preparando</option>
-                    <option value="pronto">Pronto</option>
-                    <option value="entregue">Entregue</option>
-                </select>
-                <button id="save-status-btn">Salvar</button>
-            </div>
-
-            <div class="whatsapp-contact">
-                <button id="whatsapp-btn">Conversar pelo WhatsApp</button>
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div id="form-inserir">
+                    <h2>Formulário de Dados</h2>
+                    <form id="formPedido">
+                        <div>
+                            <a href="https://wa.me/" target="_blank">
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+    </main>
+
     <div class="grafico">
         <canvas id="statusChart" width="400" height="200"></canvas>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="script.js"></script>
 

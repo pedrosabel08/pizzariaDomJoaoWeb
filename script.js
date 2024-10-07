@@ -241,11 +241,19 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
+        // Pegar o valor da taxa de entrega
+        const deliveryFee = parseFloat(document.getElementById('calcTaxaEntrega').value) || 0;
+
+        // Calcular o total com a taxa de entrega
+        const totalWithDelivery = totalCartPrice + deliveryFee;
+
+        // Criar o campo de input para o preço total (com taxa de entrega)
         const totalPriceInput = document.createElement('input');
         totalPriceInput.type = 'hidden';
         totalPriceInput.name = 'total_price';
-        totalPriceInput.value = totalCartPrice.toFixed(2);
+        totalPriceInput.value = totalWithDelivery.toFixed(2); // Incluindo a taxa de entrega
         cartInputs.appendChild(totalPriceInput);
+
 
         console.log('Dados do formulário:', cartInputs);
 
@@ -320,7 +328,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (nomeCliente) {
         const loginButton = document.getElementById('login');
-        const greeting = document.getElementById('greeting');
+        const menuButton = document.getElementById('menuButton');
         const clienteNomeSpan = document.getElementById('cliente-nome');
         const clienteNomeInput = document.getElementById('cliente_nome');
         const buttonSair = document.getElementById('button-sair')
@@ -328,7 +336,7 @@ document.addEventListener('DOMContentLoaded', function () {
         loginButton.style.display = 'none';
         clienteNomeSpan.textContent = nomeCliente;
         clienteNomeInput.value = nomeCliente
-        greeting.style.display = 'inline';
+        menuButton.style.display = 'inline';
         buttonSair.classList.remove('hidden');
     }
 
@@ -339,6 +347,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const ruaEntregaDiv = document.getElementById('ruaEntrega');
     const numeroEntregaDiv = document.getElementById('numeroEntrega');
     const complementoEntregaDiv = document.getElementById('complementoEntrega');
+    const taxaEntregaDiv = document.getElementById('taxaEntrega');
 
     retiradaRadio.addEventListener('change', () => {
         if (retiradaRadio.checked) {
@@ -347,6 +356,8 @@ document.addEventListener('DOMContentLoaded', function () {
             ruaEntregaDiv.classList.add('hidden');
             numeroEntregaDiv.classList.add('hidden');
             complementoEntregaDiv.classList.add('hidden');
+            taxaEntregaDiv.classList.add('hidden');
+
         }
     });
 
@@ -357,33 +368,34 @@ document.addEventListener('DOMContentLoaded', function () {
             ruaEntregaDiv.classList.remove('hidden');
             numeroEntregaDiv.classList.remove('hidden');
             complementoEntregaDiv.classList.remove('hidden');
+            taxaEntregaDiv.classList.remove('hidden');
         }
     });
 
     const cerveja = document.getElementById('cerveja');
     const options5 = document.getElementById('options-5');
     cerveja.addEventListener('click', function () {
-        options5.classList.remove('hidden');
+        options5.classList.toggle('hidden');
     })
     const agua = document.getElementById('agua');
     const options4 = document.getElementById('options-4');
     agua.addEventListener('click', function () {
-        options4.classList.remove('hidden');
+        options4.classList.toggle('hidden');
     })
     const doisL = document.getElementById('2l');
     const options3 = document.getElementById('options-3');
     doisL.addEventListener('click', function () {
-        options3.classList.remove('hidden');
+        options3.classList.toggle('hidden');
     })
     const seiscentosMl = document.getElementById('600ml');
     const options2 = document.getElementById('options-2');
     seiscentosMl.addEventListener('click', function () {
-        options2.classList.remove('hidden');
+        options2.classList.toggle('hidden');
     })
     const lata = document.getElementById('lata');
     const options1 = document.getElementById('options-1');
     lata.addEventListener('click', function () {
-        options1.classList.remove('hidden');
+        options1.classList.toggle('hidden');
     })
 
     document.querySelectorAll('.bebida-size button').forEach(button => {
@@ -522,7 +534,7 @@ document.addEventListener('DOMContentLoaded', function () {
             alert('Por favor, selecione uma forma de entrega.');
         }
     });
-    
+
     document.getElementById('cartForm').addEventListener('submit', function (event) {
 
         const pagamentoOptions = document.getElementsByName('forma_pagamento');
@@ -566,6 +578,10 @@ if (isOpen) {
     spanItem.classList.add("bg-red-500")
 }
 
+
+const enderecoPizzaria = 'R. Francisco Vahldieck, 236 - Fortaleza, Blumenau - SC, 89056-000'; // Endereço fixo da pizzaria
+
+// Função que busca o endereço pelo CEP e calcula a taxa de entrega
 function buscaEndereco(cep) {
     if (cep.length == 8) {
         $.ajax({
@@ -573,16 +589,66 @@ function buscaEndereco(cep) {
             dataType: "json",
             url: "https://viacep.com.br/ws/" + cep + "/json/",
             success: function (data) {
-                if (data.bairro != null) {
+                if (!data.erro) {
+                    // Preenche os campos de endereço
                     document.getElementById('bairro').value = data.bairro;
                     document.getElementById('rua').value = data.logradouro;
+
+                    const enderecoCliente = `${data.logradouro}, ${data.bairro}, ${data.localidade}, ${data.uf}`;
+
+                    // Chama o backend PHP para calcular a taxa de entrega
+                    calcularTaxaEntrega(enderecoCliente);
                 }
             }
+
         });
     }
 }
+// Função que chama o PHP para calcular a taxa de entrega
+function calcularTaxaEntrega(enderecoCliente) {
+    $.ajax({
+        url: 'http://localhost:8066/pizzariaDomJoaoWeb/taxaEntrega.php',
+        method: 'GET',
+        data: {
+            enderecoCliente: enderecoCliente,
+            enderecoPizzaria: enderecoPizzaria
+        },
+        success: function (response) {
+            if (response.status === 'success') {
+                console.log('Distância: ' + response.distanciaMetros + ' metros');
+                console.log('Taxa de entrega: R$ ' + response.taxaEntrega);
+                document.getElementById('calcTaxaEntrega').value = `${response.taxaEntrega}`;
+            } else {
+                console.error(response.message);
+            }
+        },
+        error: function (err) {
+            console.error('Erro na requisição: ', err);
+        }
+    });
+}
+
 
 function fecha() {
     document.getElementById("cart-modal").style.display = "none"
     document.getElementById('corpo').style.position = "absolute"
 }
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.getElementById('menuButton').addEventListener('click', function () {
+        const menu = document.getElementById('menu');
+        menu.classList.toggle('hidden');
+    });
+
+    window.addEventListener('click', function (event) {
+        const menu = document.getElementById('menu');
+        const button = document.getElementById('menuButton');
+
+        if (!button.contains(event.target) && !menu.contains(event.target)) {
+            menu.classList.add('hidden');
+        }
+    });
+
+});

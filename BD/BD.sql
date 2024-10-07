@@ -1195,10 +1195,12 @@ select bd_pizzaria.inserirFormaPagamento();
 select bd_pizzaria.inserirUsuarios();
 
 
-alter table vendas add column status_id INT
-ALTER TABLE vendas add constraint status_venda foreign key (status_id) references status_venda (idstatus)
+alter table vendas add column status_id INT;
+ALTER TABLE vendas add constraint status_venda foreign key (status_id) references status_venda (idstatus);
 
 INSERT INTO status_venda (nome_status) values
 ('Não começou'),
 ('Em andamento'),
-('Finalizado')
+('Finalizado');
+
+ALTER TABLE vendas add column valor_entrega DOUBLE;

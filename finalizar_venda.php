@@ -1,17 +1,17 @@
 <?php
 include("conexao.php");
 
-function inserirVenda($conn, $formaEntregaId, $total, $clienteId, $enderecoId, $formaPagamentoId)
+function inserirVenda($conn, $formaEntregaId, $total, $clienteId, $enderecoId, $formaPagamentoId, $valor_entrega)
 {
     // Adicionamos o campo 'status_id' na consulta SQL e definimos o valor como 1
-    $sql = "INSERT INTO vendas (forma_entrega_id, total, data_venda, cliente_id, endereco_id, forma_pagamento_id, status_id) VALUES (?, ?, NOW(), ?, ?, ?, ?)";
+    $sql = "INSERT INTO vendas (forma_entrega_id, total, data_venda, cliente_id, endereco_id, forma_pagamento_id, status_id, valor_entrega) VALUES (?, ?, NOW(), ?, ?, ?, ?, ?)";
 
     // Valor 1 para o status "Não começou"
     $statusId = 1;
 
     if ($stmt = mysqli_prepare($conn, $sql)) {
         // Incluímos o status_id no 'bind_param' (último parâmetro 'i' representa o status_id)
-        mysqli_stmt_bind_param($stmt, "idiiii", $formaEntregaId, $total, $clienteId, $enderecoId, $formaPagamentoId, $statusId);
+        mysqli_stmt_bind_param($stmt, "idiiiid", $formaEntregaId, $total, $clienteId, $enderecoId, $formaPagamentoId, $statusId, $valor_entrega);
 
         if (mysqli_stmt_execute($stmt)) {
             return mysqli_insert_id($conn);
@@ -53,6 +53,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $numero = $_POST["numero"];
         $complemento = $_POST["complemento"];
         $formaPagamentoId = $_POST["forma_pagamento"];
+        $nomeCliente = $_POST["cliente_nome"];
+        $valor_entrega = $_POST["calcTaxaEntrega"];
 
         if ($formaEntregaId == 2) {
             if ($bairro == "") {
@@ -69,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             $enderecoId = inserirEndereco($conn, $bairro, $rua, $numero, $complemento, $clienteId);
         }
-        $vendaId = inserirVenda($conn, $formaEntregaId, $totalPrice, $clienteId, $enderecoId, $formaPagamentoId);
+        $vendaId = inserirVenda($conn, $formaEntregaId, $totalPrice, $clienteId, $enderecoId, $formaPagamentoId, $valor_entrega);
 
         if ($vendaId !== false) {
             foreach ($_POST["cartItems"] as $item) {
