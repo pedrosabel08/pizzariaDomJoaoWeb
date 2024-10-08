@@ -43,7 +43,7 @@ document.getElementById('download-pdf').addEventListener('click', function () {
             let cellText = cell.innerText || '';
             doc.rect(14 + (40 * cellIndex), startY + (index * 10), 40, 10);
             doc.text(cellText, 18 + (40 * cellIndex), startY + 8 + (index * 10));
-        });
+        });''
     });
 
     doc.save('relatorio_vendas.pdf');

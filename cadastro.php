@@ -22,8 +22,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("sssss", $nome, $sobrenome, $telefone, $email, $senha);
 
         if ($stmt->execute()) {
-            //fazer aqui a consulta pelo e-mail do cliente e pegar o id pra passar na url e vir logado após o cadastro.
-            header("Location: index.php?idCliente=" . $row['idclientes'] . "&nome=" . urlencode($nome) . "&status=sucess&message=" . urlencode("Cadastro realizado com sucesso!"));
+            echo '
+            <form id="autoLoginForm" action="login.php" method="POST">
+                <input type="hidden" name="email" value="'.$email.'">
+                <input type="hidden" name="senha" value="'.$senha.'">
+            </form>
+
+            <script type="text/javascript">
+                document.getElementById("autoLoginForm").submit();
+            </script>
+            ';
+            exit;
         } else {
             header("Location: login.html?status=error&message=" . urlencode("Cadastro não efetuado!"));
         }
