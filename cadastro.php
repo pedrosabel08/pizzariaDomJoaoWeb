@@ -5,8 +5,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nome = $_POST['nome'];
     $sobrenome = $_POST['sobrenome'];
     $telefone = $_POST['telefone'];
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
+    $email = $_POST['emailCad'];
+    $senha = $_POST['senhaCad'];
 
     $checkEmailSql = "SELECT idclientes FROM clientes WHERE email = ?";
     $checkStmt = $conn->prepare($checkEmailSql);
@@ -22,12 +22,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("sssss", $nome, $sobrenome, $telefone, $email, $senha);
 
         if ($stmt->execute()) {
-            header("Location: login.html?status=sucess&message=" . urlencode("Cadastro realizado com sucesso!"));
+            echo '
+            <form id="autoLoginForm" action="login.php" method="POST">
+                <input type="hidden" name="email" value="'.$email.'">
+                <input type="hidden" name="senha" value="'.$senha.'">
+            </form>
+
+            <script type="text/javascript">
+                document.getElementById("autoLoginForm").submit();
+            </script>
+            ';
+            exit;
         } else {
             header("Location: login.html?status=error&message=" . urlencode("Cadastro não efetuado!"));
         }
 
         $stmt->close();
+        echo "<script>window.location.href='index.php';</script>";
     }
 
     $checkStmt->close();

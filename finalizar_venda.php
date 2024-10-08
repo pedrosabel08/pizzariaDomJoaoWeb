@@ -40,13 +40,14 @@ function inserirEndereco($conn, $bairro, $rua, $numero, $complemento, $clienteId
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $clienteId = $_POST["cliente_id"];
+    $nomeCliente = $_POST["cliente_nome"];
     if (
         isset($_POST["cartItems"]) && is_array($_POST["cartItems"]) && isset($_POST["total_price"]) &&
         isset($_POST["bairro"]) && isset($_POST["rua"]) && isset($_POST["numero"]) && isset($_POST["complemento"])
     ) {
         $totalPrice = $_POST["total_price"];
         $formaEntregaId = $_POST["forma_entrega"];
-        $clienteId = $_POST["cliente_id"];
         $bairro = $_POST["bairro"];
         $rua = $_POST["rua"];
         $numero = $_POST["numero"];
