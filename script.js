@@ -626,7 +626,7 @@ function calcularTaxaEntrega(enderecoCliente) {
 
                 document.getElementById('calcTaxaEntrega').value = `${response.taxaEntrega}`;
 
-                document.getElementById('calcTempoDuracao').value = `${response.duracaoMinutos} minutos`;
+                document.getElementById('calcTempoDuracao').value = `${response.duracaoMinutos}`;
             } else {
                 console.error(response.message);
             }

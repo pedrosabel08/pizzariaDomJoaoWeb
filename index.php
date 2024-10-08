@@ -389,11 +389,6 @@ $cliente_id = $_SESSION['cliente_id'];
                         </div>
                     </div>
 
-                    <div id="calcDuracao" class="mt-4 hidden">
-                        <h3 class="text-lg mb-2">Tempo de espera</h3>
-                        <input class="border-black border w-2/3 pl-1" type="text" maxlength="45" id="calcTempoDuracao" name="calcTempoDuracao" readonly>
-                    </div>
-
                     <div class="mt-2">
                         <h3 class="text-xl mb-2">Forma de pagamento:</h3>
                         <div class="flex items-center mb-2">

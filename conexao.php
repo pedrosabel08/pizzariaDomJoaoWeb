@@ -5,7 +5,7 @@ class Conexao
     private $username = "root";
     private $password = "";
     private $dbname = "bd_pizzaria";
-    private $port = "3307";
+    private $port = "3306";
     private $conn;
 
     public function __construct()
