@@ -86,6 +86,13 @@ document.addEventListener('DOMContentLoaded', function () {
         if (pizzaFlavors.length > 0) {
             const totalPrice = pizzaSizePrice + pizzaBorderPrice;
 
+            if(pizzaFlavors.length < maxFlavors){
+                let diferenca = maxFlavors - pizzaFlavors.length;
+                for(let i = diferenca; i < maxFlavors; i++){
+                    pizzaFlavors.push(pizzaFlavors);
+                }
+            }
+
             const cartItem = {
                 id: Date.now(),
                 size: pizzaSize,
