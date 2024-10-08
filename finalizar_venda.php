@@ -1,10 +1,10 @@
 <?php
 include("conexao.php");
 
-function inserirVenda($conn, $formaEntregaId, $total, $clienteId, $enderecoId, $formaPagamentoId, $valor_entrega)
+function inserirVenda($conn, $formaEntregaId, $total, $clienteId, $enderecoId, $formaPagamentoId, $valor_entrega, $tempo_espera)
 {
     // Adicionamos o campo 'status_id' na consulta SQL e definimos o valor como 1
-    $sql = "INSERT INTO vendas (forma_entrega_id, total, data_venda, cliente_id, endereco_id, forma_pagamento_id, status_id, valor_entrega) VALUES (?, ?, NOW(), ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO vendas (forma_entrega_id, total, data_venda, cliente_id, endereco_id, forma_pagamento_id, status_id, valor_entrega, tempo_espera) VALUES (?, ?, NOW(), ?, ?, ?, ?, ?, ?)";
 
     // Valor 1 para o status "Não começou"
     $statusId = 1;
@@ -54,6 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $formaPagamentoId = $_POST["forma_pagamento"];
         $nomeCliente = $_POST["cliente_nome"];
         $valor_entrega = $_POST["calcTaxaEntrega"];
+        $tempo_espera = $_POST["calcTempoDuracao"];
 
         if ($formaEntregaId == 2) {
             if ($bairro == "") {
@@ -70,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             $enderecoId = inserirEndereco($conn, $bairro, $rua, $numero, $complemento, $clienteId);
         }
-        $vendaId = inserirVenda($conn, $formaEntregaId, $totalPrice, $clienteId, $enderecoId, $formaPagamentoId, $valor_entrega);
+        $vendaId = inserirVenda($conn, $formaEntregaId, $totalPrice, $clienteId, $enderecoId, $formaPagamentoId, $valor_entrega, $tempo_espera);
 
         if ($vendaId !== false) {
             foreach ($_POST["cartItems"] as $item) {

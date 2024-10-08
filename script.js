@@ -241,18 +241,16 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // Pegar o valor da taxa de entrega
         const deliveryFee = parseFloat(document.getElementById('calcTaxaEntrega').value) || 0;
 
-        // Calcular o total com a taxa de entrega
         const totalWithDelivery = totalCartPrice + deliveryFee;
 
-        // Criar o campo de input para o preço total (com taxa de entrega)
         const totalPriceInput = document.createElement('input');
         totalPriceInput.type = 'hidden';
         totalPriceInput.name = 'total_price';
-        totalPriceInput.value = totalWithDelivery.toFixed(2); // Incluindo a taxa de entrega
+        totalPriceInput.value = totalWithDelivery.toFixed(2);
         cartInputs.appendChild(totalPriceInput);
+
 
 
         console.log('Dados do formulário:', cartInputs);
@@ -348,6 +346,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const numeroEntregaDiv = document.getElementById('numeroEntrega');
     const complementoEntregaDiv = document.getElementById('complementoEntrega');
     const taxaEntregaDiv = document.getElementById('taxaEntrega');
+    const calcDuracao = document.getElementById('calcDuracao');
 
     retiradaRadio.addEventListener('change', () => {
         if (retiradaRadio.checked) {
@@ -357,6 +356,7 @@ document.addEventListener('DOMContentLoaded', function () {
             numeroEntregaDiv.classList.add('hidden');
             complementoEntregaDiv.classList.add('hidden');
             taxaEntregaDiv.classList.add('hidden');
+            calcDuracao.classList.add('hidden');
 
         }
     });
@@ -369,6 +369,7 @@ document.addEventListener('DOMContentLoaded', function () {
             numeroEntregaDiv.classList.remove('hidden');
             complementoEntregaDiv.classList.remove('hidden');
             taxaEntregaDiv.classList.remove('hidden');
+            calcDuracao.classList.remove('hidden');
         }
     });
 
@@ -581,7 +582,6 @@ if (isOpen) {
 
 const enderecoPizzaria = 'R. Francisco Vahldieck, 236 - Fortaleza, Blumenau - SC, 89056-000'; // Endereço fixo da pizzaria
 
-// Função que busca o endereço pelo CEP e calcula a taxa de entrega
 function buscaEndereco(cep) {
     if (cep.length == 8) {
         $.ajax({
@@ -590,13 +590,12 @@ function buscaEndereco(cep) {
             url: "https://viacep.com.br/ws/" + cep + "/json/",
             success: function (data) {
                 if (!data.erro) {
-                    // Preenche os campos de endereço
+
                     document.getElementById('bairro').value = data.bairro;
                     document.getElementById('rua').value = data.logradouro;
 
                     const enderecoCliente = `${data.logradouro}, ${data.bairro}, ${data.localidade}, ${data.uf}`;
 
-                    // Chama o backend PHP para calcular a taxa de entrega
                     calcularTaxaEntrega(enderecoCliente);
                 }
             }
@@ -604,7 +603,6 @@ function buscaEndereco(cep) {
         });
     }
 }
-// Função que chama o PHP para calcular a taxa de entrega
 function calcularTaxaEntrega(enderecoCliente) {
     $.ajax({
         url: 'http://localhost:8066/pizzariaDomJoaoWeb/taxaEntrega.php',
@@ -617,7 +615,11 @@ function calcularTaxaEntrega(enderecoCliente) {
             if (response.status === 'success') {
                 console.log('Distância: ' + response.distanciaMetros + ' metros');
                 console.log('Taxa de entrega: R$ ' + response.taxaEntrega);
+                console.log('Duração estimada: ' + response.duracaoMinutos + ' minutos');
+
                 document.getElementById('calcTaxaEntrega').value = `${response.taxaEntrega}`;
+
+                document.getElementById('calcTempoDuracao').value = `${response.duracaoMinutos} minutos`;
             } else {
                 console.error(response.message);
             }
@@ -627,6 +629,7 @@ function calcularTaxaEntrega(enderecoCliente) {
         }
     });
 }
+
 
 
 function fecha() {
@@ -652,3 +655,37 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
+function gerarQRCode() {
+
+    const pixCode = 'assets/Untitled.png';
+
+    $('#qrcode').empty();
+
+    $('#qrcode').qrcode({
+        text: pixCode,
+        width: 200,
+        height: 200
+    });
+}
+
+
+function toggleTrocoOptions() {
+    const trocoOptions = document.getElementById('trocoOptions');
+    trocoOptions.style.display = 'block'; // Exibe as opções de troco
+    document.getElementById('trocoSim').checked = false; // Limpa a seleção
+    document.getElementById('trocoNao').checked = false; // Limpa a seleção
+    toggleTrocoInput(); // Limpa a entrada de troco
+}
+
+function toggleTrocoInput() {
+    const trocoContainer = document.getElementById('trocoContainer');
+    const precisaTrocoSim = document.getElementById('trocoSim').checked;
+
+    if (precisaTrocoSim) {
+        trocoContainer.style.display = 'block'; // Mostra a caixa de entrada
+    } else {
+        trocoContainer.style.display = 'none'; // Esconde a caixa de entrada
+        document.getElementById('valorTroco').value = ''; // Limpa o valor do troco
+    }
+}
