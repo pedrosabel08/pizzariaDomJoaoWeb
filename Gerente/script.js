@@ -7,7 +7,7 @@ close.onclick = function () {
 };
 
 window.onclick = function (event) {
-    // Verificar se o clique foi fora do modal de imagem
+
     if (event.target == modal) {
         modal.style.display = "none";
     }
@@ -15,19 +15,18 @@ window.onclick = function (event) {
 
 document.addEventListener("DOMContentLoaded", function () {
     function atualizarTabela() {
-        fetch('pedidos.php') // Caminho para o seu script PHP
+        fetch('pedidos.php')
             .then(response => response.json())
             .then(data => {
                 const tabela = document.getElementById('order-list');
-                tabela.innerHTML = ''; // Limpa a tabela atual
+                tabela.innerHTML = '';
 
                 data.forEach(produto => {
-                    // Cria uma nova linha
+
                     const tr = document.createElement('tr');
                     tr.classList.add('linha-tabela');
                     tr.setAttribute('data-id', produto.vendas_idvendas);
 
-                    // Adiciona as células à linha
                     tr.innerHTML = `
                         <td>${produto.vendas_idvendas}</td>
                         <td>
@@ -41,27 +40,28 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td>${produto.total}</td>
                     `;
 
-                    // Adiciona a linha à tabela
                     tabela.appendChild(tr);
                 });
 
-                // Adiciona o evento de clique nas linhas da tabela
                 const linhasTabela = document.querySelectorAll('.linha-tabela');
                 linhasTabela.forEach(linha => {
                     linha.addEventListener('click', function () {
                         modal.style.display = "flex";
                         var idPedidoSelecionado = this.getAttribute('data-id');
 
-                        // Realiza a requisição AJAX ao clicar na linha
                         $.ajax({
                             type: "GET",
                             dataType: "json",
-                            url: "http://localhost:8066/pizzariaDomJoaoWeb/gerente/buscaAJAX.php", // Substitua pelo caminho correto do seu script PHP
+                            url: "http://localhost:8066/pizzariaDomJoaoWeb/gerente/buscaAJAX.php",
                             data: { ajid: idPedidoSelecionado },
                             success: function (response) {
                                 if (response.length > 0) {
+                                    var clienteTelefone = response[0].telefone;
 
+                                    clienteTelefone = clienteTelefone.replace(/\D/g, '');
 
+                                    var whatsappLink = document.getElementById('whatsappLink');
+                                    whatsappLink.href = `https://wa.me/${clienteTelefone}`;
                                 } else {
                                     console.log("Nenhuma venda encontrada.");
                                 }

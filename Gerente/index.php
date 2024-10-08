@@ -98,7 +98,7 @@ if ($result->num_rows > 0) {
                     <h2>Formulário de Dados</h2>
                     <form id="formPedido">
                         <div>
-                            <a href="https://wa.me/" target="_blank">
+                            <a id="whatsappLink" href="https://wa.me/" target="_blank">
                                 <i class="fa-brands fa-whatsapp"></i>
                             </a>
                         </div>

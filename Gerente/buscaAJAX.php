@@ -18,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     t.nome, 
     b.nome, 
     c.nome as nome_cliente,
+    c.telefone,
     v.data_venda,
     v.total,
     s.nome_status
