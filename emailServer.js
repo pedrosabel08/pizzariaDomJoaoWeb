@@ -32,7 +32,6 @@ app.post('/send-email', (req, res) => {
         text: text  // Corpo do e-mail
     };
 
-    // Enviando o e-mail
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             return res.status(500).send('Erro ao enviar e-mail: ' + error.toString());
