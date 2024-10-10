@@ -47,7 +47,7 @@ $cliente_id = $_SESSION['cliente_id'];
                 <div id="menu" class="hidden">
                     <a href="infos.php" id="editProfile"><i class="fa-regular fa-user"></i>Editar Informações</a>
                     <hr>
-                    <a href="myPedidos.php" id="pedidos"><i class="fa-solid fa-list"></i>Meus pedidos</a>
+                    <a href="Pedidos/index.html" id="pedidos"><i class="fa-solid fa-list"></i>Meus pedidos</a>
                     <hr>
                     <a href="#" id="logout"><i class="fa-solid fa-right-from-bracket"></i>Sair</a>
                 </div>
