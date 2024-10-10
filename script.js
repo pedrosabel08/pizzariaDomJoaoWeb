@@ -319,31 +319,31 @@ document.addEventListener('DOMContentLoaded', function () {
         }).showToast();
     }
 
-    const params = new URLSearchParams(window.location.search);
-    const nomeCliente = params.get('nome');
-    const clienteId = params.get('idCliente');
+    // const params = new URLSearchParams(window.location.search);
+    // const nomeCliente = params.get('nome');
+    // const clienteId = params.get('idCliente');
 
-    const clientIdInput = document.getElementById('cliente_id');
+    // const clientIdInput = document.getElementById('cliente_id');
 
-    if (clientIdInput) {
-        clientIdInput.value = clienteId;
-        console.log(clienteId);
-    }
+    // if (clientIdInput) {
+    //     clientIdInput.value = clienteId;
+    //     console.log(clienteId);
+    // }
 
 
-    if (nomeCliente) {
-        const loginButton = document.getElementById('login');
-        const menuButton = document.getElementById('menuButton');
-        const clienteNomeSpan = document.getElementById('cliente-nome');
-        const clienteNomeInput = document.getElementById('cliente_nome');
-        const buttonSair = document.getElementById('button-sair')
+    // if (nomeCliente) {
+    //     const loginButton = document.getElementById('login');
+    //     const menuButton = document.getElementById('menuButton');
+    //     const clienteNomeSpan = document.getElementById('cliente-nome');
+    //     const clienteNomeInput = document.getElementById('cliente_nome');
+    //     const buttonSair = document.getElementById('button-sair')
 
-        loginButton.style.display = 'none';
-        clienteNomeSpan.textContent = nomeCliente;
-        clienteNomeInput.value = nomeCliente
-        menuButton.style.display = 'inline';
-        buttonSair.classList.remove('hidden');
-    }
+    //     loginButton.style.display = 'none';
+    //     clienteNomeSpan.textContent = nomeCliente;
+    //     clienteNomeInput.value = nomeCliente
+    //     menuButton.style.display = 'inline';
+    //     buttonSair.classList.remove('hidden');
+    // }
 
     const retiradaRadio = document.getElementById('retirada');
     const entregaRadio = document.getElementById('entrega');

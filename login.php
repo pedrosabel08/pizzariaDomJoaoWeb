@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['cliente_id'] = $row['idclientes'];
         $_SESSION['nome'] = $row['nome'];
         echo "<script>alert('Login feito com sucesso!');</script>";
-        header("Location: index.php?idCliente=" . $row['idclientes'] . "&nome=" . urlencode($row['nome']));
+        header("Location: index.php");
         exit();
     } else {
         echo "<script>alert('Email ou senha incorretos.');window.location.href='login.html';</script>";
