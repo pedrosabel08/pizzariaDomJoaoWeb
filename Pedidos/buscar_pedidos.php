@@ -31,7 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     INNER JOIN status_venda s ON v.status_id = s.idstatus
     INNER JOIN tamanho t ON vp.tamanho_idtamanho = t.idtamanho
     WHERE v.cliente_id = ?
-    GROUP BY v.idvendas;';
+    GROUP BY v.idvendas
+    ORDER BY data_venda DESC;';
 
     if ($stmt = $mysqli->prepare($sql)) {
         $stmt->bind_param('i', $idclientes);
