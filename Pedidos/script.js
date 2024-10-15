@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                     <input type="text" name="total" id="total" value="R$ ${pedido.total}" readonly>
                                 </div>
                                 <div>
-                                    <input type="text" name="rua" id="rua" value="${pedido.rua}" readonly>
+                                    <input type="text" name="tipo" id="tipo" value="${pedido.tipo}" readonly>
                                 </div>
                                 <div>
                                     <input type="text" name="nome_status" id="nome_status" value="${pedido.nome_status}" readonly class="${statusClass}">

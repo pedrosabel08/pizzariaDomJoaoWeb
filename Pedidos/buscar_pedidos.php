@@ -22,12 +22,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     t.nome,
     v.data_venda,
     v.total,
-    e.rua,
+    f.tipo,
     s.nome_status
     FROM vendas_pizzas vp
     INNER JOIN vendas v ON v.idvendas = vp.vendas_idvendas
+    INNER JOIN forma_entrega f ON v.forma_entrega_id = f.idforma_entrega
     INNER JOIN clientes c ON v.cliente_id = c.idclientes
-    INNER JOIN endereco e ON e.cliente_id = c.idclientes
     INNER JOIN status_venda s ON v.status_id = s.idstatus
     INNER JOIN tamanho t ON vp.tamanho_idtamanho = t.idtamanho
     WHERE v.cliente_id = ?
