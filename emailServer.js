@@ -20,7 +20,7 @@ app.post('/send-email', (req, res) => {
     // Configurando o Nodemailer para usar SendGrid
     let transporter = nodemailer.createTransport(
         sendgridTransport({
-            apiKey: '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'  // Substitua com a sua API Key do SendGrid
+            apiKey: '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'  // Substitua com a sua API Key do SendGrid
         })
     );
 
