@@ -59,7 +59,7 @@ if (isset($dados['vendas_idvendas'])) {
             WHERE 
             ls.venda_id = ?
             ORDER BY 
-            ls.data_alteracao DESC;";
+            ls.data_alteracao ASC;";
 
             if ($stmtLog = mysqli_prepare($conn, $sqlLog)) {
                 mysqli_stmt_bind_param($stmtLog, "i", $pedidoId);

@@ -3,10 +3,18 @@ include("conexao.php");
 
 header('Content-Type: application/json');
 
+function contarPedidosNaoFinalizados($conn)
+{
+    $sql = "SELECT COUNT(*) as totalPedidos FROM vendas WHERE status_id != 3"; // Assumindo que 3 é o status "Finalizado"
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    return $row['totalPedidos'];
+}
+
 function inserirVenda($conn, $formaEntregaId, $total, $clienteId, $enderecoId, $formaPagamentoId, $valor_entrega, $tempo_espera)
 {
     $sql = "INSERT INTO vendas (forma_entrega_id, total, data_venda, cliente_id, endereco_id, forma_pagamento_id, status_id, valor_entrega, tempo_espera) VALUES (?, ?, NOW(), ?, ?, ?, ?, ?, ?)";
-    $statusId = 1;
+    $statusId = 1; // 1 assumindo que este é o status de "Em andamento"
 
     if ($stmt = mysqli_prepare($conn, $sql)) {
         mysqli_stmt_bind_param($stmt, "idiiiidi", $formaEntregaId, $total, $clienteId, $enderecoId, $formaPagamentoId, $statusId, $valor_entrega, $tempo_espera);
@@ -43,7 +51,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $formaPagamentoId = $_POST["forma_pagamento"];
         $valor_entrega = $_POST["calcTaxaEntrega"];
         $tempo_espera = $_POST["calcTempoDuracao"];
- 
+
+        // Contar pedidos não finalizados
+        $tempo_espera = isset($_POST["calcTempoDuracao"]) ? floatval($_POST["calcTempoDuracao"]) : 0; // Certifique-se de que seja um número
+
+        // Contar pedidos não finalizados
+        $pedidosPendentes = contarPedidosNaoFinalizados($conn);
+        $tempoAdicional = $pedidosPendentes * 5;
+        $tempo_espera += $tempoAdicional;
+
         if ($formaEntregaId == 2) {
             if (empty($bairro) || empty($rua) || empty($numero)) {
                 echo json_encode(['success' => false, 'message' => "Preencha todos os campos de endereço."]);
@@ -56,7 +72,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         } else {
             $enderecoId = null;
-            $tempo_espera = 20;
+            $pedidosPendentes = contarPedidosNaoFinalizados($conn);
+            $tempoAdicional = $pedidosPendentes * 5;
+            $tempo_espera = 20 + $tempoAdicional;
         }
 
         $vendaId = inserirVenda($conn, $formaEntregaId, $totalPrice, $clienteId, $enderecoId, $formaPagamentoId, $valor_entrega, $tempo_espera);
