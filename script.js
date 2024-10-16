@@ -77,7 +77,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 inputRemover.value = 1;
                 botaoRemover.addEventListener('click', function(){
                     if (pizzaFlavors.includes(flavor)) {
-                        console.log(parseInt(document.getElementById(contador).value));
                         document.getElementById(contador).value = (parseInt(document.getElementById(contador).value) > 0 ? (parseInt(document.getElementById(contador).value) - 1) : 0);
                         inputVisivel.value = document.getElementById(contador).value + '/' + maxFlavors;
                         if(parseInt(document.getElementById(contador).value) == 0 || document.getElementById(contador).value == ''){
@@ -101,9 +100,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
             } else {
+                divSabor.classList.remove('bg-green-300');
                 document.getElementById(contador).value = (parseInt(document.getElementById(contador).value) > 0 ? (parseInt(document.getElementById(contador).value) - 1) : 0);
+                inputVisivel.classList.remove('bg-green-300');
                 inputVisivel.value = '';
-
+                pizzaFlavors = pizzaFlavors.filter(flavorItem => flavorItem !== flavor);
                 botaoRemover.style.display = 'none';
                 
                 alert(`Você só pode selecionar até ${maxFlavors} sabores.`);
@@ -118,14 +119,23 @@ document.addEventListener('DOMContentLoaded', function () {
             const totalPrice = pizzaSizePrice + pizzaBorderPrice;
 
             for(let i = 1; i <= document.getElementsByClassName('pizza-flavor').length; i++){
-                const inputVisivel = document.getElementById(`Visivelsalgadas${i}`);
-                if(inputVisivel != null){
-                    const botaoRemover = document.getElementById(`removersalgadas${i}`);
-                    botaoRemover.style.display = 'none';
-                    inputVisivel.classList.remove('bg-green-300');
-                    inputVisivel.value = '';
+                const inputVisivels = document.getElementById(`Visivelsalgadas${i}`);
+                const inputVisiveld = document.getElementById(`Visiveldoces${i}`);
+                if(inputVisivels != null){
+                    const botaoRemovers = document.getElementById(`removersalgadas${i}`);
+                    botaoRemovers.style.display = 'none';
+                    inputVisivels.classList.remove('bg-green-300');
+                    inputVisivels.value = '';
                     document.getElementById(`salgadas${i}`).value = '';
                     document.getElementById(`JaTemRemovesalgadas${i}`).value = '';
+                }
+                if(inputVisiveld != null){
+                    const botaoRemoverd = document.getElementById(`removerdoces${i}`);
+                    botaoRemoverd.style.display = 'none';
+                    inputVisiveld.classList.remove('bg-green-300');
+                    inputVisiveld.value = '';
+                    document.getElementById(`doces${i}`).value = '';
+                    document.getElementById(`JaTemRemovedoces${i}`).value = '';
                 }
             }
 
@@ -254,6 +264,7 @@ document.addEventListener('DOMContentLoaded', function () {
         for(let i = 1; i <= document.getElementsByClassName('pizza-flavor').length; i++){
             document.getElementsByClassName('pizza-flavor')[i].classList.remove('bg-green-300');
             const inputVisivel = document.getElementById(`Visivelsalgadas${i}`);
+            const inputVisiveld = document.getElementById(`Visiveldoces${i}`);
             if(inputVisivel != null){
                 const botaoRemover = document.getElementById(`removersalgadas${i}`);
                 botaoRemover.style.display = 'none';
@@ -261,6 +272,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 inputVisivel.value = '';
                 document.getElementById(`salgadas${i}`).value = '';
                 document.getElementById(`JaTemRemovesalgadas${i}`).value = '';
+            }
+            if(inputVisiveld != null){
+                const botaoRemoverd = document.getElementById(`removerdoces${i}`);
+                botaoRemoverd.style.display = 'none';
+                inputVisiveld.classList.remove('bg-green-300');
+                inputVisiveld.value = '';
+                document.getElementById(`doces${i}`).value = '';
+                document.getElementById(`JaTemRemovedoces${i}`).value = '';
             }
         }
     });
