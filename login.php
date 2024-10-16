@@ -18,11 +18,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['email'] = $email;
         $_SESSION['cliente_id'] = $row['idclientes'];
         $_SESSION['nome'] = $row['nome'];
-        echo "<script>alert('Login feito com sucesso!');</script>";
-        header("Location: index.php");
-        exit();
+
+        // Resposta em JSON para sucesso
+        echo json_encode([
+            'success' => true,
+            'message' => 'Login feito com sucesso!'
+        ]);
     } else {
-        echo "<script>alert('Email ou senha incorretos.');window.location.href='login.html';</script>";
+        // Resposta em JSON para falha
+        echo json_encode([
+            'success' => false,
+            'message' => 'Email ou senha incorretos.'
+        ]);
     }
 
     $stmt->close();
