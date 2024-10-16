@@ -187,13 +187,20 @@ $cliente_id = $_SESSION['cliente_id'];
                 $result = $conn->query($sql);
 
                 if ($result->num_rows > 0) {
+                    $contador = 0;
                     while ($row = $result->fetch_assoc()) {
-                ?>
-                        <button class="pizza-flavor bg-white p-4 rounded-lg shadow-md text-center border-2 border-red-500" data-flavor="<?php echo htmlspecialchars($row['nomePizza']); ?>" data-id-flavor="<?php echo $row['idpizzas'] ?>">
+                        $contador++;
+                ?>      
+                    <div>
+                        <button id="removersalgadas<?php echo $contador ?>" style="position:absolute;display:none;" class="bg-red-600 p-1 rounded-lg">Remover</button>
+                        <button class="pizza-flavor bg-white p-4 rounded-lg shadow-md text-center border-2 border-red-500" data-flavor="<?php echo htmlspecialchars($row['nomePizza']); ?>" data-id-flavor="<?php echo $row['idpizzas'] ?>" data-contador="salgadas<?php echo $contador ?>">
                             <div class="font-bold"><?php echo htmlspecialchars($row['nomePizza']); ?></div>
                             <div class="text-sm text-gray-600"><?php echo htmlspecialchars($row['ingredientes']); ?></div>
+                            <input class="text-center cursor-pointer" id="Visivelsalgadas<?php echo $contador ?>" type="text" readonly>
+                            <input style="display:none;" id="salgadas<?php echo $contador ?>" type="text" readonly>
+                            <input style="display:none;" id="JaTemRemovesalgadas<?php echo $contador ?>" type="text" readonly>
                         </button>
-
+                    </div>
                 <?php
                     }
                 } else {
@@ -214,11 +221,14 @@ $cliente_id = $_SESSION['cliente_id'];
                 $result = $conn->query($sql);
 
                 if ($result->num_rows > 0) {
+                    $contador = 0;
                     while ($row = $result->fetch_assoc()) {
+                        $contador++;
                 ?>
-                        <button class="pizza-flavor bg-white p-4 rounded-lg shadow-md text-center border-2 border-pink-500" data-flavor="<?php echo htmlspecialchars($row['nomePizza']); ?>" data-id-flavor="<?php echo $row['idpizzas'] ?>">
+                        <button class="pizza-flavor bg-white p-4 rounded-lg shadow-md text-center border-2 border-pink-500" data-flavor="<?php echo htmlspecialchars($row['nomePizza']); ?>" data-id-flavor="<?php echo $row['idpizzas'] ?>" data-contador="doces<?php echo $contador ?>">
                             <div class="font-bold"><?php echo htmlspecialchars($row['nomePizza']); ?></div>
                             <div class="text-sm text-gray-600"><?php echo htmlspecialchars($row['ingredientes']); ?></div>
+                            <input class="text-center cursor-pointer" id="doces<?php echo $contador ?>" type="text" readonly>
                         </button>
                 <?php
                     }
@@ -383,27 +393,33 @@ $cliente_id = $_SESSION['cliente_id'];
                             <h3 class="text-lg mb-2">Taxa de Entrega</h3>
                             <input class="border-black border w-2/3 pl-1" type="text" maxlength="45" id="calcTaxaEntrega" name="calcTaxaEntrega" readonly>
                         </div>
-                        <div id="calcDuracao" class="mt-4 hidden">
-                            <h3 class="text-lg mb-2">Tempo de espera</h3>
-                            <input class="border-black border w-2/3 pl-1" type="text" maxlength="45" id="calcTempoDuracao" name="calcTempoDuracao" readonly>
-                        </div>
                     </div>
-
-                    <div id="calcDuracao" class="mt-4 hidden">
-                        <h3 class="text-lg mb-2">Tempo de espera</h3>
-                        <input class="border-black border w-2/3 pl-1" type="text" maxlength="45" id="calcTempoDuracao" name="calcTempoDuracao" readonly>
-                    </div>
-
                     <div class="mt-2">
                         <h3 class="text-xl mb-2">Forma de pagamento:</h3>
                         <div class="flex items-center mb-2">
                             <input type="radio" id="pix" name="forma_pagamento" value="1" onchange="gerarQRCode()">
                             <label for="pix" class="ml-2">Pix</label>
                         </div>
-
+                        <!-- Container para o QR Code -->
                         <div id="qrcode" class="mt-4"></div>
                     </div>
 
+                    <script>
+                        function gerarQRCode() {
+                            // Aqui você deve substituir pelo código do seu pagamento Pix
+                            const pixCode = 'assets/Untitled.png'; // Exemplo de código Pix
+
+                            // Limpa o QR Code anterior
+                            $('#qrcode').empty();
+
+                            // Gera o QR Code
+                            $('#qrcode').qrcode({
+                                text: pixCode,
+                                width: 200,
+                                height: 200
+                            });
+                        }
+                    </script>
                     <div class="flex items-center mb-2">
                         <input type="radio" id="debito" name="forma_pagamento" value="2">
                         <label for="debito" class="ml-2">Cartão de débito</label>
@@ -417,6 +433,7 @@ $cliente_id = $_SESSION['cliente_id'];
                         <label for="dinheiro" class="ml-2">Dinheiro</label>
                     </div>
 
+                    <!-- Opções para precisar de troco -->
                     <div class="flex items-center mb-2" id="trocoOptions" style="display: none;">
                         <label class="mr-2">Precisa de troco?</label>
                         <input type="radio" id="trocoSim" name="precisaTroco" value="sim" onchange="toggleTrocoInput()">
@@ -425,10 +442,33 @@ $cliente_id = $_SESSION['cliente_id'];
                         <label for="trocoNao" class="ml-2">Não</label>
                     </div>
 
+                    <!-- Caixa de entrada para o valor do troco -->
                     <div id="trocoContainer" class="mt-2" style="display: none;">
                         <label for="valorTroco" class="mr-2">Troco para?</label>
                         <input type="number" id="valorTroco" placeholder="Informe o valor do troco">
                     </div>
+
+                    <script>
+                        function toggleTrocoOptions() {
+                            const trocoOptions = document.getElementById('trocoOptions');
+                            trocoOptions.style.display = 'block'; // Exibe as opções de troco
+                            document.getElementById('trocoSim').checked = false; // Limpa a seleção
+                            document.getElementById('trocoNao').checked = false; // Limpa a seleção
+                            toggleTrocoInput(); // Limpa a entrada de troco
+                        }
+
+                        function toggleTrocoInput() {
+                            const trocoContainer = document.getElementById('trocoContainer');
+                            const precisaTrocoSim = document.getElementById('trocoSim').checked;
+
+                            if (precisaTrocoSim) {
+                                trocoContainer.style.display = 'block'; // Mostra a caixa de entrada
+                            } else {
+                                trocoContainer.style.display = 'none'; // Esconde a caixa de entrada
+                                document.getElementById('valorTroco').value = ''; // Limpa o valor do troco
+                            }
+                        }
+                    </script>
 
                 </div>
                 <div class="flex items-center justify-between mt-5 w-full mr-14">

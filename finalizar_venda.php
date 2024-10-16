@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $nomeCliente = $_POST["cliente_nome"];
         $valor_entrega = $_POST["calcTaxaEntrega"];
         $tempo_espera = $_POST["calcTempoDuracao"];
-
+ 
         if ($formaEntregaId == 2) {
             if ($bairro == "") {
                 header("Location: index.php?idCliente=".$clienteId."&nome=".$nomeCliente."&status=error&message=" . urlencode("Informe o bairro."));

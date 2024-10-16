@@ -67,17 +67,48 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.pizza-flavor').forEach(button => {
         button.addEventListener('click', function () {
             const flavor = this.dataset.flavor;
-            if (pizzaFlavors.includes(flavor)) {
-                pizzaFlavors = pizzaFlavors.filter(flavorItem => flavorItem !== flavor);
-                this.classList.remove('bg-green-300');
-            } else {
-                if (pizzaFlavors.length < maxFlavors) {
-                    pizzaFlavors.push(flavor);
-                    this.classList.add('bg-green-300');
-                } else {
-                    alert(`Você só pode selecionar até ${maxFlavors} sabores.`);
-                }
+            let divSabor = this;
+            const contador = this.dataset.contador;
+            const botaoRemover = document.getElementById(`remover${contador}`);
+            const inputVisivel = document.getElementById(`Visivel${contador}`);
+            const inputRemover = document.getElementById(`JaTemRemove${contador}`);
+            botaoRemover.style.display = 'block';
+            if(parseInt(inputRemover.value) <= 0 || inputRemover.value == ''){
+                inputRemover.value = 1;
+                botaoRemover.addEventListener('click', function(){
+                    if (pizzaFlavors.includes(flavor)) {
+                        console.log(parseInt(document.getElementById(contador).value));
+                        document.getElementById(contador).value = (parseInt(document.getElementById(contador).value) > 0 ? (parseInt(document.getElementById(contador).value) - 1) : 0);
+                        inputVisivel.value = document.getElementById(contador).value + '/' + maxFlavors;
+                        if(parseInt(document.getElementById(contador).value) == 0 || document.getElementById(contador).value == ''){
+                            divSabor.classList.remove('bg-green-300');
+                            inputVisivel.classList.remove('bg-green-300');
+                            botaoRemover.style.display = 'none';
+                            inputVisivel.value = '';
+                            pizzaFlavors = pizzaFlavors.filter(flavorItem => flavorItem !== flavor);
+                        }
+                    }
+                });
             }
+            if (pizzaFlavors.length < maxFlavors) {
+                pizzaFlavors.push(flavor);
+                document.getElementById(contador).value = (parseInt(document.getElementById(contador).value) > 0 ? (parseInt(document.getElementById(contador).value) + 1) : 1);
+                inputVisivel.value = document.getElementById(contador).value + '/' + maxFlavors;
+
+                if(parseInt(document.getElementById(contador).value) > 0){
+                    divSabor.classList.add('bg-green-300');
+                    inputVisivel.classList.add('bg-green-300');
+                }
+
+            } else {
+                document.getElementById(contador).value = (parseInt(document.getElementById(contador).value) > 0 ? (parseInt(document.getElementById(contador).value) - 1) : 0);
+                inputVisivel.value = '';
+
+                botaoRemover.style.display = 'none';
+                
+                alert(`Você só pode selecionar até ${maxFlavors} sabores.`);
+            }
+            
         });
     });
     let cartItems = [];
@@ -86,10 +117,15 @@ document.addEventListener('DOMContentLoaded', function () {
         if (pizzaFlavors.length > 0) {
             const totalPrice = pizzaSizePrice + pizzaBorderPrice;
 
-            if(pizzaFlavors.length < maxFlavors){
-                let diferenca = maxFlavors - pizzaFlavors.length;
-                for(let i = diferenca; i < maxFlavors; i++){
-                    pizzaFlavors.push(pizzaFlavors);
+            for(let i = 1; i <= document.getElementsByClassName('pizza-flavor').length; i++){
+                const inputVisivel = document.getElementById(`Visivelsalgadas${i}`);
+                if(inputVisivel != null){
+                    const botaoRemover = document.getElementById(`removersalgadas${i}`);
+                    botaoRemover.style.display = 'none';
+                    inputVisivel.classList.remove('bg-green-300');
+                    inputVisivel.value = '';
+                    document.getElementById(`salgadas${i}`).value = '';
+                    document.getElementById(`JaTemRemovesalgadas${i}`).value = '';
                 }
             }
 
@@ -213,6 +249,20 @@ document.addEventListener('DOMContentLoaded', function () {
         step3.classList.add('hidden');
         step2.classList.remove('hidden');
         this.classList.add('hidden');
+        pizzaFlavors = [];
+
+        for(let i = 1; i <= document.getElementsByClassName('pizza-flavor').length; i++){
+            document.getElementsByClassName('pizza-flavor')[i].classList.remove('bg-green-300');
+            const inputVisivel = document.getElementById(`Visivelsalgadas${i}`);
+            if(inputVisivel != null){
+                const botaoRemover = document.getElementById(`removersalgadas${i}`);
+                botaoRemover.style.display = 'none';
+                inputVisivel.classList.remove('bg-green-300');
+                inputVisivel.value = '';
+                document.getElementById(`salgadas${i}`).value = '';
+                document.getElementById(`JaTemRemovesalgadas${i}`).value = '';
+            }
+        }
     });
 
     document.getElementById('finalizeSale').addEventListener('click', function () {
