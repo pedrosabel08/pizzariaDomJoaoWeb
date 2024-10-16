@@ -164,6 +164,10 @@ CREATE TABLE IF NOT EXISTS `vendas` (
   `forma_entrega_id` INT(11) NOT NULL,
   `endereco_id` INT(11) NULL,
   `forma_pagamento_id` INT(11) NULL,
+    `status_id` INT(11) NULL,
+	`valor_entrega` INT(11) NULL,
+`tempo_espera` INT(11) NULL,
+
   PRIMARY KEY (`idvendas`),
   INDEX `fk_vendas_clientes_idx` (`cliente_id` ASC),
   INDEX `fk_vendas_forma_entrega_idx` (`forma_entrega_id` ASC),
@@ -186,7 +190,9 @@ CREATE TABLE IF NOT EXISTS `vendas` (
     FOREIGN KEY (`forma_pagamento_id`)
     REFERENCES `forma_pagamento` (`idforma_pagamento`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION
+    ON UPDATE NO ACTION,
+    foreign key (status_id) references status_venda (idstatus)
+    
 );
 
 -- -----------------------------------------------------
@@ -1205,16 +1211,10 @@ select bd_pizzaria.inserirFormaPagamento();
 select bd_pizzaria.inserirUsuarios();
 
 
-alter table vendas add column status_id INT;
-ALTER TABLE vendas add constraint status_venda foreign key (status_id) references status_venda (idstatus);
-
 INSERT INTO status_venda (nome_status) values
 ('Não começou'),
 ('Em andamento'),
 ('Finalizado');
-
-ALTER TABLE vendas add column valor_entrega DOUBLE;
-ALTER TABLE vendas add column tempo_espera INT;
 
 DELIMITER //
 
