@@ -1181,40 +1181,10 @@ END$$
 -- function inserirUsuarios
 -- -----------------------------------------------------
 
-DELIMITER $$
-USE `bd_pizzaria`$$
-CREATE DEFINER=`root`@`localhost` FUNCTION `inserirUsuarios`() RETURNS int(11)
-    DETERMINISTIC
-BEGIN
-INSERT INTO `bd_pizzaria`.`clientes` (`nome`,`sobrenome`, `telefone`, `email`, `senha`) 
-VALUES 
-('Pedro', 'Sabel', '47999160344', 'pedrosabel08@gmail.com', '12345');
-
-RETURN 1;
-END$$
-
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
-select bd_pizzaria.inserirBordaPizza();
-select bd_pizzaria.inserirUnidadeMedida();
-select bd_pizzaria.inserirFormaEntrega();
-select bd_pizzaria.inserirProdutos();
-select bd_pizzaria.inserirTamanho();
-select bd_pizzaria.inserirPizzas();
-select bd_pizzaria.inserirMarcaBebidas();
-select bd_pizzaria.inserirTamanhoBebidas();
-select bd_pizzaria.inserirBebidas();
-select bd_pizzaria.inserirFormaPagamento();
-select bd_pizzaria.inserirUsuarios();
-
-
-INSERT INTO status_venda (nome_status) values
-('Não começou'),
-('Em andamento'),
-('Finalizado');
 
 DELIMITER //
 
@@ -1230,3 +1200,20 @@ BEGIN
 END //
 
 DELIMITER ;
+
+select bd_pizzaria.inserirBordaPizza();
+select bd_pizzaria.inserirUnidadeMedida();
+select bd_pizzaria.inserirFormaEntrega();
+select bd_pizzaria.inserirProdutos();
+select bd_pizzaria.inserirTamanho();
+select bd_pizzaria.inserirPizzas();
+select bd_pizzaria.inserirMarcaBebidas();
+select bd_pizzaria.inserirTamanhoBebidas();
+select bd_pizzaria.inserirBebidas();
+select bd_pizzaria.inserirFormaPagamento();
+
+
+INSERT INTO status_venda (nome_status) values
+('Não começou'),
+('Em andamento'),
+('Finalizado');
