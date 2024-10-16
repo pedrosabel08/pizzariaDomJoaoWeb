@@ -12,13 +12,30 @@
 
 <body>
     <header>
-        <button onclick="window.location.href='../index.php'" id="button-sair"><i class="fas fa-arrow-left"></i></button>
+        <button onclick="window.location.href='../index.php'" id="button-sair"><i
+                class="fas fa-arrow-left"></i></button>
         <h3>Meus pedidos</h3>
     </header>
 
     <main>
 
     </main>
+
+    <div id="modalPedido" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Detalhes do Pedido</h2>
+            <p><strong>ID Pedido:</strong> <span id="modal-idPedido"></span></p>
+            <p><strong>Data:</strong> <span id="modal-dataPedido"></span></p>
+            <p><strong>Total:</strong> <span id="modal-totalPedido"></span></p>
+            <p><strong>Forma de entrega:</strong> <span id="modal-tipoPedido"></span></p>
+            <p><strong>Status Atual:</strong> <span id="modal-statusPedido"></span></p>
+            <p><strong>Sabores:</strong> <span id="modal-sabores"></span></p>
+            <p><strong>Tamanho:</strong> <span id="modal-tamanho"></span></p> 
+            <p><strong>Borda:</strong> <span id="modal-borda"></span></p> 
+
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

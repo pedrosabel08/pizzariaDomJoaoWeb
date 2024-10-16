@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("modalPedido");
+    const spanClose = document.querySelector(".close");
+
     function atualizarPedidos() {
         fetch('buscar_pedidos.php', {
             method: 'POST'
@@ -11,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .then(data => {
                 const containerPedidos = document.querySelector('main');
-                containerPedidos.innerHTML = ''; 
+                containerPedidos.innerHTML = '';
 
                 if (data.length > 0) {
                     data.forEach(pedido => {
@@ -30,10 +33,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         let pizzaImage = '';
                         switch (pedido.nome) {
                             case 'Baby':
-                                pizzaImage = '../assets/pizzaBaby.jpg'; 
+                                pizzaImage = '../assets/pizzaBaby.jpg';
                                 break;
                             case 'Média':
-                                pizzaImage = '../assets/pizzaMedia.jpg'; 
+                                pizzaImage = '../assets/pizzaMedia.jpg';
                                 break;
                             case 'Grande':
                                 pizzaImage = '../assets/pizzaGrande.jpg';
@@ -66,6 +69,41 @@ document.addEventListener("DOMContentLoaded", function () {
                             </div>
                         `;
 
+                        // Adicionar evento de clique para exibir mais detalhes no modal
+                        divPedido.addEventListener('click', function () {
+                            console.log('ID do Pedido:', pedido.vendas_idvendas);
+                            fetch('pedido_detalhado.php', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ vendas_idvendas: pedido.vendas_idvendas })
+                            })
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error('Erro ao buscar detalhes do pedido.');
+                                    }
+                                    return response.json();
+                                })
+                                .then(detalhes => {
+                                    // Preenche os detalhes no modal
+                                    document.getElementById('modal-idPedido').textContent = detalhes.vendas_idvendas;
+                                    document.getElementById('modal-dataPedido').textContent = detalhes.data_venda;
+                                    document.getElementById('modal-totalPedido').textContent = `R$ ${detalhes.total}`;
+                                    document.getElementById('modal-tipoPedido').textContent = detalhes.tipo;
+                                    document.getElementById('modal-statusPedido').textContent = detalhes.nome_status;
+
+                                    // Adiciona os sabores, tamanho e borda
+                                    document.getElementById('modal-sabores').textContent = detalhes.sabores.split(', ').join(', ');
+                                    document.getElementById('modal-tamanho').textContent = detalhes.tamanho;
+                                    document.getElementById('modal-borda').textContent = detalhes.borda;
+
+                                    // Exibir o modal
+                                    modal.style.display = "block";
+                                })
+                                .catch(error => console.error('Erro ao carregar os detalhes:', error));
+                        });
+
                         containerPedidos.appendChild(divPedido);
                     });
                 } else {
@@ -76,6 +114,18 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .catch(error => console.error('Erro ao carregar os dados:', error));
     }
+
+    // Fechar o modal quando o usuário clicar no "X"
+    spanClose.addEventListener('click', function () {
+        modal.style.display = "none";
+    });
+
+    // Fechar o modal ao clicar fora da área de conteúdo
+    window.addEventListener('click', function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
 
     atualizarPedidos();
 });
