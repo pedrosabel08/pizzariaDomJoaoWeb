@@ -225,11 +225,16 @@ $nomeCliente = $_SESSION['nome'];
                     while ($row = $result->fetch_assoc()) {
                         $contador++;
                 ?>
-                        <button class="pizza-flavor bg-white p-4 rounded-lg shadow-md text-center border-2 border-pink-500" data-flavor="<?php echo htmlspecialchars($row['nomePizza']); ?>" data-id-flavor="<?php echo $row['idpizzas'] ?>" data-contador="doces<?php echo $contador ?>">
+                    <div>
+                        <button id="removerdoces<?php echo $contador ?>" style="position:absolute;display:none;" class="bg-red-600 p-1 rounded-lg">Remover</button>
+                        <button style="width:100%;height:100%;" class="pizza-flavor bg-white p-4 rounded-lg shadow-md text-center border-2 border-pink-500" data-flavor="<?php echo htmlspecialchars($row['nomePizza']); ?>" data-id-flavor="<?php echo $row['idpizzas'] ?>" data-contador="doces<?php echo $contador ?>">
                             <div class="font-bold"><?php echo htmlspecialchars($row['nomePizza']); ?></div>
                             <div class="text-sm text-gray-600"><?php echo htmlspecialchars($row['ingredientes']); ?></div>
-                            <input class="text-center cursor-pointer" id="doces<?php echo $contador ?>" type="text" readonly>
+                            <input class="text-center cursor-pointer" id="Visiveldoces<?php echo $contador ?>" type="text" readonly>
+                            <input style="display:none;" id="doces<?php echo $contador ?>" type="text" readonly>
+                            <input style="display:none;" id="JaTemRemovedoces<?php echo $contador ?>" type="text" readonly>
                         </button>
+                    </div>
                 <?php
                     }
                 } else {
