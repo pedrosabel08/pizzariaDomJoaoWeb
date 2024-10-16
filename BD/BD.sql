@@ -300,6 +300,16 @@ CREATE TABLE IF NOT EXISTS status_venda (
     nome_status VARCHAR(50)
     );
 
+
+CREATE TABLE log_status (
+    id_log INT AUTO_INCREMENT PRIMARY KEY,
+    venda_id INT NOT NULL, -- ID do registro original
+    status_anterior VARCHAR(50),
+    status_novo VARCHAR(50),
+    data_alteracao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (venda_id) references vendas (idvendas)
+);
+
 -- -----------------------------------------------------
 -- function inserirFormaEntrega
 -- -----------------------------------------------------
@@ -1205,3 +1215,18 @@ INSERT INTO status_venda (nome_status) values
 
 ALTER TABLE vendas add column valor_entrega DOUBLE;
 ALTER TABLE vendas add column tempo_espera INT;
+
+DELIMITER //
+
+CREATE TRIGGER trg_after_status_update
+AFTER UPDATE ON vendas
+FOR EACH ROW
+BEGIN
+    -- Verifica se o status foi alterado
+    IF OLD.status_id <> NEW.status_id THEN
+        INSERT INTO log_status (venda_id, status_anterior, status_novo, data_alteracao)
+        VALUES (OLD.idvendas, OLD.status_id, NEW.status_id, NOW());
+    END IF;
+END //
+
+DELIMITER ;
