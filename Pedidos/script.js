@@ -98,6 +98,15 @@ document.addEventListener("DOMContentLoaded", function () {
                                     document.getElementById('modal-tamanho').textContent = detalhes.tamanho;
                                     document.getElementById('modal-borda').textContent = detalhes.borda;
 
+                                    const logContainer = document.getElementById('modal-logStatus');
+                                    logContainer.innerHTML = ''; // Limpa o conteúdo anterior
+                                    detalhes.log_status.forEach(log => {
+                                        const logItem = document.createElement('p');
+                                        logItem.textContent = `${log.data_alteracao}: ${log.status_anterior} → ${log.status_novo}`;
+                                        logContainer.appendChild(logItem);
+                                    });
+
+
                                     // Exibir o modal
                                     modal.style.display = "block";
                                 })

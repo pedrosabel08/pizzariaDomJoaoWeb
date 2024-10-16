@@ -9,7 +9,7 @@ $dados = json_decode(file_get_contents("php://input"), true);
 if (isset($dados['vendas_idvendas'])) {
     $pedidoId = $dados['vendas_idvendas'];
 
-    // Query para buscar os detalhes do pedido, incluindo itens da pizza, tamanho, borda e status
+    // Query para buscar os detalhes do pedido
     $sql = "SELECT vp.vendas_idvendas, vp.pizzas_idpizzas, 
         t.nome AS tamanho, 
         b.nome AS borda, 
@@ -31,7 +31,7 @@ if (isset($dados['vendas_idvendas'])) {
         $result = mysqli_stmt_get_result($stmt);
 
         if ($row = mysqli_fetch_assoc($result)) {
-
+            // Dados principais do pedido
             $pedidoDetalhado = [
                 'vendas_idvendas' => $row['vendas_idvendas'],
                 'total' => $row['total'],
@@ -43,6 +43,48 @@ if (isset($dados['vendas_idvendas'])) {
                 'borda' => $row['borda']
             ];
 
+            // Query para buscar o log de alterações de status
+            $sqlLog = "SELECT 
+            sa.nome_status AS status_anterior,
+            sn.nome_status AS status_novo,
+            ls.data_alteracao
+            FROM 
+            log_status ls
+            JOIN 
+            status_venda sa ON ls.status_anterior = sa.idstatus
+            JOIN 
+            status_venda sn ON ls.status_novo = sn.idstatus
+            JOIN 
+            vendas v ON ls.venda_id = v.idvendas
+            WHERE 
+            ls.venda_id = ?
+            ORDER BY 
+            ls.data_alteracao DESC;";
+
+            if ($stmtLog = mysqli_prepare($conn, $sqlLog)) {
+                mysqli_stmt_bind_param($stmtLog, "i", $pedidoId);
+                mysqli_stmt_execute($stmtLog);
+                $resultLog = mysqli_stmt_get_result($stmtLog);
+
+                // Inicializa o array de logs
+                $logs = [];
+
+                // Percorre o resultado da consulta de logs
+                while ($rowLog = mysqli_fetch_assoc($resultLog)) {
+                    $logs[] = [
+                        'status_anterior' => $rowLog['status_anterior'],
+                        'status_novo' => $rowLog['status_novo'],
+                        'data_alteracao' => $rowLog['data_alteracao']
+                    ];
+                }
+
+                // Adiciona o log de status ao resultado final
+                $pedidoDetalhado['log_status'] = $logs;
+
+                mysqli_stmt_close($stmtLog);
+            }
+
+            // Retorna o pedido com os detalhes e o log de status
             echo json_encode($pedidoDetalhado);
         } else {
             echo json_encode(['success' => false, 'message' => 'Pedido não encontrado.']);
