@@ -3,13 +3,13 @@ session_start();
 
 include("conexao.php");
 
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    // Se não estiver logado, redirecionar para a página de login
+if (!isset($_SESSION['loggedin'])) {
     header("Location: login.html");
     exit();
 }
 
 $cliente_id = $_SESSION['cliente_id'];
+$nomeCliente = $_SESSION['nome'];
 
 ?>
 
@@ -47,7 +47,7 @@ $cliente_id = $_SESSION['cliente_id'];
                 <div id="menu" class="hidden">
                     <a href="infos.php" id="editProfile"><i class="fa-regular fa-user"></i>Editar Informações</a>
                     <hr>
-                    <a href="myPedidos.php" id="pedidos"><i class="fa-solid fa-list"></i>Meus pedidos</a>
+                    <a href="Pedidos/index.html" id="pedidos"><i class="fa-solid fa-list"></i>Meus pedidos</a>
                     <hr>
                     <a href="#" id="logout"><i class="fa-solid fa-right-from-bracket"></i>Sair</a>
                 </div>
@@ -393,7 +393,12 @@ $cliente_id = $_SESSION['cliente_id'];
                             <h3 class="text-lg mb-2">Taxa de Entrega</h3>
                             <input class="border-black border w-2/3 pl-1" type="text" maxlength="45" id="calcTaxaEntrega" name="calcTaxaEntrega" readonly>
                         </div>
+                        <div id="calcDuracao" class="mt-4 hidden">
+                            <h3 class="text-lg mb-2">Tempo de espera</h3>
+                            <input class="border-black border w-2/3 pl-1" type="text" maxlength="45" id="calcTempoDuracao" name="calcTempoDuracao" readonly>
+                        </div>
                     </div>
+
                     <div class="mt-2">
                         <h3 class="text-xl mb-2">Forma de pagamento:</h3>
                         <div class="flex items-center mb-2">
@@ -484,6 +489,33 @@ $cliente_id = $_SESSION['cliente_id'];
         <p class="font-medium text-sm">Desenvolvido por Arthur, Pedro e Vitor</p>
         <p class="font-medium text-sm">SENAI-SC </p>
     </footer>
+
+    <script>
+        const clienteId = <?php echo json_encode($_SESSION['cliente_id']); ?>;
+        const nomeCliente = <?php echo json_encode($_SESSION['nome']); ?>;
+
+        const clientIdInput = document.getElementById('cliente_id');
+
+        if (clientIdInput) {
+            clientIdInput.value = clienteId;
+            console.log(clienteId);
+        }
+
+        if (nomeCliente) {
+            const loginButton = document.getElementById('login');
+            const menuButton = document.getElementById('menuButton');
+            const clienteNomeSpan = document.getElementById('cliente-nome');
+            const clienteNomeInput = document.getElementById('cliente_nome');
+            const buttonSair = document.getElementById('button-sair');
+
+            loginButton.style.display = 'none';
+            clienteNomeSpan.textContent = nomeCliente;
+            clienteNomeInput.value = nomeCliente;
+            menuButton.style.display = 'inline';
+            buttonSair.classList.remove('hidden');
+        }
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="script.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

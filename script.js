@@ -299,16 +299,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         const deliveryFee = parseFloat(document.getElementById('calcTaxaEntrega').value) || 0;
-
         const totalWithDelivery = totalCartPrice + deliveryFee;
-
         const totalPriceInput = document.createElement('input');
         totalPriceInput.type = 'hidden';
         totalPriceInput.name = 'total_price';
         totalPriceInput.value = totalWithDelivery.toFixed(2);
         cartInputs.appendChild(totalPriceInput);
-
-
 
         console.log('Dados do formulário:', cartInputs);
 
@@ -318,9 +314,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 text: "Ops, o restaurante está fechado",
                 duration: 3000,
                 close: true,
-                gravity: "top", // `top` or `bottom`
-                position: "right", // `left`, `center` or `right`
-                stopOnFocus: true, // Prevents dismissing of toast on hover
+                gravity: "top",
+                position: "right",
+                stopOnFocus: true,
                 style: {
                     background: "#ef4444",
                 },
@@ -332,9 +328,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 text: "Faça login ou cadastro para realizar o pedido",
                 duration: 3000,
                 close: true,
-                gravity: "top", // `top` or `bottom`
-                position: "right", // `left`, `center` or `right`
-                stopOnFocus: true, // Prevents dismissing of toast on hover
+                gravity: "top",
+                position: "right",
+                stopOnFocus: true,
                 style: {
                     background: "#ef4444",
                 },
@@ -342,58 +338,90 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        document.getElementById('cartForm').submit();
+        // Convertendo os dados do formulário para FormData
+        const formData = new FormData(document.getElementById('cartForm'));
+
+        // Enviando a requisição para o PHP usando fetch
+        fetch('finalizar_venda.php', {
+            method: 'POST',
+            body: formData,
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Toastify({
+                        text: "Pedido realizado com sucesso!",
+                        duration: 3000,
+                        close: true,
+                        gravity: "top",
+                        position: "right",
+                        stopOnFocus: true,
+                        style: {
+                            background: "#22c55e",
+                        },
+                    }).showToast();
+
+                    // Limpar os campos do formulário
+                    document.getElementById('cartForm').reset();
+                    document.getElementById('cartInputs').innerHTML = '';
+                    document.getElementById('cartItems').innerHTML = '';
+                    document.getElementById('total-price').innerHTML = '';
+                    cartModal.style.display = "none"
+
+                } else {
+                    Toastify({
+                        text: "Houve um problema ao finalizar o pedido.",
+                        duration: 3000,
+                        close: true,
+                        gravity: "top",
+                        position: "right",
+                        stopOnFocus: true,
+                        style: {
+                            background: "#ef4444",
+                        },
+                    }).showToast();
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                Toastify({
+                    text: "Erro ao enviar o pedido.",
+                    duration: 3000,
+                    close: true,
+                    gravity: "top",
+                    position: "right",
+                    stopOnFocus: true,
+                    style: {
+                        background: "#ef4444",
+                    },
+                }).showToast();
+            });
     });
+    // const params = new URLSearchParams(window.location.search);
+    // const nomeCliente = params.get('nome');
+    // const clienteId = params.get('idCliente');
+
+    // const clientIdInput = document.getElementById('cliente_id');
+
+    // if (clientIdInput) {
+    //     clientIdInput.value = clienteId;
+    //     console.log(clienteId);
+    // }
 
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const status = urlParams.get('status');
-    const message = urlParams.get('message');
+    // if (nomeCliente) {
+    //     const loginButton = document.getElementById('login');
+    //     const menuButton = document.getElementById('menuButton');
+    //     const clienteNomeSpan = document.getElementById('cliente-nome');
+    //     const clienteNomeInput = document.getElementById('cliente_nome');
+    //     const buttonSair = document.getElementById('button-sair')
 
-    if (status && message) {
-        let backgroundColor = "#10B981";
-        if (status === 'error') {
-            backgroundColor = "#EF4444";
-        }
-
-        Toastify({
-            text: decodeURIComponent(message.replace(/\+/g, ' ')),
-            duration: 3000,
-            close: true,
-            gravity: "top",
-            position: "right",
-            stopOnFocus: true,
-            style: {
-                background: backgroundColor,
-            },
-        }).showToast();
-    }
-
-    const params = new URLSearchParams(window.location.search);
-    const nomeCliente = params.get('nome');
-    const clienteId = params.get('idCliente');
-
-    const clientIdInput = document.getElementById('cliente_id');
-
-    if (clientIdInput) {
-        clientIdInput.value = clienteId;
-        console.log(clienteId);
-    }
-
-
-    if (nomeCliente) {
-        const loginButton = document.getElementById('login');
-        const menuButton = document.getElementById('menuButton');
-        const clienteNomeSpan = document.getElementById('cliente-nome');
-        const clienteNomeInput = document.getElementById('cliente_nome');
-        const buttonSair = document.getElementById('button-sair')
-
-        loginButton.style.display = 'none';
-        clienteNomeSpan.textContent = nomeCliente;
-        clienteNomeInput.value = nomeCliente
-        menuButton.style.display = 'inline';
-        buttonSair.classList.remove('hidden');
-    }
+    //     loginButton.style.display = 'none';
+    //     clienteNomeSpan.textContent = nomeCliente;
+    //     clienteNomeInput.value = nomeCliente
+    //     menuButton.style.display = 'inline';
+    //     buttonSair.classList.remove('hidden');
+    // }
 
     const retiradaRadio = document.getElementById('retirada');
     const entregaRadio = document.getElementById('entrega');
@@ -676,7 +704,7 @@ function calcularTaxaEntrega(enderecoCliente) {
 
                 document.getElementById('calcTaxaEntrega').value = `${response.taxaEntrega}`;
 
-                document.getElementById('calcTempoDuracao').value = `${response.duracaoMinutos} minutos`;
+                document.getElementById('calcTempoDuracao').value = `${response.duracaoMinutos}`;
             } else {
                 console.error(response.message);
             }

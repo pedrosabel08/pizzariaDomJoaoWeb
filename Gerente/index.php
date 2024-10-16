@@ -41,20 +41,9 @@ if ($result->num_rows > 0) {
 <body>
     <header>
         <h1>Painel de Pedidos</h1>
-        <input type="text" id="search" placeholder="Buscar por cliente, ID ou status">
     </header>
 
     <main>
-        <div class="filters">
-            <label for="filter-status">Filtrar por status:</label>
-            <select id="filter-status">
-                <option value="todos">Todos</option>
-                <option value="pendente">Pendente</option>
-                <option value="preparando">Preparando</option>
-                <option value="pronto">Pronto</option>
-                <option value="entregue">Entregue</option>
-            </select>
-        </div>
 
         <table class="order-table">
             <thead>
@@ -98,6 +87,40 @@ if ($result->num_rows > 0) {
                     <h2>Formulário de Dados</h2>
                     <form id="formPedido">
                         <div>
+                            <div id="idpedido">
+                                <p>Pedido</p>
+                                <span id="idvenda"></span>
+                            </div>
+                            <div id="pedidos">
+                                <input type="text" id="sabores" disabled>
+                                <input type="text" id="tamanho" disabled>
+                                <input type="text" id="borda" disabled>
+
+                            </div>
+                            <div>
+                                <label>Informações do cliente:</label>
+                                <input type="text" id="nome_cliente" disabled>
+                                <input type="text" id="telefone" disabled>
+                                <input type="text" id="data_venda" disabled>
+                            </div>
+
+                            <div>
+                                <label for="">Status:</label>
+                                <input type="text" id="status" disabled>
+                            </div>
+
+                            <div>
+                                <label for="">Valor total:</label>
+                                <input type="text" id="total" disabled>
+                            </div>
+
+                            <div>
+                                <label for="">Tempo de espera:</label>
+                                <input type="text" id="tempo_espera" disabled>
+                            </div>
+
+
+
                             <a id="whatsappLink" href="https://wa.me/" target="_blank">
                                 <i class="fa-brands fa-whatsapp"></i>
                             </a>

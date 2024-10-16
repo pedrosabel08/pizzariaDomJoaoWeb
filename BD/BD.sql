@@ -1204,3 +1204,4 @@ INSERT INTO status_venda (nome_status) values
 ('Finalizado');
 
 ALTER TABLE vendas add column valor_entrega DOUBLE;
+ALTER TABLE vendas add column tempo_espera INT;

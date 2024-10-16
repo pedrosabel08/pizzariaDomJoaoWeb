@@ -1,3 +1,6 @@
+https://mm.tt/app/map/3426621587?t=0R41jf8xMJ
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -41,43 +44,64 @@
         </thead>
         <tbody>
             <?php
-            // Simulação de pedidos (pode ser substituído por uma consulta ao banco de dados)
-            $pedidos = [
-                ['id' => '001', 'status' => 'Andamento'],
-                ['id' => '002', 'status' => 'Concluída'],
-                ['id' => '003', 'status' => 'Cancelada'],
-            ];
+            // Conexão com o banco de dados
+            $mysqli = new mysqli("localhost", "root", "", "bd_pizzaria");
+
+            if ($mysqli->connect_error) {
+                die("Erro na conexão com o banco de dados: " . $mysqli->connect_error);
+            }
+
+            // Define o charset para UTF-8
+            $mysqli->set_charset("utf8mb4");
 
             // Atualiza o status do pedido
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $pedidoId = $_POST['pedidoId'];
                 $status = $_POST['status'];
 
-                foreach ($pedidos as &$pedido) {
-                    if ($pedido['id'] === $pedidoId) {
-                        $pedido['status'] = ucfirst($status);
-                    }
-                }
+                // Atualiza o status no banco de dados
+                $stmt = $mysqli->prepare("UPDATE vendas SET status_id = (SELECT idstatus FROM status_venda WHERE nome_status = ?) WHERE idvendas = ?");
+                $stmt->bind_param('si', $status, $pedidoId);
+                $stmt->execute();
+                $stmt->close();
             }
 
-            foreach ($pedidos as $pedido) {
-                echo "<tr>
-                        <td class='py-2 px-4 border-b'>{$pedido['id']}</td>
-                        <td class='py-2 px-4 border-b' id='status-{$pedido['id']}'>{$pedido['status']}</td>
-                        <td class='py-2 px-4 border-b'>
-                            <form action='' method='POST' class='inline'>
-                                <input type='hidden' name='pedidoId' value='{$pedido['id']}'>
-                                <input type='hidden' name='status' value='concluida'>
-                                <button type='submit' class='bg-green-500 text-white px-2 py-1 rounded'>Concluir</button>
-                            </form>
-                            <form action='' method='POST' class='inline'>
-                                <input type='hidden' name='pedidoId' value='{$pedido['id']}'>
-                                <input type='hidden' name='status' value='cancelada'>
-                                <button type='submit' class='bg-red-500 text-white px-2 py-1 rounded'>Cancelar</button>
-                            </form>
-                        </td>
-                    </tr>";
+            // Consulta os pedidos do banco de dados
+            $sql = '
+            SELECT 
+                v.idvendas AS pedido_id,
+                s.nome_status AS status
+            FROM vendas v
+            INNER JOIN status_venda s ON v.status_id = s.idstatus;
+            ';
+            $result = $mysqli->query($sql);
+
+            // Exibe os pedidos e seus status
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>
+                            <td class='py-2 px-4 border-b'>{$row['pedido_id']}</td>
+                            <td class='py-2 px-4 border-b' id='status-{$row['pedido_id']}'>{$row['status']}</td>
+                            <td class='py-2 px-4 border-b'>
+                                <form action='' method='POST' class='inline'>
+                                    <input type='hidden' name='pedidoId' value='{$row['pedido_id']}'>
+                                    <input type='hidden' name='status' value='concluida'>
+                                    <button type='submit' class='bg-green-500 text-white px-2 py-1 rounded'>Concluir</button>
+                                </form>
+                                <form action='' method='POST' class='inline'>
+                                    <input type='hidden' name='pedidoId' value='{$row['pedido_id']}'>
+                                    <input type='hidden' name='status' value='cancelada'>
+                                    <button type='submit' class='bg-red-500 text-white px-2 py-1 rounded'>Cancelar</button>
+                                </form>
+                            </td>
+                        </tr>";
+                }
+            } else {
+                echo "<tr><td colspan='3' class='text-center py-4'>Nenhum pedido encontrado</td></tr>";
             }
+
+            // Fecha a conexão com o banco
+            $mysqli->close();
             ?>
         </tbody>
     </table>

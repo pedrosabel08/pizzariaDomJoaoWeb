@@ -57,9 +57,20 @@ document.addEventListener("DOMContentLoaded", function () {
                             success: function (response) {
                                 if (response.length > 0) {
                                     var clienteTelefone = response[0].telefone;
+                                    document.getElementById('idvenda').innerText = response[0].idvendas;
+                                    document.getElementById('sabores').value = response[0].pizzas;
+                                    document.getElementById('tamanho').value = response[0].tamanho;
+                                    document.getElementById('borda').value = response[0].borda;
+                                    document.getElementById('nome_cliente').value = response[0].nome_cliente;
+                                    document.getElementById('nome_cliente').value = response[0].nome_cliente;
+                                    document.getElementById('telefone').value = response[0].telefone;
+                                    document.getElementById('data_venda').value = response[0].data_venda;
+                                    document.getElementById('total').value = response[0].total;
+                                    document.getElementById('tempo_espera').value = response[0].tempo_espera;
+                                    document.getElementById('status').value = response[0].nome_status;
 
                                     clienteTelefone = clienteTelefone.replace(/\D/g, '');
-
+                
                                     var whatsappLink = document.getElementById('whatsappLink');
                                     whatsappLink.href = `https://wa.me/${clienteTelefone}`;
                                 } else {

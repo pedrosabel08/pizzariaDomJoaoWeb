@@ -15,13 +15,15 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $sql = "SELECT 
     v.idvendas AS vendas_idvendas,
     GROUP_CONCAT(p.nomePizza) AS pizzas, 
-    t.nome, 
-    b.nome, 
+    t.nome as tamanho, 
+    b.nome as borda, 
     c.nome as nome_cliente,
     c.telefone,
     v.data_venda,
     v.total,
-    s.nome_status
+    s.nome_status,
+    v.tempo_espera,
+    v.idvendas
     FROM vendas_pizzas vp
     INNER JOIN vendas v ON v.idvendas = vp.vendas_idvendas
     INNER JOIN clientes c ON v.cliente_id = c.idclientes

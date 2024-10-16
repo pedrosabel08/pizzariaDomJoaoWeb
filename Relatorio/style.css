@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Nunito", sans-serif;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    gap: 30px;
+}
+
+#voltar {
+    background-color: #0066ff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+#voltar:hover {
+    background-color: #033797;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+.chart-container,
+.table-container {
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+}
+
+.table-container {
+    width: 100%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th,
+table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+table th {
+    background-color: #f1f1f1;
+}
+
+select {
+    max-width: 100px;
+    margin: 15px 0;
+    font-size: 16px;
+}
+
+button {
+    all: unset;
+    cursor: pointer;
+}
+
+button#generatePDF {
+    padding: 5px;
+    background-color: #ff4141;
+    font-size: 14px;
+    border-radius: 10px;
+    transition: 0.3s all ease;
+}
+
+button#generatePDF:hover {
+    background-color: #ff1414;
+    font-weight: bold;
+}

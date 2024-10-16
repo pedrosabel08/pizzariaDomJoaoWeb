@@ -3,44 +3,57 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Relatórios de Venda</title>
-    <link rel="stylesheet" href="styleRelatorio.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <link rel="icon" href="assets/relatorio-de-lucro.png" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Vendas</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
 
+        .container {
+            width: 90%;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .chart-container {
+            width: 50%;
+            margin: 0 auto 50px auto;
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 
 <body>
-    <button id="back" onclick="window.location.href='produtos.html'">Voltar</button>
-    <form id="report-form">
-        <h1>Relatórios de Venda</h1>
-        <label for="date">Selecione a Data:</label>
-        <input type="date" id="date" name="date" required>
-        <div class="buttons">
-            <button type="submit" class="first-button">Buscar</button>
-            <button type="button" id="download-pdf">Download PDF</button>
+    <div class="container">
+        <h1>Relatório de Vendas da Pizzaria</h1>
+
+        <!-- Gráfico de Vendas por Período -->
+        <div class="chart-container">
+            <h2>Total de Vendas por Período</h2>
+            <select name="periodo" id="periodo">
+                <option value="ano">Ano</option>
+                <option value="semana">Semana</option>
+                <option value="dia">Dia</option>
+            </select>
+            <canvas id="salesChart"></canvas>
         </div>
-    </form>
 
-    <div class="tabela">
-
-        <table id="sales-table">
-            <thead>
-                <tr>
-                    <th>ID Venda</th>
-                    <th>Pizza</th>
-                    <th>Tamanho</th>
-                    <th>Borda</th>
-                    <th>Total</th>
-                    <th>Data da Venda</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
     </div>
 
-    <script src="scriptRelatorio.js"></script>
+    
 </body>
 
 </html>

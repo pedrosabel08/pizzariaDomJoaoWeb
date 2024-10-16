@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <title>Meus pedidos</title>
+</head>
+
+<body>
+    <header>
+        <button onclick="window.location.href='../index.php'" id="button-sair"><i
+                class="fas fa-arrow-left"></i></button>
+        <h3>Meus pedidos</h3>
+    </header>
+
+    <main>
+
+    </main>
+
+    <div id="modalPedido" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Detalhes do Pedido</h2>
+            <p>ID Pedido: <span id="modal-idPedido"></span></p>
+            <p>Data: <span id="modal-dataPedido"></span></p>
+            <p>Total: <span id="modal-totalPedido"></span></p>
+            <p>Tipo: <span id="modal-tipoPedido"></span></p>
+            <p>Status Atual: <span id="modal-statusPedido"></span></p>
+            <p>Sabores: <span id="modal-sabores"></span></p>
+            <p>Tamanho: <span id="modal-tamanho"></span></p>
+            <p>Borda: <span id="modal-borda"></span></p>
+            <h3>Log de Alterações de Status</h3>
+            <div id="modal-logStatus"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

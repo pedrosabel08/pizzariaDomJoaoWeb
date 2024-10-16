@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Nunito', sans-serif;
+}
+
+body {
+    background-color: #e0e0e0;
+}
+
+header {
+    background-color: #fff;
+    margin-bottom: 20px;
+    padding: 15px;
+}
+
+header h3 {
+    text-align: center;
+}
+
+#button-sair {
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+}
+
+#button-sair:hover {
+    background-color: #970303;
+}
+
+input,
+button {
+    all: unset;
+}
+
+main {
+    width: 100%;
+    height: 100%;
+}
+
+.pedido {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    align-items: center;
+    background-color: #fff;
+    margin: 20px auto;
+    padding: 15px;
+    border-radius: 15px;
+    width: 50%;
+    gap: 10px;
+    animation: fadeIn .5s ease-in-out forwards;
+}
+
+.imagem img {
+    width: 150px;
+    border-radius: 5px;
+}
+
+.imagem {
+    margin: 0 auto;
+}
+
+.desc {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.desc input {
+    width: 200px;
+}
+
+.desc input#total {
+    font-weight: bold;
+}
+
+.desc input#nome_status {
+    padding: 5px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    text-align: center;
+    color: #fff;
+}
+
+.status-vermelho {
+    background-color: #fa2e2e;
+}
+
+.status-laranja {
+    background-color: #ffa500;
+}
+
+.status-verde {
+    background-color: #4caf50;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
