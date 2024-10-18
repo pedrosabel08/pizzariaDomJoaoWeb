@@ -131,18 +131,17 @@ function validateVerificationCode() {
         // Exibe o Toastify ao invés de usar innerText
         Toastify({
             text: "Código validado com sucesso!",
-            duration: 3000,  // Duração de 3 segundos
+            duration: 3000, 
             close: true,
-            gravity: "top",  // Posiciona no topo
+            gravity: "top", 
             position: "center",  // Centralizado
-            backgroundColor: "green",  // Cor de fundo verde
+            backgroundColor: "green", 
         }).showToast();
         
-        // Submete o formulário após um pequeno atraso para permitir que o Toastify seja visto
         setTimeout(() => {
             document.getElementById('formCadastro').submit();
             window.location.href = 'index.php';
-        }, 1000);  // 1 segundo de delay
+        }, 1000); 
     } else {
         Toastify({
             text: "Código inválido!",

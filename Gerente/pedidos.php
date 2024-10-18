@@ -17,7 +17,7 @@ INNER JOIN status_venda s ON v.status_id = s.idstatus
 INNER JOIN pizzas p ON vp.pizzas_idpizzas = p.idpizzas
 INNER JOIN tamanho t ON vp.tamanho_idtamanho = t.idtamanho
 INNER JOIN bordas_pizza b ON vp.borda_idbordas_pizza = b.idbordas_pizza
-GROUP BY v.idvendas";
+GROUP BY v.idvendas, c.nome, v.data_venda, v.total, s.nome_status";
 
 $result = $conn->query($sql);
 

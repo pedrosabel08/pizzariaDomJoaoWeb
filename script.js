@@ -449,6 +449,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const ruaEntregaDiv = document.getElementById('ruaEntrega');
     const numeroEntregaDiv = document.getElementById('numeroEntrega');
     const complementoEntregaDiv = document.getElementById('complementoEntrega');
+    const cidadeEntregaDiv = document.getElementById('cidadeEntrega');
     const taxaEntregaDiv = document.getElementById('taxaEntrega');
     const calcDuracao = document.getElementById('calcDuracao');
 
@@ -459,8 +460,11 @@ document.addEventListener('DOMContentLoaded', function () {
             ruaEntregaDiv.classList.add('hidden');
             numeroEntregaDiv.classList.add('hidden');
             complementoEntregaDiv.classList.add('hidden');
+            cidadeEntregaDiv.classList.add('hidden');
             taxaEntregaDiv.classList.add('hidden');
             calcDuracao.classList.add('hidden');
+
+            document.querySelector('.sidebar').style.height = '60%';
 
         }
     });
@@ -472,8 +476,11 @@ document.addEventListener('DOMContentLoaded', function () {
             ruaEntregaDiv.classList.remove('hidden');
             numeroEntregaDiv.classList.remove('hidden');
             complementoEntregaDiv.classList.remove('hidden');
+            cidadeEntregaDiv.classList.remove('hidden');
             taxaEntregaDiv.classList.remove('hidden');
             calcDuracao.classList.remove('hidden');
+
+            document.querySelector('.sidebar').style.height = '80%';
         }
     });
 
@@ -697,6 +704,7 @@ function buscaEndereco(cep) {
 
                     document.getElementById('bairro').value = data.bairro;
                     document.getElementById('rua').value = data.logradouro;
+                    document.getElementById('localidade').value = data.localidade;
 
                     const enderecoCliente = `${data.logradouro}, ${data.bairro}, ${data.localidade}, ${data.uf}`;
 

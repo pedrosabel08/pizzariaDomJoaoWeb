@@ -23,11 +23,11 @@ function inserirVenda($conn, $formaEntregaId, $total, $clienteId, $enderecoId, $
     return false;
 }
 
-function inserirEndereco($conn, $bairro, $rua, $numero, $complemento, $clienteId)
+function inserirEndereco($conn, $bairro, $rua, $numero, $complemento, $cidade, $clienteId)
 {
-    $sqlInsertEndereco = "INSERT INTO endereco (bairro, rua, numero, complemento, cliente_id) VALUES (?, ?, ?, ?, ?)";
+    $sqlInsertEndereco = "INSERT INTO endereco (bairro, rua, numero, complemento, cidade, cliente_id) VALUES (?, ?, ?, ?, ?, ?)";
     if ($stmt = mysqli_prepare($conn, $sqlInsertEndereco)) {
-        mysqli_stmt_bind_param($stmt, "ssisi", $bairro, $rua, $numero, $complemento, $clienteId);
+        mysqli_stmt_bind_param($stmt, "ssissi", $bairro, $rua, $numero, $complemento, $cidade, $clienteId);
         return mysqli_stmt_execute($stmt) ? mysqli_insert_id($conn) : false;
     }
     return false;
@@ -48,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $rua = $_POST["rua"];
         $numero = $_POST["numero"];
         $complemento = $_POST["complemento"];
+        $cidade = $_POST["localidade"];
         $formaPagamentoId = $_POST["forma_pagamento"];
         $valor_entrega = $_POST["calcTaxaEntrega"];
         $tempo_espera = $_POST["calcTempoDuracao"];
@@ -65,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo json_encode(['success' => false, 'message' => "Preencha todos os campos de endereço."]);
                 exit;
             }
-            $enderecoId = inserirEndereco($conn, $bairro, $rua, $numero, $complemento, $clienteId);
+            $enderecoId = inserirEndereco($conn, $bairro, $rua, $numero, $complemento, $cidade, $clienteId);
             if ($enderecoId === false) {
                 echo json_encode(['success' => false, 'message' => "Erro ao inserir endereço."]);
                 exit;

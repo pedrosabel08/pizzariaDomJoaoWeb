@@ -378,6 +378,10 @@ $nomeCliente = $_SESSION['nome'];
                             <h3 class="text-lg mb-2">CEP:</h3>
                             <input class="border-black border w-20 pl-1" onkeyup="buscaEndereco(this.value);" type="number" id="cep" name="cep" required>
                         </div>
+                        <div id="cidadeEntrega" class="mt-2 hidden">
+                            <h3 class="text-lg mb-2">Cidade</h3>
+                            <input class="border-black border w-30 pl-1" type="text" id="localidade" name="localidade">
+                        </div>
                         <div id="bairroEntrega" class="mt-2 hidden">
                             <h3 class="text-lg mb-2">Bairro</h3>
                             <input class="border-black border w-30 pl-1" type="text" id="bairro" name="bairro">

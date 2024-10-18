@@ -22,8 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     v.data_venda,
     v.total,
     s.nome_status,
-    v.tempo_espera,
-    v.idvendas
+    v.tempo_espera
     FROM vendas_pizzas vp
     INNER JOIN vendas v ON v.idvendas = vp.vendas_idvendas
     INNER JOIN clientes c ON v.cliente_id = c.idclientes
@@ -31,7 +30,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     INNER JOIN pizzas p ON vp.pizzas_idpizzas = p.idpizzas
     INNER JOIN tamanho t ON vp.tamanho_idtamanho = t.idtamanho
     INNER JOIN bordas_pizza b ON vp.borda_idbordas_pizza = b.idbordas_pizza
-    WHERE v.idvendas = $idPedidoSelecionado";
+    WHERE v.idvendas = $idPedidoSelecionado
+    GROUP BY v.idvendas, v.data_venda, v.total, s.nome_status, c.nome, c.telefone, t.nome, b.nome, v.tempo_espera";
+
 
     $result = $conn->query($sql);
 
