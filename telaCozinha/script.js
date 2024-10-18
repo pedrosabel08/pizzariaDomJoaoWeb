@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         // Verifica se o novo status é válido (por exemplo, se está entre 1 e 3)
                         if (newStatus > 3) {
-                            alert('Status não pode ser atualizado além de "Concluída".');
+                            alert('Status já esta Finalizado".');
                             return;
                         }
 

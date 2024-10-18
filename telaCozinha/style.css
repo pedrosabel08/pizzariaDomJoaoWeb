@@ -87,11 +87,9 @@ th {
     padding: 5px;
 }
 
-table tbody tr:hover {
-    background-color: #f1f1f1;
+tr:hover {
     cursor: pointer;
 }
-
 .linha-pendente {
     background-color: #f9c2c2;
     /* Vermelho claro */
