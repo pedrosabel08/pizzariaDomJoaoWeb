@@ -1,0 +1,120 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    margin: 0 50px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* Alinha verticalmente o conteúdo */
+    padding: 10px 20px;
+    /* Adiciona um pouco de espaço ao redor */
+    background-color: #f8f8f8;
+    /* Cor de fundo clara */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Sombra leve para dar profundidade */
+}
+
+header button {
+    background-color: transparent;
+    /* Remove o fundo padrão */
+    border: none;
+    /* Remove a borda */
+    cursor: pointer;
+    /* Mostra o cursor de pointer ao passar o mouse */
+    font-size: 20px;
+    /* Tamanho do ícone */
+    margin-right: 10px;
+    /* Espaço entre o botão e o título */
+}
+
+header button:hover {
+    color: #007bff;
+    /* Muda a cor do ícone ao passar o mouse */
+}
+
+header h2 {
+    flex-grow: 1;
+    /* Faz o título ocupar o espaço restante */
+    text-align: center;
+    /* Centraliza o texto */
+    margin: 0;
+    /* Remove margem padrão */
+    font-size: 24px;
+    /* Tamanho da fonte */
+    color: #333;
+    /* Cor do texto */
+}
+
+#button-sair {
+    background-color: #0066ff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+#button-sair:hover {
+    background-color: #033797;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    animation: fadeIn .5s ease-in-out forwards;
+}
+
+td,
+th {
+    border: 1px solid black;
+    text-align: center;
+    padding: 5px;
+}
+
+table tbody tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+.linha-pendente {
+    background-color: #f9c2c2;
+    /* Vermelho claro */
+}
+
+.linha-andamento {
+    background-color: #f0e68c;
+    /* Amarelo */
+}
+
+.linha-concluida {
+    background-color: #c2f9c2;
+    /* Verde claro */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
