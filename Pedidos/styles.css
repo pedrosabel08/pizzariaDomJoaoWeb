@@ -62,13 +62,15 @@ main {
     margin: 20px auto;
     padding: 15px;
     border-radius: 15px;
-    width: 50%;
+    width: 90%;
+    max-width: 800px;
     gap: 10px;
     animation: fadeIn .5s ease-in-out forwards;
 }
 
 .imagem img {
-    width: 150px;
+    width: 100%;
+    max-width: 150px;
     border-radius: 5px;
 }
 
@@ -83,7 +85,8 @@ main {
 }
 
 .desc input {
-    width: 200px;
+    width: 100%;
+    max-width: 200px;
 }
 
 .desc input#total {
@@ -96,6 +99,17 @@ main {
     border-radius: 5px;
     text-align: center;
     color: #fff;
+}
+
+@media (max-width: 768px) {
+    .pedido {
+        grid-template-columns: 1fr; /* uma coluna em telas pequenas */
+        width: 95%; /* largura maior em telas menores */
+    }
+
+    .desc input {
+        max-width: 100%; /* ajuste a largura máxima dos inputs */
+    }
 }
 
 .status-vermelho {
@@ -122,11 +136,16 @@ main {
 }
 
 .modal-content {
-    background-color: white;
-    margin: 10% auto;
+    max-width: 900px;
+    max-height: 700px;
+    margin: 20px auto;
+    background-color: #fff;
     padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    animation: fadeIn .5s ease-in-out forwards;
+
 }
 
 .close {
@@ -142,6 +161,122 @@ main {
     text-decoration: none;
     cursor: pointer;
 }
+
+/* Cabeçalho */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header h1 {
+    font-size: 18px;
+    color: #333;
+}
+
+.header img {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+}
+
+/* Status do pedido */
+.status {
+    margin: 15px 0;
+}
+
+.status p {
+    padding: 10px 0;
+}
+
+.status span {
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.status span#modal-dataPedido {
+    background-color: #e63946;
+
+}
+
+/* Itens do pedido */
+.section-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #e63946;
+    margin-bottom: 10px;
+}
+
+.items {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.items p {
+    margin: 5px 0;
+}
+
+/* Preços */
+.prices {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.prices span#modal-totalPizza,
+span#modal-valor_entrega,
+span#modal-totalPedido,
+span#total {
+    color: green;
+}
+
+/* Endereço */
+.address {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.address p {
+    margin: 5px 0;
+}
+
+/* Informações de pagamento */
+.info {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.info p {
+    margin: 5px 0;
+}
+
+.log-status {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.log-status p {
+    margin: 5px 0;
+}
+
+@media (max-width: 1000px) {
+    .modal-content {
+        max-width: 500px;
+    }
+
+}
+
 
 @keyframes fadeIn {
     0% {

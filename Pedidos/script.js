@@ -69,7 +69,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             </div>
                         `;
 
-                        // Adicionar evento de clique para exibir mais detalhes no modal
                         divPedido.addEventListener('click', function () {
                             console.log('ID do Pedido:', pedido.vendas_idvendas);
                             fetch('pedido_detalhado.php', {
@@ -86,32 +85,63 @@ document.addEventListener("DOMContentLoaded", function () {
                                     return response.json();
                                 })
                                 .then(detalhes => {
-                                    // Preenche os detalhes no modal
+
+                                    console.log(detalhes)
                                     document.getElementById('modal-idPedido').textContent = detalhes.vendas_idvendas;
                                     document.getElementById('modal-dataPedido').textContent = detalhes.data_venda;
-                                    document.getElementById('modal-totalPedido').textContent = `R$ ${detalhes.total}`;
                                     document.getElementById('modal-tipoPedido').textContent = detalhes.tipo;
                                     document.getElementById('modal-statusPedido').textContent = detalhes.nome_status;
 
-                                    // Adiciona os sabores, tamanho e borda
+                                    const statusElement = document.getElementById('modal-statusPedido');
+                                    statusElement.className = ''; 
+
+                                    switch (detalhes.nome_status) {
+                                        case 'Não começou':
+                                            statusElement.classList.add('status-vermelho');
+                                            break;
+                                        case 'Em Andamento':
+                                            statusElement.classList.add('status-laranja');
+                                            break;
+                                        case 'Finalizado':
+                                            statusElement.classList.add('status-verde');
+                                            break;
+                                        case 'Cancelado':
+                                            statusElement.classList.add('status-cancelado');
+                                            break;
+
+                                    }
+
+                                    document.getElementById('modal-totalPedido').textContent = `R$ ${detalhes.total}`;
+                                    const totalPizza = detalhes.total - detalhes.valor_entrega;
+                                    document.getElementById('modal-totalPizza').textContent = `R$ ${totalPizza.toFixed(2)}`;
+
+                                    document.getElementById('modal-valor_entrega').textContent = `R$ ${detalhes.valor_entrega.toFixed(2)}`;
                                     document.getElementById('modal-sabores').textContent = detalhes.sabores.split(', ').join(', ');
                                     document.getElementById('modal-tamanho').textContent = detalhes.tamanho;
                                     document.getElementById('modal-borda').textContent = detalhes.borda;
 
+                                    document.getElementById('complemento').textContent = detalhes.complemento || '';
+                                    document.getElementById('bairro').textContent = detalhes.bairro;
+                                    document.getElementById('numero').textContent = detalhes.numero;
+                                    document.getElementById('rua').textContent = detalhes.rua;
+                                    document.getElementById('cidade').textContent = detalhes.cidade;
+
+                                    document.getElementById('modal-tempoEspera').textContent = `${detalhes.tempo_espera} minutos`;
+                                    document.getElementById('modal-pagamento').textContent = detalhes.forma_pagamento;
+
                                     const logContainer = document.getElementById('modal-logStatus');
-                                    logContainer.innerHTML = ''; // Limpa o conteúdo anterior
+                                    logContainer.innerHTML = ''; 
                                     detalhes.log_status.forEach(log => {
                                         const logItem = document.createElement('p');
                                         logItem.textContent = `${log.data_alteracao}: ${log.status_anterior} → ${log.status_novo}`;
                                         logContainer.appendChild(logItem);
                                     });
 
-
-                                    // Exibir o modal
                                     modal.style.display = "block";
                                 })
                                 .catch(error => console.error('Erro ao carregar os detalhes:', error));
                         });
+
 
                         containerPedidos.appendChild(divPedido);
                     });
@@ -124,12 +154,10 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error('Erro ao carregar os dados:', error));
     }
 
-    // Fechar o modal quando o usuário clicar no "X"
     spanClose.addEventListener('click', function () {
         modal.style.display = "none";
     });
 
-    // Fechar o modal ao clicar fora da área de conteúdo
     window.addEventListener('click', function (event) {
         if (event.target === modal) {
             modal.style.display = "none";

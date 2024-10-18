@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="../assets/pizza.png" type="image/png">
 
     <title>Meus pedidos</title>
 </head>
@@ -24,17 +25,53 @@
     <div id="modalPedido" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Detalhes do Pedido</h2>
-            <p>ID Pedido: <span id="modal-idPedido"></span></p>
-            <p>Data: <span id="modal-dataPedido"></span></p>
-            <p>Total: <span id="modal-totalPedido"></span></p>
-            <p>Tipo: <span id="modal-tipoPedido"></span></p>
-            <p>Status Atual: <span id="modal-statusPedido"></span></p>
-            <p>Sabores: <span id="modal-sabores"></span></p>
-            <p>Tamanho: <span id="modal-tamanho"></span></p>
-            <p>Borda: <span id="modal-borda"></span></p>
-            <h3>Log de Alterações de Status</h3>
-            <div id="modal-logStatus"></div>
+            <div class="header">
+                <img src="../assets/domJoao.jpg" alt="Logo do Restaurante">
+                <h1>Pedido <span id="modal-idPedido"></span></h1>
+            </div>
+            <div class="status">
+                <h2>Status</h2>
+                <p><span id="modal-statusPedido"></span> - <span id="modal-dataPedido"></span></p>
+            </div>
+
+            <div class="items">
+                <h2 class="section-title">Itens</h2>
+                <p>Sabores: <span id="modal-sabores"></span></p>
+                <p>Tamanho: <span id="modal-tamanho"></span></p>
+                <p>Borda: <span id="modal-borda"></span></p>
+
+                <div class="prices">
+                    <span>Total dos itens</span>
+                    <span id="modal-totalPizza"></span>
+                </div>
+                <div class="prices">
+                    <span>Valor da entrega</span>
+                    <span id="modal-valor_entrega"></span>
+                </div>
+                <div class="prices">
+                    <span id="total">Total do pedido</span>
+                    <span id="modal-totalPedido"></span>
+                </div>
+            </div>
+
+            <div class="address">
+                <h2 class="section-title">Endereço de Entrega</h2>
+                <p><span id="rua"></span>, <span id="numero"></span></p>
+                <p><span id="cidade"></span> - <span id="bairro"></span></p>
+                <p id="complemento"></p>
+            </div>
+
+            <div class="info">
+                <h2 class="section-title">Informações</h2>
+                <p>Forma de entrega: <span id="modal-tipoPedido"></span></p>
+                <p>Tempo de Espera: <span id="modal-tempoEspera"></span></p>
+                <p>Forma de pagamento: <span id="modal-pagamento"></span></p>
+            </div>
+
+            <div class="log-status">
+                <h2 class="section-title">Log de Alterações de Status</h2>
+                <div id="modal-logStatus"></div>
+            </div>
         </div>
     </div>
 
