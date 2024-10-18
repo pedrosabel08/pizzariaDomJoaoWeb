@@ -116,41 +116,19 @@ function generateVerificationCode() {
 function validateVerificationCode() {
     const userCode = document.getElementById('token').value;
     const currentTime = new Date().getTime();
-
     if (!generatedCode) {
         document.getElementById('statusToken').innerText = "Nenhum código gerado ainda!";
         return;
     }
-
     if (currentTime > expirationTime) {
         document.getElementById('statusToken').innerText = "O código expirou!";
         return;
     }
-
     if (userCode == generatedCode) {
-        // Exibe o Toastify ao invés de usar innerText
-        Toastify({
-            text: "Código validado com sucesso!",
-            duration: 3000, 
-            close: true,
-            gravity: "top", 
-            position: "center",  // Centralizado
-            backgroundColor: "green", 
-        }).showToast();
-        
-        setTimeout(() => {
-            document.getElementById('formCadastro').submit();
-            window.location.href = 'index.php';
-        }, 1000); 
+        document.getElementById('statusToken').innerText = "Código validado com sucesso!";
+        document.getElementById('formCadastro').submit();
     } else {
-        Toastify({
-            text: "Código inválido!",
-            duration: 3000,  // Duração de 3 segundos
-            close: true,
-            gravity: "top",  // Posiciona no topo
-            position: "center",  // Centralizado
-            backgroundColor: "red",  // Cor de fundo verde
-        }).showToast();
+        document.getElementById('statusToken').innerText = "Código inválido!";
     }
 }
 
