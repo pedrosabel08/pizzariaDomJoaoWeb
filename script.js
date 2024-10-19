@@ -20,14 +20,11 @@ document.addEventListener('DOMContentLoaded', function () {
     cartBtn.addEventListener("click", function () {
         cartModal.style.display = "flex"
         cartModal.style.justifyContent = "center"
-        document.getElementById('corpo').style.position = "fixed"
-        document.getElementById('corpo').style.width = "100%"
     })
 
     cartModal.addEventListener("click", function (event) {
         if (event.target === cartModal) {
             cartModal.style.display = "none"
-            document.getElementById('corpo').style.position = "absolute"
         }
     })
 
@@ -776,8 +773,8 @@ function gerarQRCode() {
 
     $('#qrcode').qrcode({
         text: pixCode,
-        width: 200,
-        height: 200
+        width: 100,
+        height: 100
     });
 }
 

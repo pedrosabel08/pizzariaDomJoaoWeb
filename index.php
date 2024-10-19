@@ -61,7 +61,7 @@ $nomeCliente = $_SESSION['nome'];
             </div>
         </div>
         <div class="w-full h-full flex flex-col justify-center items-center">
-            <img src="./assets/domJoao.jpg" alt="Logo" class="w-40 h-40 rounded-full shadow-lg hover:scale-110">
+            <img src="./assets/domJoao.jpg" alt="Logo" class="w-40 h-40 rounded-full shadow-lg" id="logo">
             <h1 class="text-3xl mt-4 mb-2 font-bold text-black">Pizzaria Dom João</h1>
             <a href="https://www.google.com/maps/search/?api=1&query=%27Rua%20Jo%C3%A3o%20Pessoa,%201726%20Sl%2004%20-%20Velha%20-%20Blumenau%20/%20SC%27" class="text-black font-medium" target="blink">Rua João Pessoa, 1726 Sl 04 - Velha - Blumenau/SC</a>
             <div class="bg-green-500 px-4 py-1 rounded-lg my-5" id="date-span">
@@ -190,17 +190,17 @@ $nomeCliente = $_SESSION['nome'];
                     $contador = 0;
                     while ($row = $result->fetch_assoc()) {
                         $contador++;
-                ?>      
-                    <div>
-                        <button id="removersalgadas<?php echo $contador ?>" style="position:absolute;display:none;" class="bg-red-600 p-1 rounded-lg">Remover</button>
-                        <button class="pizza-flavor bg-white p-4 rounded-lg shadow-md text-center border-2 border-red-500" data-flavor="<?php echo htmlspecialchars($row['nomePizza']); ?>" data-id-flavor="<?php echo $row['idpizzas'] ?>" data-contador="salgadas<?php echo $contador ?>">
-                            <div class="font-bold"><?php echo htmlspecialchars($row['nomePizza']); ?></div>
-                            <div class="text-sm text-gray-600"><?php echo htmlspecialchars($row['ingredientes']); ?></div>
-                            <input class="text-center cursor-pointer" id="Visivelsalgadas<?php echo $contador ?>" type="text" readonly>
-                            <input style="display:none;" id="salgadas<?php echo $contador ?>" type="text" readonly>
-                            <input style="display:none;" id="JaTemRemovesalgadas<?php echo $contador ?>" type="text" readonly>
-                        </button>
-                    </div>
+                ?>
+                        <div>
+                            <button id="removersalgadas<?php echo $contador ?>" style="position:absolute;display:none;" class="bg-red-600 pl-1 pr-1 rounded-lg"><i class="fa-solid fa-minus"></i></button>
+                            <button class="pizza-flavor bg-white p-4 rounded-lg shadow-md text-center border-2 border-red-500" data-flavor="<?php echo htmlspecialchars($row['nomePizza']); ?>" data-id-flavor="<?php echo $row['idpizzas'] ?>" data-contador="salgadas<?php echo $contador ?>">
+                                <div class="font-bold"><?php echo htmlspecialchars($row['nomePizza']); ?></div>
+                                <div class="text-sm text-gray-600"><?php echo htmlspecialchars($row['ingredientes']); ?></div>
+                                <input class="text-center cursor-pointer" id="Visivelsalgadas<?php echo $contador ?>" type="text" readonly>
+                                <input style="display:none;" id="salgadas<?php echo $contador ?>" type="text" readonly>
+                                <input style="display:none;" id="JaTemRemovesalgadas<?php echo $contador ?>" type="text" readonly>
+                            </button>
+                        </div>
                 <?php
                     }
                 } else {
@@ -225,16 +225,16 @@ $nomeCliente = $_SESSION['nome'];
                     while ($row = $result->fetch_assoc()) {
                         $contador++;
                 ?>
-                    <div>
-                        <button id="removerdoces<?php echo $contador ?>" style="position:absolute;display:none;" class="bg-red-600 p-1 rounded-lg">Remover</button>
-                        <button style="width:100%;height:100%;" class="pizza-flavor bg-white p-4 rounded-lg shadow-md text-center border-2 border-pink-500" data-flavor="<?php echo htmlspecialchars($row['nomePizza']); ?>" data-id-flavor="<?php echo $row['idpizzas'] ?>" data-contador="doces<?php echo $contador ?>">
-                            <div class="font-bold"><?php echo htmlspecialchars($row['nomePizza']); ?></div>
-                            <div class="text-sm text-gray-600"><?php echo htmlspecialchars($row['ingredientes']); ?></div>
-                            <input class="text-center cursor-pointer" id="Visiveldoces<?php echo $contador ?>" type="text" readonly>
-                            <input style="display:none;" id="doces<?php echo $contador ?>" type="text" readonly>
-                            <input style="display:none;" id="JaTemRemovedoces<?php echo $contador ?>" type="text" readonly>
-                        </button>
-                    </div>
+                        <div>
+                            <button id="removerdoces<?php echo $contador ?>" style="position:absolute;display:none;" class="bg-red-600 p-1 rounded-lg"><i class="fa-solid fa-minus"></i></button>
+                            <button style="width:100%;height:100%;" class="pizza-flavor bg-white p-4 rounded-lg shadow-md text-center border-2 border-pink-500" data-flavor="<?php echo htmlspecialchars($row['nomePizza']); ?>" data-id-flavor="<?php echo $row['idpizzas'] ?>" data-contador="doces<?php echo $contador ?>">
+                                <div class="font-bold"><?php echo htmlspecialchars($row['nomePizza']); ?></div>
+                                <div class="text-sm text-gray-600"><?php echo htmlspecialchars($row['ingredientes']); ?></div>
+                                <input class="text-center cursor-pointer" id="Visiveldoces<?php echo $contador ?>" type="text" readonly>
+                                <input style="display:none;" id="doces<?php echo $contador ?>" type="text" readonly>
+                                <input style="display:none;" id="JaTemRemovedoces<?php echo $contador ?>" type="text" readonly>
+                            </button>
+                        </div>
                 <?php
                     }
                 } else {
@@ -407,44 +407,44 @@ $nomeCliente = $_SESSION['nome'];
                             <input class="border-black border w-2/3 pl-1" type="text" maxlength="45" id="calcTempoDuracao" name="calcTempoDuracao" readonly>
                         </div>
                     </div>
-           
+
                     <div class="mt-2">
-    <h3 class="text-xl mb-2">Forma de pagamento:</h3>
-    <div class="flex items-center mb-2">
-        <input type="radio" id="pix" name="forma_pagamento" value="1" onchange="selecionarPagamento('pix')">
-        <label for="pix" class="ml-2">Pix</label>
-    </div>
+                        <h3 class="text-xl mb-2">Forma de pagamento:</h3>
+                        <div class="flex items-center mb-2">
+                            <input type="radio" id="pix" name="forma_pagamento" value="1" onchange="selecionarPagamento('pix')">
+                            <label for="pix" class="ml-2">Pix</label>
+                        </div>
 
-    <div id="qrcode" class="mt-4"></div>
-</div>
+                        <div id="qrcode" class="mt-4 mb-4"></div>
+                    </div>
 
-<div class="flex items-center mb-2">
-    <input type="radio" id="debito" name="forma_pagamento" value="2" onchange="selecionarPagamento()">
-    <label for="debito" class="ml-2">Cartão de débito</label>
-</div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" id="debito" name="forma_pagamento" value="2" onchange="selecionarPagamento()">
+                        <label for="debito" class="ml-2">Cartão de débito</label>
+                    </div>
 
-<div class="flex items-center mb-2">
-    <input type="radio" id="credito" name="forma_pagamento" value="3" onchange="selecionarPagamento()">
-    <label for="credito" class="ml-2">Cartão de crédito</label>
-</div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" id="credito" name="forma_pagamento" value="3" onchange="selecionarPagamento()">
+                        <label for="credito" class="ml-2">Cartão de crédito</label>
+                    </div>
 
-<div class="flex items-center mb-2">
-    <input type="radio" id="dinheiro" name="forma_pagamento" value="4" onchange="selecionarPagamento('dinheiro')">
-    <label for="dinheiro" class="ml-2">Dinheiro</label>
-</div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" id="dinheiro" name="forma_pagamento" value="4" onchange="selecionarPagamento('dinheiro')">
+                        <label for="dinheiro" class="ml-2">Dinheiro</label>
+                    </div>
 
-<div class="flex items-center mb-2" id="trocoOptions" style="display: none;">
-    <label class="mr-2">Precisa de troco?</label>
-    <input type="radio" id="trocoSim" name="precisaTroco" value="sim" onchange="toggleTrocoInput()">
-    <label for="trocoSim" class="ml-2">Sim</label>
-    <input type="radio" id="trocoNao" name="precisaTroco" value="nao" onchange="toggleTrocoInput()">
-    <label for="trocoNao" class="ml-2">Não</label>
-</div>
+                    <div class="flex items-center mb-2" id="trocoOptions" style="display: none;">
+                        <label class="mr-2">Precisa de troco?</label>
+                        <input type="radio" id="trocoSim" name="precisaTroco" value="sim" onchange="toggleTrocoInput()">
+                        <label for="trocoSim" class="ml-2">Sim</label>
+                        <input type="radio" id="trocoNao" name="precisaTroco" value="nao" onchange="toggleTrocoInput()">
+                        <label for="trocoNao" class="ml-2">Não</label>
+                    </div>
 
-<div id="trocoContainer" class="mt-2" style="display: none;">
-    <label for="valorTroco" class="mr-2">Troco para?</label>
-    <input type="number" id="valorTroco" placeholder="Informe o valor do troco">
-</div>
+                    <div id="trocoContainer" class="mt-2" style="display: none;">
+                        <label for="valorTroco" class="mr-2">Troco para?</label>
+                        <input type="number" id="valorTroco" placeholder="Informe o valor do troco">
+                    </div>
                     <script>
                         function toggleTrocoOptions() {
                             const trocoOptions = document.getElementById('trocoOptions');

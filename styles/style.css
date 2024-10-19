@@ -79,6 +79,15 @@ input[type=number] {
     background-color: #ccc;
 }
 
+img#logo {
+    transition: .3s all ease;
+}
+
+img#logo:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
 button#voltar {
     width: 100px;
     border: 2px solid black;
