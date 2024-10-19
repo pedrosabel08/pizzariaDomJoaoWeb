@@ -407,61 +407,44 @@ $nomeCliente = $_SESSION['nome'];
                             <input class="border-black border w-2/3 pl-1" type="text" maxlength="45" id="calcTempoDuracao" name="calcTempoDuracao" readonly>
                         </div>
                     </div>
-
+           
                     <div class="mt-2">
-                        <h3 class="text-xl mb-2">Forma de pagamento:</h3>
-                        <div class="flex items-center mb-2">
-                            <input type="radio" id="pix" name="forma_pagamento" value="1" onchange="gerarQRCode()">
-                            <label for="pix" class="ml-2">Pix</label>
-                        </div>
-                        <!-- Container para o QR Code -->
-                        <div id="qrcode" class="mt-4"></div>
-                    </div>
+    <h3 class="text-xl mb-2">Forma de pagamento:</h3>
+    <div class="flex items-center mb-2">
+        <input type="radio" id="pix" name="forma_pagamento" value="1" onchange="selecionarPagamento('pix')">
+        <label for="pix" class="ml-2">Pix</label>
+    </div>
 
-                    <script>
-                        function gerarQRCode() {
-                            // Aqui você deve substituir pelo código do seu pagamento Pix
-                            const pixCode = 'assets/Untitled.png'; // Exemplo de código Pix
+    <div id="qrcode" class="mt-4"></div>
+</div>
 
-                            // Limpa o QR Code anterior
-                            $('#qrcode').empty();
+<div class="flex items-center mb-2">
+    <input type="radio" id="debito" name="forma_pagamento" value="2" onchange="selecionarPagamento()">
+    <label for="debito" class="ml-2">Cartão de débito</label>
+</div>
 
-                            // Gera o QR Code
-                            $('#qrcode').qrcode({
-                                text: pixCode,
-                                width: 200,
-                                height: 200
-                            });
-                        }
-                    </script>
-                    <div class="flex items-center mb-2">
-                        <input type="radio" id="debito" name="forma_pagamento" value="2">
-                        <label for="debito" class="ml-2">Cartão de débito</label>
-                    </div>
-                    <div class="flex items-center mb-2">
-                        <input type="radio" id="credito" name="forma_pagamento" value="3">
-                        <label for="credito" class="ml-2">Cartão de crédito</label>
-                    </div>
-                    <div class="flex items-center mb-2">
-                        <input type="radio" id="dinheiro" name="forma_pagamento" value="4" onchange="toggleTrocoOptions()">
-                        <label for="dinheiro" class="ml-2">Dinheiro</label>
-                    </div>
+<div class="flex items-center mb-2">
+    <input type="radio" id="credito" name="forma_pagamento" value="3" onchange="selecionarPagamento()">
+    <label for="credito" class="ml-2">Cartão de crédito</label>
+</div>
 
-                    <!-- Opções para precisar de troco -->
-                    <div class="flex items-center mb-2" id="trocoOptions" style="display: none;">
-                        <label class="mr-2">Precisa de troco?</label>
-                        <input type="radio" id="trocoSim" name="precisaTroco" value="sim" onchange="toggleTrocoInput()">
-                        <label for="trocoSim" class="ml-2">Sim</label>
-                        <input type="radio" id="trocoNao" name="precisaTroco" value="nao" onchange="toggleTrocoInput()">
-                        <label for="trocoNao" class="ml-2">Não</label>
-                    </div>
+<div class="flex items-center mb-2">
+    <input type="radio" id="dinheiro" name="forma_pagamento" value="4" onchange="selecionarPagamento('dinheiro')">
+    <label for="dinheiro" class="ml-2">Dinheiro</label>
+</div>
 
-                    <!-- Caixa de entrada para o valor do troco -->
-                    <div id="trocoContainer" class="mt-2" style="display: none;">
-                        <label for="valorTroco" class="mr-2">Troco para?</label>
-                        <input type="number" id="valorTroco" placeholder="Informe o valor do troco">
-                    </div>
+<div class="flex items-center mb-2" id="trocoOptions" style="display: none;">
+    <label class="mr-2">Precisa de troco?</label>
+    <input type="radio" id="trocoSim" name="precisaTroco" value="sim" onchange="toggleTrocoInput()">
+    <label for="trocoSim" class="ml-2">Sim</label>
+    <input type="radio" id="trocoNao" name="precisaTroco" value="nao" onchange="toggleTrocoInput()">
+    <label for="trocoNao" class="ml-2">Não</label>
+</div>
 
+<div id="trocoContainer" class="mt-2" style="display: none;">
+    <label for="valorTroco" class="mr-2">Troco para?</label>
+    <input type="number" id="valorTroco" placeholder="Informe o valor do troco">
+</div>
                     <script>
                         function toggleTrocoOptions() {
                             const trocoOptions = document.getElementById('trocoOptions');

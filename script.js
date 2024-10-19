@@ -801,3 +801,34 @@ function toggleTrocoInput() {
         document.getElementById('valorTroco').value = ''; // Limpa o valor do troco
     }
 }
+function selecionarPagamento(forma) {
+    // Resetando todos os campos para o estado inicial
+    document.getElementById("qrcode").innerHTML = "";
+    document.getElementById("trocoOptions").style.display = "none";
+    document.getElementById("trocoContainer").style.display = "none";
+    document.getElementById("valorTroco").value = "";
+
+    // Ações específicas para cada forma de pagamento
+    if (forma === 'pix') {
+        gerarQRCode();
+    } else if (forma === 'dinheiro') {
+        toggleTrocoOptions();
+    }
+}
+
+
+function toggleTrocoOptions() {
+    document.getElementById("trocoOptions").style.display = "flex";
+}
+
+function toggleTrocoInput() {
+    const trocoSim = document.getElementById("trocoSim").checked;
+    const trocoContainer = document.getElementById("trocoContainer");
+
+    if (trocoSim) {
+        trocoContainer.style.display = "block";
+    } else {
+        trocoContainer.style.display = "none";
+        document.getElementById("valorTroco").value = ""; // Resetando o valor do troco
+    }
+}
