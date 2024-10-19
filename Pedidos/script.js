@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                         case 'Não começou':
                                             statusElement.classList.add('status-vermelho');
                                             break;
-                                        case 'Em Andamento':
+                                        case 'Em andamento':
                                             statusElement.classList.add('status-laranja');
                                             break;
                                         case 'Finalizado':

@@ -103,12 +103,15 @@ main {
 
 @media (max-width: 768px) {
     .pedido {
-        grid-template-columns: 1fr; /* uma coluna em telas pequenas */
-        width: 95%; /* largura maior em telas menores */
+        grid-template-columns: 1fr;
+        /* uma coluna em telas pequenas */
+        width: 95%;
+        /* largura maior em telas menores */
     }
 
     .desc input {
-        max-width: 100%; /* ajuste a largura máxima dos inputs */
+        max-width: 100%;
+        /* ajuste a largura máxima dos inputs */
     }
 }
 
@@ -137,7 +140,7 @@ main {
 
 .modal-content {
     max-width: 900px;
-    max-height: 700px;
+    max-height: 80vh;
     margin: 20px auto;
     background-color: #fff;
     padding: 20px;
