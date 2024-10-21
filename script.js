@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const cartModal = document.getElementById("cart-modal")
     const closeModalBtn = document.getElementById("close-modal-btn")
     const totalPriceElement = document.getElementById('total-price');
+    const sidebar = document.getElementById('sidebar')
 
     let pizzaSize = '';
     let pizzaSizePrice = 0;
@@ -22,16 +23,25 @@ document.addEventListener('DOMContentLoaded', function () {
         cartModal.style.justifyContent = "center"
     })
 
-    cartModal.addEventListener("click", function (event) {
-        if (event.target === cartModal) {
-            cartModal.style.display = "none"
-        }
-    })
-
     closeModalBtn.addEventListener("click", function () {
-        cartModal.style.display = "none"
-        document.getElementById('corpo').style.position = "absolute"
-    })
+        sidebar.classList.add("hide"); 
+
+        setTimeout(() => {
+            cartModal.style.display = "none"; 
+            sidebar.classList.remove("hide"); 
+        }, 300); 
+    });
+
+    window.onclick = function (event) {
+        if (event.target == cartModal) {
+            sidebar.classList.add("hide");
+
+            setTimeout(() => {
+                cartModal.style.display = "none";
+                sidebar.classList.remove("hide");
+            }, 300);
+        }
+    };
 
     document.querySelectorAll('.pizza-size').forEach(button => {
         button.addEventListener('click', function () {
@@ -70,13 +80,13 @@ document.addEventListener('DOMContentLoaded', function () {
             const inputVisivel = document.getElementById(`Visivel${contador}`);
             const inputRemover = document.getElementById(`JaTemRemove${contador}`);
             botaoRemover.style.display = 'block';
-            if(parseInt(inputRemover.value) <= 0 || inputRemover.value == ''){
+            if (parseInt(inputRemover.value) <= 0 || inputRemover.value == '') {
                 inputRemover.value = 1;
-                botaoRemover.addEventListener('click', function(){
+                botaoRemover.addEventListener('click', function () {
                     if (pizzaFlavors.includes(flavor)) {
                         document.getElementById(contador).value = (parseInt(document.getElementById(contador).value) > 0 ? (parseInt(document.getElementById(contador).value) - 1) : 0);
                         inputVisivel.value = document.getElementById(contador).value + '/' + maxFlavors;
-                        if(parseInt(document.getElementById(contador).value) == 0 || document.getElementById(contador).value == ''){
+                        if (parseInt(document.getElementById(contador).value) == 0 || document.getElementById(contador).value == '') {
                             divSabor.classList.remove('bg-green-300');
                             inputVisivel.classList.remove('bg-green-300');
                             botaoRemover.style.display = 'none';
@@ -91,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById(contador).value = (parseInt(document.getElementById(contador).value) > 0 ? (parseInt(document.getElementById(contador).value) + 1) : 1);
                 inputVisivel.value = document.getElementById(contador).value + '/' + maxFlavors;
 
-                if(parseInt(document.getElementById(contador).value) > 0){
+                if (parseInt(document.getElementById(contador).value) > 0) {
                     divSabor.classList.add('bg-green-300');
                     inputVisivel.classList.add('bg-green-300');
                 }
@@ -103,10 +113,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 inputVisivel.value = '';
                 pizzaFlavors = pizzaFlavors.filter(flavorItem => flavorItem !== flavor);
                 botaoRemover.style.display = 'none';
-                
+
                 alert(`Você só pode selecionar até ${maxFlavors} sabores.`);
             }
-            
+
         });
     });
     let cartItems = [];
@@ -115,10 +125,10 @@ document.addEventListener('DOMContentLoaded', function () {
         if (pizzaFlavors.length > 0) {
             const totalPrice = pizzaSizePrice + pizzaBorderPrice;
 
-            for(let i = 1; i <= document.getElementsByClassName('pizza-flavor').length; i++){
+            for (let i = 1; i <= document.getElementsByClassName('pizza-flavor').length; i++) {
                 const inputVisivels = document.getElementById(`Visivelsalgadas${i}`);
                 const inputVisiveld = document.getElementById(`Visiveldoces${i}`);
-                if(inputVisivels != null){
+                if (inputVisivels != null) {
                     const botaoRemovers = document.getElementById(`removersalgadas${i}`);
                     botaoRemovers.style.display = 'none';
                     inputVisivels.classList.remove('bg-green-300');
@@ -126,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     document.getElementById(`salgadas${i}`).value = '';
                     document.getElementById(`JaTemRemovesalgadas${i}`).value = '';
                 }
-                if(inputVisiveld != null){
+                if (inputVisiveld != null) {
                     const botaoRemoverd = document.getElementById(`removerdoces${i}`);
                     botaoRemoverd.style.display = 'none';
                     inputVisiveld.classList.remove('bg-green-300');
@@ -180,6 +190,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 cartItem.quantity += 1;
                 inputQtde.value = cartItem.quantity;
                 totalCartPrice += cartItem.price;
+                totalTroco.value = totalCartPrice;
+                console.log(`Valor do troco: R$ ${totalTroco.value}`);
                 totalPriceElement.textContent = `Total: R$ ${totalCartPrice.toFixed(2)}`;
             });
 
@@ -203,6 +215,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             totalCartPrice += totalPrice;
 
+            totalTroco.value = totalCartPrice;
+            console.log(`Valor do troco: R$ ${totalTroco.value}`);
             totalPriceElement.textContent = `Total: R$ ${totalCartPrice.toFixed(2)}`;
 
             li.appendChild(botaoMenos);
@@ -258,11 +272,11 @@ document.addEventListener('DOMContentLoaded', function () {
         this.classList.add('hidden');
         pizzaFlavors = [];
 
-        for(let i = 1; i <= document.getElementsByClassName('pizza-flavor').length; i++){
+        for (let i = 1; i <= document.getElementsByClassName('pizza-flavor').length; i++) {
             document.getElementsByClassName('pizza-flavor')[i].classList.remove('bg-green-300');
             const inputVisivel = document.getElementById(`Visivelsalgadas${i}`);
             const inputVisiveld = document.getElementById(`Visiveldoces${i}`);
-            if(inputVisivel != null){
+            if (inputVisivel != null) {
                 const botaoRemover = document.getElementById(`removersalgadas${i}`);
                 botaoRemover.style.display = 'none';
                 inputVisivel.classList.remove('bg-green-300');
@@ -270,7 +284,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById(`salgadas${i}`).value = '';
                 document.getElementById(`JaTemRemovesalgadas${i}`).value = '';
             }
-            if(inputVisiveld != null){
+            if (inputVisiveld != null) {
                 const botaoRemoverd = document.getElementById(`removerdoces${i}`);
                 botaoRemoverd.style.display = 'none';
                 inputVisiveld.classList.remove('bg-green-300');
@@ -740,13 +754,6 @@ function calcularTaxaEntrega(enderecoCliente) {
 }
 
 
-
-function fecha() {
-    document.getElementById("cart-modal").style.display = "none"
-    document.getElementById('corpo').style.position = "absolute"
-}
-
-
 document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById('menuButton').addEventListener('click', function () {
@@ -813,19 +820,34 @@ function selecionarPagamento(forma) {
     }
 }
 
+function verificarTroco() {
+    const totalTroco = parseFloat(document.getElementById('totalTroco').value);
+    const valorTroco = parseFloat(document.getElementById('valorTroco').value);
+    const mensagemErro = document.getElementById('mensagemErro');
+    const resultadoTroco = document.getElementById('resultadoTroco'); 
 
-function toggleTrocoOptions() {
-    document.getElementById("trocoOptions").style.display = "flex";
-}
+    // Verifica se totalTroco é nulo ou NaN
+    if (isNaN(totalTroco) || totalTroco === null) {
+        mensagemErro.style.display = 'block'; 
+        mensagemErro.innerHTML = 'Adicione um pedido para calcular o troco!';
+        resultadoTroco.style.display = 'none';
+        return; // Sai da função se totalTroco não for válido
+    }
 
-function toggleTrocoInput() {
-    const trocoSim = document.getElementById("trocoSim").checked;
-    const trocoContainer = document.getElementById("trocoContainer");
-
-    if (trocoSim) {
-        trocoContainer.style.display = "block";
+    if (!isNaN(valorTroco)) {
+        if (valorTroco < totalTroco) {
+            mensagemErro.style.display = 'block';
+            mensagemErro.innerHTML = 'O valor para o troco não pode ser menor que o total do pedido!';
+            resultadoTroco.style.display = 'none';
+        } else {
+            mensagemErro.style.display = 'none'; 
+            
+            const troco = valorTroco - totalTroco;
+            resultadoTroco.innerHTML = `Troco a ser dado: R$ ${troco.toFixed(2)}`;
+            resultadoTroco.style.display = 'block'; 
+        }
     } else {
-        trocoContainer.style.display = "none";
-        document.getElementById("valorTroco").value = ""; // Resetando o valor do troco
+        mensagemErro.style.display = 'none'; 
+        resultadoTroco.style.display = 'none';
     }
 }

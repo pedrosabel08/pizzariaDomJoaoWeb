@@ -20,27 +20,56 @@ input[type=number] {
 }
 
 .sidebar {
-    width: 0;
-    position: fixed;
-    top: 10px;
     background-color: white;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
-    box-shadow: 0px 0px 200px rgba(0, 0, 0, 0.9);
-    z-index: 1;
-    height: 60%;
-    overflow-y: scroll;
+    padding: 20px;
+    border-radius: 10px;
+    width: 40%;
+    max-height: 70%;
+    overflow-y: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: showModal 0.3s ease;
 }
 
-.overlay {
+.modal {
+    display: none;
     position: fixed;
-    top: 0;
+    z-index: 1000;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes showModal {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes hideModal {
+    from {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    to {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+}
+
+.hide {
+    animation: hideModal 0.15s forwards;
 }
 
 .hidden {

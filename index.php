@@ -23,12 +23,16 @@ $nomeCliente = $_SESSION['nome'];
     <link rel="stylesheet" href="./styles/output.css" />
     <link rel="stylesheet" href="./styles/style.css">
 
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD75y85lHmcaYraJsfSMtk245adprAqWFw&libraries=places"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD75y85lHmcaYraJsfSMtk245adprAqWFw&libraries=places"></script>
 
     <title>Pizzaria</title>
     <link rel="icon" href="./assets/pizza.png" type="image/png">
@@ -51,7 +55,8 @@ $nomeCliente = $_SESSION['nome'];
                     <hr>
                     <a href="#" id="logout"><i class="fa-solid fa-right-from-bracket"></i>Sair</a>
                 </div>
-                <button onclick="window.location.href='login.html'" id="button-sair" class="bg-red-500 hover:bg-red-700 text-white py-1 px-4 rounded focus:outline-none focus:shadow-outline ml-4 hidden">Sair</button>
+                <button onclick="window.location.href='login.html'" id="button-sair"
+                    class="bg-red-500 hover:bg-red-700 text-white py-1 px-4 rounded focus:outline-none focus:shadow-outline ml-4 hidden">Sair</button>
             </div>
             <div class="absolute top-0 right-0 p-3" id="cart-container">
                 <button class="flex items-center gap-2 font-bold" id="cart-btn">
@@ -63,7 +68,8 @@ $nomeCliente = $_SESSION['nome'];
         <div class="w-full h-full flex flex-col justify-center items-center">
             <img src="./assets/domJoao.jpg" alt="Logo" class="w-40 h-40 rounded-full shadow-lg" id="logo">
             <h1 class="text-3xl mt-4 mb-2 font-bold text-black">Pizzaria Dom João</h1>
-            <a href="https://www.google.com/maps/search/?api=1&query=%27Rua%20Jo%C3%A3o%20Pessoa,%201726%20Sl%2004%20-%20Velha%20-%20Blumenau%20/%20SC%27" class="text-black font-medium" target="blink">Rua João Pessoa, 1726 Sl 04 - Velha - Blumenau/SC</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=%27Rua%20Jo%C3%A3o%20Pessoa,%201726%20Sl%2004%20-%20Velha%20-%20Blumenau%20/%20SC%27"
+                class="text-black font-medium" target="blink">Rua João Pessoa, 1726 Sl 04 - Velha - Blumenau/SC</a>
             <div class="bg-green-500 px-4 py-1 rounded-lg my-5" id="date-span">
                 <span class="text-white font-medium">Seg a Dom - 17:30 as 23:30</span>
             </div>
@@ -76,7 +82,9 @@ $nomeCliente = $_SESSION['nome'];
         <div id="step1" class="mb-8">
             <h2 class="text-2xl mb-4">Escolha o tamanho da pizza:</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <button class="pizza-size flex items-center bg-white p-4 rounded-lg shadow-md border-2 border-yellow-500" data-size="Baby" data-sabores="1" data-price="29.90" data-id-size="2">
+                <button
+                    class="pizza-size flex items-center bg-white p-4 rounded-lg shadow-md border-2 border-yellow-500"
+                    data-size="Baby" data-sabores="1" data-price="29.90" data-id-size="2">
                     <img src="./assets/pizzaBaby.jpg" alt="pizzaBaby" class="w-24 h-24 object-cover rounded-3xl mr-6">
                     <div class="text-left">
                         <p class="font-bold text-2xl mb-3">Baby</p>
@@ -84,7 +92,9 @@ $nomeCliente = $_SESSION['nome'];
                         <p class="text-[16px] text-red-700 font-medium">A partir de R$ 29,90</p>
                     </div>
                 </button>
-                <button class="pizza-size flex items-center bg-white p-4 rounded-lg shadow-md border-2 border-yellow-500" data-size="Média" data-sabores="2" data-price="58.90" data-id-size="3">
+                <button
+                    class="pizza-size flex items-center bg-white p-4 rounded-lg shadow-md border-2 border-yellow-500"
+                    data-size="Média" data-sabores="2" data-price="58.90" data-id-size="3">
                     <img src="./assets/pizzaMedia.jpg" alt="pizzaMedia" class="w-24 h-24 object-cover rounded-3xl mr-6">
                     <div class="text-left">
                         <p class="font-bold text-2xl mb-3">Média</p>
@@ -92,16 +102,22 @@ $nomeCliente = $_SESSION['nome'];
                         <p class="text-[16px] text-red-700 font-medium">A partir de R$ 58,90</p>
                     </div>
                 </button>
-                <button class="pizza-size flex items-center bg-white p-4 rounded-lg shadow-md border-2 border-yellow-500" data-size="Grande" data-sabores="3" data-price="76.90" data-id-size="4">
-                    <img src="./assets/pizzaGrande.jpg" alt="pizzaGrande" class="w-24 h-24 object-cover rounded-3xl mr-6">
+                <button
+                    class="pizza-size flex items-center bg-white p-4 rounded-lg shadow-md border-2 border-yellow-500"
+                    data-size="Grande" data-sabores="3" data-price="76.90" data-id-size="4">
+                    <img src="./assets/pizzaGrande.jpg" alt="pizzaGrande"
+                        class="w-24 h-24 object-cover rounded-3xl mr-6">
                     <div class="text-left">
                         <p class="font-bold text-2xl mb-3">Grande</p>
                         <p class="text-[16px]">35cm, 12 fatias, 3 sabores</p>
                         <p class="text-[16px] text-red-700 font-medium">A partir de R$ 76,90</p>
                     </div>
                 </button>
-                <button class="pizza-size flex items-center bg-white p-4 rounded-lg shadow-md border-2 border-yellow-500" data-size="Gigante" data-sabores="4" data-price="87.90" data-id-size="5">
-                    <img src="./assets/pizzaGigante.jpg" alt="pizzaGigante" class="w-24 h-24 object-cover rounded-3xl mr-6">
+                <button
+                    class="pizza-size flex items-center bg-white p-4 rounded-lg shadow-md border-2 border-yellow-500"
+                    data-size="Gigante" data-sabores="4" data-price="87.90" data-id-size="5">
+                    <img src="./assets/pizzaGigante.jpg" alt="pizzaGigante"
+                        class="w-24 h-24 object-cover rounded-3xl mr-6">
                     <div class="text-left">
                         <p class="font-bold text-2xl mb-3">Gigante</p>
                         <p class="text-[16px]">45cm, 16 fatias, 4 sabores</p>
@@ -114,49 +130,57 @@ $nomeCliente = $_SESSION['nome'];
         <!-- Step 2: Borda da Pizza -->
         <div id="step2" class="mb-8 hidden">
             <div class="flex items-center mb-4">
-                <button id="backToStep1" class="mr-4 bg-zinc-500 text-white p-3 rounded-full hidden border-2 border-yellow-500">
+                <button id="backToStep1"
+                    class="mr-4 bg-zinc-500 text-white p-3 rounded-full hidden border-2 border-yellow-500">
                     <i class="fa-solid fa-arrow-left"></i>
                 </button>
                 <h2 class="text-2xl">Escolha os tipos de borda:</h2>
             </div>
             <p id="selectedSizeStep2" class="text-lg mb-4"></p>
             <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-8">
-                <button class="pizza-border bg-white p-4 rounded-lg shadow-md text-center border-2 border-yellow-500" data-border="Sem Borda" data-border-price="0" data-id-border="7">
+                <button class="pizza-border bg-white p-4 rounded-lg shadow-md text-center border-2 border-yellow-500"
+                    data-border="Sem Borda" data-border-price="0" data-id-border="7">
                     <div>
                         <p>Sem borda</p>
                     </div>
                 </button>
-                <button class="pizza-border bg-white p-4 rounded-lg shadow-md text-center border-2 border-yellow-500" data-border="Catupiry" data-border-price="10" data-id-border="1">
+                <button class="pizza-border bg-white p-4 rounded-lg shadow-md text-center border-2 border-yellow-500"
+                    data-border="Catupiry" data-border-price="10" data-id-border="1">
                     <div>
                         <p>Catupiry</p>
                         <p class="text-red-500">+ R$10,00</p>
                     </div>
                 </button>
-                <button class="pizza-border bg-white p-4 rounded-lg shadow-md text-center border-2 border-yellow-500" data-border="Cheddar" data-border-price="10" data-id-border="2">
+                <button class="pizza-border bg-white p-4 rounded-lg shadow-md text-center border-2 border-yellow-500"
+                    data-border="Cheddar" data-border-price="10" data-id-border="2">
                     <div>
                         <p>Cheddar</p>
                         <p class="text-red-500">+ R$10,00</p>
                     </div>
                 </button>
-                <button class="pizza-border bg-white p-4 rounded-lg shadow-md text-center border-2 border-yellow-500" data-border="Cream Cheese" data-border-price="10" data-id-border="3">
+                <button class="pizza-border bg-white p-4 rounded-lg shadow-md text-center border-2 border-yellow-500"
+                    data-border="Cream Cheese" data-border-price="10" data-id-border="3">
                     <div>
                         <p>Cream Cheese</p>
                         <p class="text-red-500">+ R$10,00</p>
                     </div>
                 </button>
-                <button class="pizza-border bg-white p-4 rounded-lg shadow-md text-center border-2 border-yellow-500" data-border="Chocolate preto" data-border-price="10" data-id-border="4">
+                <button class="pizza-border bg-white p-4 rounded-lg shadow-md text-center border-2 border-yellow-500"
+                    data-border="Chocolate preto" data-border-price="10" data-id-border="4">
                     <div>
                         <p>Chocolate Preto</p>
                         <p class="text-red-500">+ R$10,00</p>
                     </div>
                 </button>
-                <button class="pizza-border bg-white p-4 rounded-lg shadow-md text-center border-2 border-yellow-500" data-border="Chocolate branco" data-border-price="10" data-id-border="5">
+                <button class="pizza-border bg-white p-4 rounded-lg shadow-md text-center border-2 border-yellow-500"
+                    data-border="Chocolate branco" data-border-price="10" data-id-border="5">
                     <div>
                         <p>Chocolate Branco</p>
                         <p class="text-red-500">+ R$10,00</p>
                     </div>
                 </button>
-                <button class="pizza-border bg-white p-4 rounded-lg shadow-md text-center border-2 border-yellow-500" data-border="Doce de Leite" data-border-price="10" data-id-border="6">
+                <button class="pizza-border bg-white p-4 rounded-lg shadow-md text-center border-2 border-yellow-500"
+                    data-border="Doce de Leite" data-border-price="10" data-id-border="6">
                     <div>
                         <p>Doce de leite</p>
                         <p class="text-red-500">+ R$10,00</p>
@@ -190,18 +214,23 @@ $nomeCliente = $_SESSION['nome'];
                     $contador = 0;
                     while ($row = $result->fetch_assoc()) {
                         $contador++;
-                ?>
+                        ?>
                         <div>
-                            <button id="removersalgadas<?php echo $contador ?>" style="position:absolute;display:none;" class="bg-red-600 pl-1 pr-1 rounded-lg"><i class="fa-solid fa-minus"></i></button>
-                            <button class="pizza-flavor bg-white p-4 rounded-lg shadow-md text-center border-2 border-red-500" data-flavor="<?php echo htmlspecialchars($row['nomePizza']); ?>" data-id-flavor="<?php echo $row['idpizzas'] ?>" data-contador="salgadas<?php echo $contador ?>">
+                            <button id="removersalgadas<?php echo $contador ?>" style="position:absolute;display:none;"
+                                class="bg-red-600 pl-1 pr-1 rounded-lg"><i class="fa-solid fa-minus"></i></button>
+                            <button class="pizza-flavor bg-white p-4 rounded-lg shadow-md text-center border-2 border-red-500"
+                                data-flavor="<?php echo htmlspecialchars($row['nomePizza']); ?>"
+                                data-id-flavor="<?php echo $row['idpizzas'] ?>" data-contador="salgadas<?php echo $contador ?>">
                                 <div class="font-bold"><?php echo htmlspecialchars($row['nomePizza']); ?></div>
                                 <div class="text-sm text-gray-600"><?php echo htmlspecialchars($row['ingredientes']); ?></div>
-                                <input class="text-center cursor-pointer" id="Visivelsalgadas<?php echo $contador ?>" type="text" readonly>
+                                <input class="text-center cursor-pointer" id="Visivelsalgadas<?php echo $contador ?>"
+                                    type="text" readonly>
                                 <input style="display:none;" id="salgadas<?php echo $contador ?>" type="text" readonly>
-                                <input style="display:none;" id="JaTemRemovesalgadas<?php echo $contador ?>" type="text" readonly>
+                                <input style="display:none;" id="JaTemRemovesalgadas<?php echo $contador ?>" type="text"
+                                    readonly>
                             </button>
                         </div>
-                <?php
+                        <?php
                     }
                 } else {
                     echo "<p class='col-span-4'>Nenhuma pizza salgada encontrada.</p>";
@@ -224,18 +253,23 @@ $nomeCliente = $_SESSION['nome'];
                     $contador = 0;
                     while ($row = $result->fetch_assoc()) {
                         $contador++;
-                ?>
+                        ?>
                         <div>
-                            <button id="removerdoces<?php echo $contador ?>" style="position:absolute;display:none;" class="bg-red-600 p-1 rounded-lg"><i class="fa-solid fa-minus"></i></button>
-                            <button style="width:100%;height:100%;" class="pizza-flavor bg-white p-4 rounded-lg shadow-md text-center border-2 border-pink-500" data-flavor="<?php echo htmlspecialchars($row['nomePizza']); ?>" data-id-flavor="<?php echo $row['idpizzas'] ?>" data-contador="doces<?php echo $contador ?>">
+                            <button id="removerdoces<?php echo $contador ?>" style="position:absolute;display:none;"
+                                class="bg-red-600 p-1 rounded-lg"><i class="fa-solid fa-minus"></i></button>
+                            <button style="width:100%;height:100%;"
+                                class="pizza-flavor bg-white p-4 rounded-lg shadow-md text-center border-2 border-pink-500"
+                                data-flavor="<?php echo htmlspecialchars($row['nomePizza']); ?>"
+                                data-id-flavor="<?php echo $row['idpizzas'] ?>" data-contador="doces<?php echo $contador ?>">
                                 <div class="font-bold"><?php echo htmlspecialchars($row['nomePizza']); ?></div>
                                 <div class="text-sm text-gray-600"><?php echo htmlspecialchars($row['ingredientes']); ?></div>
-                                <input class="text-center cursor-pointer" id="Visiveldoces<?php echo $contador ?>" type="text" readonly>
+                                <input class="text-center cursor-pointer" id="Visiveldoces<?php echo $contador ?>" type="text"
+                                    readonly>
                                 <input style="display:none;" id="doces<?php echo $contador ?>" type="text" readonly>
                                 <input style="display:none;" id="JaTemRemovedoces<?php echo $contador ?>" type="text" readonly>
                             </button>
                         </div>
-                <?php
+                        <?php
                     }
                 } else {
                     echo "<p class='col-span-4'>Nenhuma pizza doce encontrada.</p>";
@@ -253,7 +287,9 @@ $nomeCliente = $_SESSION['nome'];
             <h2 class="text-2xl mb-4">Escolha a bebida:</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
                 <div>
-                    <button class="bebida-size flex items-center bg-white p-4 rounded-lg shadow-md w-full border-2 border-yellow-500" id="lata">
+                    <button
+                        class="bebida-size flex items-center bg-white p-4 rounded-lg shadow-md w-full border-2 border-yellow-500"
+                        id="lata">
                         <img src="./assets/Refrigerante.jpg" alt="lata" class="w-24 h-24 object-cover rounded-3xl mr-6">
                         <div class="text-left">
                             <p>Refrigerante Lata</p>
@@ -262,18 +298,29 @@ $nomeCliente = $_SESSION['nome'];
                     <div id="options-1" class="hidden mt-2">
                         <ul class="border border-gray-300 rounded-lg p-4">
                             <li class="flex flex-col space-y-2">
-                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500" data-bebida-id="1" data-bebida-name="Coca Cola Lata" data-bebida-price="6">Coca cola - R$6,00</button>
-                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500" data-bebida-id="2" data-bebida-name="Guaraná Lata" data-bebida-price="6">Guaraná - R$6,00</button>
-                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500" data-bebida-id="3" data-bebida-name="Sprite Lata" data-bebida-price="6">Sprite - R$6,00</button>
-                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500" data-bebida-id="4" data-bebida-name="Fanta Lata" data-bebida-price="6">Fanta - R$6,00</button>
+                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500"
+                                    data-bebida-id="1" data-bebida-name="Coca Cola Lata" data-bebida-price="6">Coca cola
+                                    - R$6,00</button>
+                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500"
+                                    data-bebida-id="2" data-bebida-name="Guaraná Lata" data-bebida-price="6">Guaraná -
+                                    R$6,00</button>
+                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500"
+                                    data-bebida-id="3" data-bebida-name="Sprite Lata" data-bebida-price="6">Sprite -
+                                    R$6,00</button>
+                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500"
+                                    data-bebida-id="4" data-bebida-name="Fanta Lata" data-bebida-price="6">Fanta -
+                                    R$6,00</button>
                             </li>
                         </ul>
                     </div>
                 </div>
 
                 <div>
-                    <button class="bebida-size flex items-center bg-white p-4 rounded-lg shadow-md w-full border-2 border-yellow-500" id="600ml">
-                        <img src="./assets/Refrigerante600.jfif" alt="600ml" class="w-24 h-24 object-cover rounded-3xl mr-6">
+                    <button
+                        class="bebida-size flex items-center bg-white p-4 rounded-lg shadow-md w-full border-2 border-yellow-500"
+                        id="600ml">
+                        <img src="./assets/Refrigerante600.jfif" alt="600ml"
+                            class="w-24 h-24 object-cover rounded-3xl mr-6">
                         <div class="text-left">
                             <p>Refrigerante 600ml</p>
                         </div>
@@ -281,17 +328,26 @@ $nomeCliente = $_SESSION['nome'];
                     <div id="options-2" class="hidden mt-2">
                         <ul class="border border-gray-300 rounded-lg p-4">
                             <li class="flex flex-col space-y-2">
-                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500" data-bebida-id="5" data-bebida-name="Coca Cola 600ml" data-bebida-price="8">Coca cola - R$8,00</button>
-                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500" data-bebida-id="6" data-bebida-name="Sprite 600ml" data-bebida-price="8">Sprite - R$8,00</button>
-                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500" data-bebida-id="7" data-bebida-name="Fanta 600ml" data-bebida-price="8">Fanta - R$8,00</button>
+                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500"
+                                    data-bebida-id="5" data-bebida-name="Coca Cola 600ml" data-bebida-price="8">Coca
+                                    cola - R$8,00</button>
+                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500"
+                                    data-bebida-id="6" data-bebida-name="Sprite 600ml" data-bebida-price="8">Sprite -
+                                    R$8,00</button>
+                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500"
+                                    data-bebida-id="7" data-bebida-name="Fanta 600ml" data-bebida-price="8">Fanta -
+                                    R$8,00</button>
                             </li>
                         </ul>
                     </div>
                 </div>
 
                 <div>
-                    <button class="bebida-size flex items-center bg-white p-4 rounded-lg shadow-md w-full border-2 border-yellow-500" id="2l">
-                        <img src="./assets/Refrigerante2lt.jpg" alt="2l" class="w-24 h-24 object-cover rounded-3xl mr-6">
+                    <button
+                        class="bebida-size flex items-center bg-white p-4 rounded-lg shadow-md w-full border-2 border-yellow-500"
+                        id="2l">
+                        <img src="./assets/Refrigerante2lt.jpg" alt="2l"
+                            class="w-24 h-24 object-cover rounded-3xl mr-6">
                         <div class="text-left">
                             <p>Refrigerante 2 Litros</p>
                         </div>
@@ -299,19 +355,31 @@ $nomeCliente = $_SESSION['nome'];
                     <div id="options-3" class="hidden mt-2">
                         <ul class="border border-gray-300 rounded-lg p-4">
                             <li class="flex flex-col space-y-2">
-                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500" data-bebida-id="8" data-bebida-name="Coca Cola 2L" data-bebida-price="15">Coca cola - R$15,00</button>
-                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500" data-bebida-id="9" data-bebida-name="Coca Cola zero 2L" data-bebida-price="15">Coca cola zero -
+                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500"
+                                    data-bebida-id="8" data-bebida-name="Coca Cola 2L" data-bebida-price="15">Coca cola
+                                    - R$15,00</button>
+                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500"
+                                    data-bebida-id="9" data-bebida-name="Coca Cola zero 2L" data-bebida-price="15">Coca
+                                    cola zero -
                                     R$15,00</button>
-                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500" data-bebida-id="10" data-bebida-name="Guaraná 2L" data-bebida-price="12">Guaraná - R$12,00</button>
-                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500" data-bebida-id="11" data-bebida-name="Sprite 2L" data-bebida-price="12">Sprite - R$12,00</button>
-                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500" data-bebida-id="12" data-bebida-name="Fanta 2L" data-bebida-price="12">Fanta - R$12,00</button>
+                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500"
+                                    data-bebida-id="10" data-bebida-name="Guaraná 2L" data-bebida-price="12">Guaraná -
+                                    R$12,00</button>
+                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500"
+                                    data-bebida-id="11" data-bebida-name="Sprite 2L" data-bebida-price="12">Sprite -
+                                    R$12,00</button>
+                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500"
+                                    data-bebida-id="12" data-bebida-name="Fanta 2L" data-bebida-price="12">Fanta -
+                                    R$12,00</button>
                             </li>
                         </ul>
                     </div>
                 </div>
 
                 <div>
-                    <button class="bebida-size flex items-center bg-white p-4 rounded-lg shadow-md w-full border-2 border-yellow-500" id="agua">
+                    <button
+                        class="bebida-size flex items-center bg-white p-4 rounded-lg shadow-md w-full border-2 border-yellow-500"
+                        id="agua">
                         <img src="./assets/agua.jpg" alt="agua" class="w-24 h-24 object-cover rounded-3xl mr-6">
                         <div class="text-left">
                             <p>Água</p>
@@ -320,9 +388,13 @@ $nomeCliente = $_SESSION['nome'];
                     <div id="options-4" class="hidden mt-2">
                         <ul class="border border-gray-300 rounded-lg p-4">
                             <li class="flex flex-col space-y-2">
-                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500" data-bebida-id="13" data-bebida-name="Água com gás" data-bebida-price="3.50">Água com gás -
+                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500"
+                                    data-bebida-id="13" data-bebida-name="Água com gás" data-bebida-price="3.50">Água
+                                    com gás -
                                     R$3,50</button>
-                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500" data-bebida-id="14" data-bebida-name="Água sem gás" data-bebida-price="3.50">Água sem gás -
+                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500"
+                                    data-bebida-id="14" data-bebida-name="Água sem gás" data-bebida-price="3.50">Água
+                                    sem gás -
                                     R$3,50</button>
                             </li>
                         </ul>
@@ -330,7 +402,9 @@ $nomeCliente = $_SESSION['nome'];
                 </div>
 
                 <div>
-                    <button class="bebida-size flex items-center bg-white p-4 rounded-lg shadow-md w-full border-2 border-yellow-500" id="cerveja">
+                    <button
+                        class="bebida-size flex items-center bg-white p-4 rounded-lg shadow-md w-full border-2 border-yellow-500"
+                        id="cerveja">
                         <img src="./assets/longneck.png" alt="cerveja" class="w-24 h-24 object-cover rounded-3xl mr-6">
                         <div class="text-left">
                             <p>Cerveja Longneck</p>
@@ -339,9 +413,13 @@ $nomeCliente = $_SESSION['nome'];
                     <div id="options-5" class="hidden mt-2">
                         <ul class="border border-gray-300 rounded-lg p-4">
                             <li class="flex flex-col space-y-2">
-                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500" data-bebida-id="15" data-bebida-name="Cerveja Heineken" data-bebida-price="10">Cerveja Heineken -
+                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500"
+                                    data-bebida-id="15" data-bebida-name="Cerveja Heineken"
+                                    data-bebida-price="10">Cerveja Heineken -
                                     R$10,00</button>
-                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500" data-bebida-id="16" data-bebida-name="Cerveja Budweiser" data-bebida-price="10">Cerveja Budweiser -
+                                <button class="text-left hover:bg-gray-200 p-2 rounded border-2 border-yellow-500"
+                                    data-bebida-id="16" data-bebida-name="Cerveja Budweiser"
+                                    data-bebida-price="10">Cerveja Budweiser -
                                     R$10,00</button>
                             </li>
                         </ul>
@@ -351,9 +429,8 @@ $nomeCliente = $_SESSION['nome'];
         </div>
 
     </div>
-    <div class="modal hidden w-full" id="cart-modal">
-        <div class="overlay" id="overlay" onclick="fecha()"></div>
-        <div class="bg-white p-5 rounded-md min-w-[90%] md:min-w-[600px] sidebar">
+    <div class="modal hidden" id="cart-modal">
+        <div class="bg-white p-5 rounded-md min-w-[90%] md:min-w-[600px] sidebar" id="sidebar">
             <form id="cartForm" action="finalizar_venda.php" method="post">
                 <div id="cart" class="mt-2">
                     <h2 class="text-2xl mb-2">Carrinho:</h2>
@@ -376,7 +453,8 @@ $nomeCliente = $_SESSION['nome'];
 
                         <div id="enderecoEntrega" class="mt-2 hidden">
                             <h3 class="text-lg mb-2">CEP:</h3>
-                            <input class="border-black border w-20 pl-1" onkeyup="buscaEndereco(this.value);" type="number" id="cep" name="cep" required>
+                            <input class="border-black border w-20 pl-1" onkeyup="buscaEndereco(this.value);"
+                                type="number" id="cep" name="cep" required>
                         </div>
                         <div id="cidadeEntrega" class="mt-2 hidden">
                             <h3 class="text-lg mb-2">Cidade</h3>
@@ -396,22 +474,26 @@ $nomeCliente = $_SESSION['nome'];
                         </div>
                         <div id="complementoEntrega" class="mt-4 hidden">
                             <h3 class="text-lg mb-2">Complemento</h3>
-                            <input class="border-black border w-2/3 pl-1" type="text" maxlength="45" id="complemento" name="complemento">
+                            <input class="border-black border w-2/3 pl-1" type="text" maxlength="45" id="complemento"
+                                name="complemento">
                         </div>
                         <div id="taxaEntrega" class="mt-4 hidden">
                             <h3 class="text-lg mb-2">Taxa de Entrega</h3>
-                            <input class="border-black border w-2/3 pl-1" type="text" maxlength="45" id="calcTaxaEntrega" name="calcTaxaEntrega" readonly>
+                            <input class="border-black border w-2/3 pl-1" type="text" maxlength="45"
+                                id="calcTaxaEntrega" name="calcTaxaEntrega" readonly>
                         </div>
                         <div id="calcDuracao" class="mt-4 hidden">
                             <h3 class="text-lg mb-2">Tempo de espera</h3>
-                            <input class="border-black border w-2/3 pl-1" type="text" maxlength="45" id="calcTempoDuracao" name="calcTempoDuracao" readonly>
+                            <input class="border-black border w-2/3 pl-1" type="text" maxlength="45"
+                                id="calcTempoDuracao" name="calcTempoDuracao" readonly>
                         </div>
                     </div>
 
                     <div class="mt-2">
                         <h3 class="text-xl mb-2">Forma de pagamento:</h3>
                         <div class="flex items-center mb-2">
-                            <input type="radio" id="pix" name="forma_pagamento" value="1" onchange="selecionarPagamento('pix')">
+                            <input type="radio" id="pix" name="forma_pagamento" value="1"
+                                onchange="selecionarPagamento('pix')">
                             <label for="pix" class="ml-2">Pix</label>
                         </div>
 
@@ -419,17 +501,20 @@ $nomeCliente = $_SESSION['nome'];
                     </div>
 
                     <div class="flex items-center mb-2">
-                        <input type="radio" id="debito" name="forma_pagamento" value="2" onchange="selecionarPagamento()">
+                        <input type="radio" id="debito" name="forma_pagamento" value="2"
+                            onchange="selecionarPagamento()">
                         <label for="debito" class="ml-2">Cartão de débito</label>
                     </div>
 
                     <div class="flex items-center mb-2">
-                        <input type="radio" id="credito" name="forma_pagamento" value="3" onchange="selecionarPagamento()">
+                        <input type="radio" id="credito" name="forma_pagamento" value="3"
+                            onchange="selecionarPagamento()">
                         <label for="credito" class="ml-2">Cartão de crédito</label>
                     </div>
 
                     <div class="flex items-center mb-2">
-                        <input type="radio" id="dinheiro" name="forma_pagamento" value="4" onchange="selecionarPagamento('dinheiro')">
+                        <input type="radio" id="dinheiro" name="forma_pagamento" value="4"
+                            onchange="selecionarPagamento('dinheiro')">
                         <label for="dinheiro" class="ml-2">Dinheiro</label>
                     </div>
 
@@ -442,39 +527,23 @@ $nomeCliente = $_SESSION['nome'];
                     </div>
 
                     <div id="trocoContainer" class="mt-2" style="display: none;">
+                        <input type="text" id="totalTroco" name="totalTroco" hidden>
                         <label for="valorTroco" class="mr-2">Troco para?</label>
-                        <input type="number" id="valorTroco" placeholder="Informe o valor do troco">
+                        <input type="number" id="valorTroco" placeholder="Informe o valor do troco"
+                            onkeyup="verificarTroco()">
+                        <div id="mensagemErro" style="color: red; display: none;"></div>
+                        <p id="resultadoTroco" style="display: none; color: green"></p>
+
                     </div>
-                    <script>
-                        function toggleTrocoOptions() {
-                            const trocoOptions = document.getElementById('trocoOptions');
-                            trocoOptions.style.display = 'block'; // Exibe as opções de troco
-                            document.getElementById('trocoSim').checked = false; // Limpa a seleção
-                            document.getElementById('trocoNao').checked = false; // Limpa a seleção
-                            toggleTrocoInput(); // Limpa a entrada de troco
-                        }
-
-                        function toggleTrocoInput() {
-                            const trocoContainer = document.getElementById('trocoContainer');
-                            const precisaTrocoSim = document.getElementById('trocoSim').checked;
-
-                            if (precisaTrocoSim) {
-                                trocoContainer.style.display = 'block'; // Mostra a caixa de entrada
-                            } else {
-                                trocoContainer.style.display = 'none'; // Esconde a caixa de entrada
-                                document.getElementById('valorTroco').value = ''; // Limpa o valor do troco
-                            }
-                        }
-                    </script>
-
                 </div>
                 <div class="flex items-center justify-between mt-5 w-full mr-14">
-                    <button id="close-modal-btn" type="button" class="bg-red-500 text-white px-4 py-1 rounded">Fechar</button>
-                    <button id="finalizeSale" type="submit" class="bg-green-500 text-white px-4 py-1 rounded">Finalizar Pedido</button>
+                    <button id="close-modal-btn" type="button"
+                        class="bg-red-500 text-white px-4 py-1 rounded">Fechar</button>
+                    <button id="finalizeSale" type="submit" class="bg-green-500 text-white px-4 py-1 rounded">Finalizar
+                        Pedido</button>
                 </div>
+            </form>
         </div>
-        </form>
-    </div>
     </div>
 
     <footer class="bg-gray-300 flex items-center flex-col py-2">
