@@ -1212,8 +1212,24 @@ select bd_pizzaria.inserirTamanhoBebidas();
 select bd_pizzaria.inserirBebidas();
 select bd_pizzaria.inserirFormaPagamento();
 
+DELIMITER //
+
+CREATE TRIGGER `vendas_AFTER_INSERT` 
+AFTER INSERT ON `vendas` 
+FOR EACH ROW 
+BEGIN
+    IF NEW.status_id = 1 THEN
+        -- Insere no log_status
+        INSERT INTO log_status (venda_id, status_anterior, status_novo, data_alteracao)
+        VALUES (NEW.idvendas, 4, NEW.status_id, NOW());  -- NULL para status_anterior, pois é um novo registro
+    END IF;
+END //
+
+DELIMITER ;
+
 
 INSERT INTO status_venda (nome_status) values
 ('Não começou'),
 ('Em andamento'),
-('Finalizado');
+('Finalizado'),
+('Pedido feito');
