@@ -41,6 +41,7 @@ if ($result->num_rows > 0) {
 <body>
     <header>
         <h1>Painel de Pedidos</h1>
+        <p id="data-atual"></p>
     </header>
 
     <main>
@@ -52,6 +53,7 @@ if ($result->num_rows > 0) {
                     <th>Sabores</th>
                     <th>Tamanho</th>
                     <th>Borda</th>
+                    <th>Bebidas</th>
                     <th>Cliente</th>
                     <th>Data</th>
                     <th>Status</th>
@@ -134,7 +136,7 @@ if ($result->num_rows > 0) {
     </main>
 
     <div class="grafico">
-        <canvas id="statusChart" width="400" height="200"></canvas>
+        <canvas id="statusChart" width="600" height="350"></canvas>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

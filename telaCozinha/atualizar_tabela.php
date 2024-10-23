@@ -18,6 +18,7 @@ JOIN bordas_pizza b ON vp.borda_idbordas_pizza = b.idbordas_pizza
 JOIN vendas v ON v.idvendas = vp.vendas_idvendas
 JOIN status_venda s ON v.status_id = s.idstatus
 JOIN clientes c ON v.cliente_id = c.idclientes
+WHERE DATE(v.data_venda) = CURDATE()
 GROUP BY 
     vp.vendas_idvendas, 
     t.nome, 

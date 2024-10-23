@@ -27,6 +27,7 @@ GROUP BY vb.vendas_idvendas
 ) vb ON v.idvendas = vb.vendas_idvendas
 INNER JOIN clientes c ON v.cliente_id = c.idclientes
 INNER JOIN status_venda s ON v.status_id = s.idstatus
+WHERE DATE(v.data_venda) = CURDATE()  -- Ajuste para considerar só a data
 GROUP BY v.idvendas, c.nome, v.data_venda, v.total, s.nome_status, t.nome, b2.nome
 ORDER BY v.data_venda DESC;";
 

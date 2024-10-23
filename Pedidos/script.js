@@ -55,22 +55,24 @@ document.addEventListener("DOMContentLoaded", function () {
                         
                         // Verifica se há bebidas e usa a primeira apenas se não houver pizza
                         if (pedido.id_bebidas && !pedido.id_pizzas) { // Verifica se há bebidas e se não há pizza
-                            const bebidaIds = pedido.id_bebidas.split(", "); // Separar os IDs das bebidas
-                            const primeiraBebidaId = parseInt(bebidaIds[0]); // Pega o primeiro ID
+                            const tamanhoBebida = pedido.tamanho_id; // Separar os IDs das bebidas
                         
                             // Mapeia o ID da bebida para a imagem
-                            switch (primeiraBebidaId) {
+                            switch (tamanhoBebida) {
                                 case 1:
                                     pizzaImage = '../assets/Refrigerante.jpg';
                                     break;
                                 case 2:
-                                    pizzaImage = '../assets/sprite.jpg';
+                                    pizzaImage = '../assets/Refrigerante600.jfif';
                                     break;
                                 case 3:
-                                    pizzaImage = '../assets/guarana.jpg';
+                                    pizzaImage = '../assets/Refrigerante2lt.jpg';
+                                    break;
+                                case 4:
+                                    pizzaImage = '../assets/agua.jpg';
                                     break;
                                 case 5:
-                                    pizzaImage = '../assets/Refrigerante.jpg';
+                                    pizzaImage = '../assets/longneck.png';
                                     break;
                                 default:
                                     pizzaImage = '../assets/defaultDrink.jpg'; // Imagem padrão caso a bebida não seja identificada

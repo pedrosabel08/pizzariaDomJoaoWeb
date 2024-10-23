@@ -1,4 +1,20 @@
 document.addEventListener("DOMContentLoaded", function () {
+
+    function formatarHorario(dataVenda) {
+        const data = new Date(dataVenda);
+        return data.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function mostrarDataAtual() {
+        const divDataAtual = document.getElementById('data-atual');
+        const dataAtual = new Date();
+
+        const opcoes = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const dataFormatada = dataAtual.toLocaleDateString('pt-BR', opcoes);
+
+        divDataAtual.textContent = dataFormatada.charAt(0).toUpperCase() + dataFormatada.slice(1);
+    }
+
     function atualizarTabela() {
         fetch('pedidos.php')
             .then(response => response.json())
@@ -18,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td>${produto.borda || 'Sem Borda'}</td>
                         <td>${produto.bebidas || 'Nenhuma Bebida'}</td>
                         <td>${produto.nome}</td>
-                        <td>${produto.data_venda}</td>
+                        <td>${formatarHorario(produto.data_venda)}</td>
                         <td>${produto.nome_status}</td>
                         <td>${produto.total}</td>
                     `;
@@ -37,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 modal.style.display = "none";
                             }
                         });
-                        
+
                         const spanClose = document.querySelector(".close");
 
 
@@ -45,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             modal.style.display = "none";
                         });
 
-                        
+
                         $.ajax({
                             type: "GET",
                             dataType: "json",
@@ -65,9 +81,9 @@ document.addEventListener("DOMContentLoaded", function () {
                                     document.getElementById('total').value = response[0].total;
                                     document.getElementById('tempo_espera').value = response[0].tempo_espera;
                                     document.getElementById('status').value = response[0].nome_status;
-                            
+
                                     clienteTelefone = clienteTelefone.replace(/\D/g, '');
-                            
+
                                     var whatsappLink = document.getElementById('whatsappLink');
                                     whatsappLink.href = `https://wa.me/${clienteTelefone}`;
                                 } else {
@@ -85,16 +101,18 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     atualizarTabela();
+    mostrarDataAtual();
 });
+
 
 var ctx = document.getElementById('statusChart').getContext('2d');
 var statusChart = new Chart(ctx, {
-    type: 'pie', // Pode ser 'bar', 'pie', 'doughnut', etc.
+    type: 'bar',
     data: {
-        labels: [], // Será preenchido dinamicamente
+        labels: [],
         datasets: [{
             label: 'Status dos Pedidos',
-            data: [], // Será preenchido dinamicamente
+            data: [],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -124,9 +142,8 @@ var statusChart = new Chart(ctx, {
     }
 });
 
-// Função para buscar os dados via AJAX e atualizar o gráfico
 function updateChart() {
-    fetch('graficoAJAX.php') // Substitua pelo caminho correto do PHP
+    fetch('graficoAJAX.php')
         .then(response => response.json())
         .then(data => {
             var labels = data.map(item => item.nome_status);
@@ -138,5 +155,5 @@ function updateChart() {
         });
 }
 
-// Atualiza o gráfico a cada 5 segundos (5000 milissegundos)
+updateChart();
 setInterval(updateChart, 5000);

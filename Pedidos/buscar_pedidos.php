@@ -26,7 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     s.nome_status,
     GROUP_CONCAT(DISTINCT b.nomeBebida SEPARATOR ", ") AS bebidas,  -- Bebidas associadas
     GROUP_CONCAT(DISTINCT vb.bebidas_idbebidas SEPARATOR ", ") AS id_bebidas,  -- IDs das bebidas
-    SUM(vb.quantidade) AS quantidade_bebidas -- Quantidade total de bebidas
+    SUM(vb.quantidade) AS quantidade_bebidas, -- Quantidade total de bebidas
+    b.tamanho_id
 FROM vendas v
 LEFT JOIN vendas_pizzas vp ON v.idvendas = vp.vendas_idvendas
 INNER JOIN forma_entrega f ON v.forma_entrega_id = f.idforma_entrega

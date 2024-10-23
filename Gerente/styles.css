@@ -10,18 +10,22 @@
 body {
     font-family: 'Nunito', sans-serif;
     background-color: #f4f4f4;
-    padding: 20px;
 }
 
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 20px;
 }
 
 h1 {
     font-size: 2rem;
     color: #333;
+}
+
+main {
+    padding: 30px;
 }
 
 #search {
@@ -58,7 +62,7 @@ h1 {
     font-weight: bold;
 }
 
-.order-table tr {
+.order-table tbody tr {
     cursor: pointer;
 }
 
@@ -138,7 +142,8 @@ h1 {
 }
 
 .grafico {
-    width: 500px;
+    display: flex;
+    justify-content: center;
 }
 
 #statusChart {

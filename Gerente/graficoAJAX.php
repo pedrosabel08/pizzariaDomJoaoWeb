@@ -4,6 +4,7 @@ include('conexao.php');
 $sql = "SELECT s.nome_status, COUNT(v.idvendas) AS total
         FROM vendas v
         INNER JOIN status_venda s ON v.status_id = s.idstatus
+        WHERE DATE(v.data_venda) = CURDATE()
         GROUP BY s.nome_status";
 
 $result = $conn->query($sql);
@@ -16,4 +17,3 @@ if ($result->num_rows > 0) {
 }
 
 echo json_encode($data);
-?>
