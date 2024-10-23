@@ -66,7 +66,7 @@ $nomeCliente = $_SESSION['nome'];
             </div>
         </div>
         <div class="w-full h-full flex flex-col justify-center items-center">
-            <img src="./assets/domJoao.jpg" alt="Logo" class="w-40 h-40 rounded-full shadow-lg" id="logo">
+            <img src="./assets/PizzaControl.webp" alt="Logo" class="w-40 h-40 rounded-full shadow-lg" id="logo">
             <h1 class="text-3xl mt-4 mb-2 font-bold text-black">Pizzaria Dom João</h1>
             <a href="https://www.google.com/maps/search/?api=1&query=%27Rua%20Jo%C3%A3o%20Pessoa,%201726%20Sl%2004%20-%20Velha%20-%20Blumenau%20/%20SC%27"
                 class="text-black font-medium" target="blink">Rua João Pessoa, 1726 Sl 04 - Velha - Blumenau/SC</a>
