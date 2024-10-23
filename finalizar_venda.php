@@ -84,80 +84,113 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
         }
 
-        foreach ($_POST["cartItems"] as $item) {
-            $size = $item["size"];
-            $border = $item["border"];
-            $flavors = $item["flavors"];
-            $price = $item["price"];
 
-            if (!is_array($flavors)) {
+        foreach ($_POST["cartItems"] as $item) {
+            // Verificar borda, tamanho e sabores
+            $size = isset($item["size"]) ? $item["size"] : null;
+            $border = isset($item["border"]) ? $item["border"] : null;
+            $flavors = isset($item["flavors"]) ? $item["flavors"] : null;
+            $price = isset($item["price"]) ? $item["price"] : null;
+
+            // Verificar bebidas
+            $idBebida = isset($item["idBebida"]) ? $item["idBebida"] : null;
+            $precoBebida = isset($item["precoBebida"]) ? $item["precoBebida"] : null;
+            $quantity = isset($item["quantity"]) ? $item["quantity"] : null;
+
+            // Verificar e tratar os sabores, separando-os se for uma string
+            if (!is_array($flavors) && $flavors !== null) {
                 $flavors = explode(',', $flavors);
             }
 
-            // Consultar ID da borda
-            $sqlBorda = "SELECT idbordas_pizza FROM bordas_pizza WHERE nome = ?";
-            if ($stmtBorda = mysqli_prepare($conn, $sqlBorda)) {
-                mysqli_stmt_bind_param($stmtBorda, "s", $border);
-                mysqli_stmt_execute($stmtBorda);
-                mysqli_stmt_bind_result($stmtBorda, $bordaId);
-                mysqli_stmt_fetch($stmtBorda);
-                mysqli_stmt_close($stmtBorda);
-            } else {
-                echo json_encode(['success' => false, 'message' => "Erro ao buscar borda."]);
-                exit;
-            }
-
-            // Consultar ID do tamanho
-            $sqlTamanho = "SELECT idtamanho FROM tamanho WHERE nome = ?";
-            if ($stmtTamanho = mysqli_prepare($conn, $sqlTamanho)) {
-                mysqli_stmt_bind_param($stmtTamanho, "s", $size);
-                mysqli_stmt_execute($stmtTamanho);
-                mysqli_stmt_bind_result($stmtTamanho, $tamanhoId);
-                mysqli_stmt_fetch($stmtTamanho);
-                mysqli_stmt_close($stmtTamanho);
-            } else {
-                echo json_encode(['success' => false, 'message' => "Erro ao buscar tamanho."]);
-                exit;
-            }
-
-            foreach ($flavors as $flavor) {
-                // Consultar ID da pizza
-                $sqlPizza = "SELECT idpizzas FROM pizzas WHERE nomePizza = ?";
-                if ($stmtPizza = mysqli_prepare($conn, $sqlPizza)) {
-                    mysqli_stmt_bind_param($stmtPizza, "s", $flavor);
-                    mysqli_stmt_execute($stmtPizza);
-                    mysqli_stmt_bind_result($stmtPizza, $pizzaId);
-                    mysqli_stmt_fetch($stmtPizza);
-                    mysqli_stmt_close($stmtPizza);
+            // Processar borda e tamanho se forem informados
+            if ($border !== null && $size !== null) {
+                // Consultar ID da borda
+                $sqlBorda = "SELECT idbordas_pizza FROM bordas_pizza WHERE nome = ?";
+                if ($stmtBorda = mysqli_prepare($conn, $sqlBorda)) {
+                    mysqli_stmt_bind_param($stmtBorda, "s", $border);
+                    mysqli_stmt_execute($stmtBorda);
+                    mysqli_stmt_bind_result($stmtBorda, $bordaId);
+                    mysqli_stmt_fetch($stmtBorda);
+                    mysqli_stmt_close($stmtBorda);
                 } else {
-                    echo json_encode(['success' => false, 'message' => "Erro ao buscar sabor."]);
+                    echo json_encode(['success' => false, 'message' => "Erro ao buscar borda."]);
                     exit;
                 }
 
-                if ($pizzaId !== null) {
-                    $sqlVendaPizza = "INSERT INTO vendas_pizzas (vendas_idvendas, pizzas_idpizzas, tamanho_idtamanho, borda_idbordas_pizza) VALUES (?, ?, ?, ?)";
-                    if ($stmtVendaPizza = mysqli_prepare($conn, $sqlVendaPizza)) {
-                        mysqli_stmt_bind_param($stmtVendaPizza, "iiii", $vendaId, $pizzaId, $tamanhoId, $bordaId);
-                        mysqli_stmt_execute($stmtVendaPizza);
-                        mysqli_stmt_close($stmtVendaPizza);
-                    } else {
-                        echo json_encode(['success' => false, 'message' => "Erro ao inserir venda de pizza."]);
-                        exit;
-                    }
+                // Consultar ID do tamanho
+                $sqlTamanho = "SELECT idtamanho FROM tamanho WHERE nome = ?";
+                if ($stmtTamanho = mysqli_prepare($conn, $sqlTamanho)) {
+                    mysqli_stmt_bind_param($stmtTamanho, "s", $size);
+                    mysqli_stmt_execute($stmtTamanho);
+                    mysqli_stmt_bind_result($stmtTamanho, $tamanhoId);
+                    mysqli_stmt_fetch($stmtTamanho);
+                    mysqli_stmt_close($stmtTamanho);
+                } else {
+                    echo json_encode(['success' => false, 'message' => "Erro ao buscar tamanho."]);
+                    exit;
+                }
 
-                    // Atualizar estoque
-                    $sqlUpdateEstoque = "UPDATE produtos p
-                                         JOIN pizzas_produtos pp ON p.idprodutos = pp.produto_id
-                                         SET p.quantidade = p.quantidade - pp.quantidade
-                                         WHERE pp.pizza_id = ?";
-                    if ($stmtUpdateEstoque = mysqli_prepare($conn, $sqlUpdateEstoque)) {
-                        mysqli_stmt_bind_param($stmtUpdateEstoque, "i", $pizzaId);
-                        mysqli_stmt_execute($stmtUpdateEstoque);
-                        mysqli_stmt_close($stmtUpdateEstoque);
+                // Processar sabores de pizza, se forem informados
+                if ($flavors !== null) {
+                    foreach ($flavors as $flavor) {
+                        // Consultar ID do sabor de pizza
+                        $sqlPizza = "SELECT idpizzas FROM pizzas WHERE nomePizza = ?";
+                        if ($stmtPizza = mysqli_prepare($conn, $sqlPizza)) {
+                            mysqli_stmt_bind_param($stmtPizza, "s", $flavor);
+                            mysqli_stmt_execute($stmtPizza);
+                            mysqli_stmt_bind_result($stmtPizza, $pizzaId);
+                            mysqli_stmt_fetch($stmtPizza);
+                            mysqli_stmt_close($stmtPizza);
+                        } else {
+                            echo json_encode(['success' => false, 'message' => "Erro ao buscar sabor."]);
+                            exit;
+                        }
+
+                        // Inserir pizza na tabela de vendas_pizzas
+                        if ($pizzaId !== null) {
+                            $sqlVendaPizza = "INSERT INTO vendas_pizzas (vendas_idvendas, pizzas_idpizzas, tamanho_idtamanho, borda_idbordas_pizza) VALUES (?, ?, ?, ?)";
+                            if ($stmtVendaPizza = mysqli_prepare($conn, $sqlVendaPizza)) {
+                                mysqli_stmt_bind_param($stmtVendaPizza, "iiii", $vendaId, $pizzaId, $tamanhoId, $bordaId);
+                                mysqli_stmt_execute($stmtVendaPizza);
+                                mysqli_stmt_close($stmtVendaPizza);
+                            } else {
+                                echo json_encode(['success' => false, 'message' => "Erro ao inserir venda de pizza."]);
+                                exit;
+                            }
+
+                            // Atualizar o estoque de ingredientes
+                            $sqlUpdateEstoque = "UPDATE produtos p
+                                                 JOIN pizzas_produtos pp ON p.idprodutos = pp.produto_id
+                                                 SET p.quantidade = p.quantidade - pp.quantidade
+                                                 WHERE pp.pizza_id = ?";
+                            if ($stmtUpdateEstoque = mysqli_prepare($conn, $sqlUpdateEstoque)) {
+                                mysqli_stmt_bind_param($stmtUpdateEstoque, "i", $pizzaId);
+                                mysqli_stmt_execute($stmtUpdateEstoque);
+                                mysqli_stmt_close($stmtUpdateEstoque);
+                            } else {
+                                echo json_encode(['success' => false, 'message' => "Erro ao atualizar estoque."]);
+                                exit;
+                            }
+                        }
                     }
                 }
             }
+
+            // Verificar e processar a bebida
+            if ($idBebida !== null && $precoBebida !== null && $quantity !== null) {
+                $sqlVendaBebida = "INSERT INTO vendas_bebidas (vendas_idvendas, bebidas_idbebidas, quantidade) VALUES (?, ?, ?)";
+                if ($stmtVendaBebida = mysqli_prepare($conn, $sqlVendaBebida)) {
+                    mysqli_stmt_bind_param($stmtVendaBebida, "iii", $vendaId, $idBebida, $quantity);
+                    mysqli_stmt_execute($stmtVendaBebida);
+                    mysqli_stmt_close($stmtVendaBebida);
+                } else {
+                    echo json_encode(['success' => false, 'message' => "Erro ao inserir venda de bebida."]);
+                    exit;
+                }
+            }
         }
+
+        // Se todas as operações forem bem-sucedidas
         echo json_encode(['success' => true, 'message' => "Venda finalizada com sucesso!"]);
     } else {
         echo json_encode(['success' => false, 'message' => "Informações incompletas."]);

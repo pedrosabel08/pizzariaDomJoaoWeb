@@ -19,20 +19,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $sql = 'SELECT 
     v.idvendas AS vendas_idvendas,
-    t.nome,
+    t.nome AS tamanho,
     v.data_venda,
     v.total,
-    f.tipo,
+    f.tipo AS forma_entrega,
+    s.nome_status,
+    GROUP_CONCAT(DISTINCT b.nomeBebida SEPARATOR ", ") AS bebidas,  -- Bebidas associadas
+    GROUP_CONCAT(DISTINCT vb.bebidas_idbebidas SEPARATOR ", ") AS id_bebidas,  -- IDs das bebidas
+    SUM(vb.quantidade) AS quantidade_bebidas -- Quantidade total de bebidas
+FROM vendas v
+LEFT JOIN vendas_pizzas vp ON v.idvendas = vp.vendas_idvendas
+INNER JOIN forma_entrega f ON v.forma_entrega_id = f.idforma_entrega
+INNER JOIN clientes c ON v.cliente_id = c.idclientes
+INNER JOIN status_venda s ON v.status_id = s.idstatus
+LEFT JOIN tamanho t ON vp.tamanho_idtamanho = t.idtamanho
+LEFT JOIN vendas_bebidas vb ON v.idvendas = vb.vendas_idvendas  -- Conexão com as bebidas do pedido
+LEFT JOIN bebidas b ON vb.bebidas_idbebidas = b.idbebidas  -- Conexão com os detalhes das bebidas
+WHERE v.cliente_id = ?
+GROUP BY 
+    vendas_idvendas, 
+    t.nome, 
+    v.data_venda, 
+    v.total, 
+    f.tipo, 
     s.nome_status
-    FROM vendas_pizzas vp
-    INNER JOIN vendas v ON v.idvendas = vp.vendas_idvendas
-    INNER JOIN forma_entrega f ON v.forma_entrega_id = f.idforma_entrega
-    INNER JOIN clientes c ON v.cliente_id = c.idclientes
-    INNER JOIN status_venda s ON v.status_id = s.idstatus
-    INNER JOIN tamanho t ON vp.tamanho_idtamanho = t.idtamanho
-    WHERE v.cliente_id = ?
-    GROUP BY vendas_idvendas, t.nome, v.data_venda, v.total, f.tipo, s.nome_status
-	ORDER BY data_venda DESC;';
+ORDER BY 
+    v.data_venda DESC;';
 
     if ($stmt = $mysqli->prepare($sql)) {
         $stmt->bind_param('i', $idclientes);

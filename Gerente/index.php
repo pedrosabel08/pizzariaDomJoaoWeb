@@ -49,7 +49,9 @@ if ($result->num_rows > 0) {
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Pedido</th>
+                    <th>Sabores</th>
+                    <th>Tamanho</th>
+                    <th>Borda</th>
                     <th>Cliente</th>
                     <th>Data</th>
                     <th>Status</th>
@@ -95,7 +97,7 @@ if ($result->num_rows > 0) {
                                 <input type="text" id="sabores" disabled>
                                 <input type="text" id="tamanho" disabled>
                                 <input type="text" id="borda" disabled>
-
+                                <input type="text" id="bebidas" disabled>
                             </div>
                             <div>
                                 <label>Informações do cliente:</label>

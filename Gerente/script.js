@@ -1,18 +1,3 @@
-const modal = document.getElementById('modal');
-var close = document.getElementsByClassName("close")[0];
-
-close.onclick = function () {
-    modal.style.display = "none";
-    limparCampos();
-};
-
-window.onclick = function (event) {
-
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-};
-
 document.addEventListener("DOMContentLoaded", function () {
     function atualizarTabela() {
         fetch('pedidos.php')
@@ -22,18 +7,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 tabela.innerHTML = '';
 
                 data.forEach(produto => {
-
                     const tr = document.createElement('tr');
                     tr.classList.add('linha-tabela');
                     tr.setAttribute('data-id', produto.vendas_idvendas);
 
                     tr.innerHTML = `
                         <td>${produto.vendas_idvendas}</td>
-                        <td>
-                            ${produto.pizzas.split(',').map((pizza, index) =>
-                        `Pizza: ${pizza} - Tamanho: ${produto.tamanhos.split(',')[index]} - Borda: ${produto.bordas.split(',')[index]}`
-                    ).join('<br>')}
-                        </td>
+                        <td>${produto.pizzas || 'Nenhuma Pizza'}</td>
+                        <td>${produto.tamanho || 'Sem Tamanho'}</td>
+                        <td>${produto.borda || 'Sem Borda'}</td>
+                        <td>${produto.bebidas || 'Nenhuma Bebida'}</td>
                         <td>${produto.nome}</td>
                         <td>${produto.data_venda}</td>
                         <td>${produto.nome_status}</td>
@@ -49,6 +32,20 @@ document.addEventListener("DOMContentLoaded", function () {
                         modal.style.display = "flex";
                         var idPedidoSelecionado = this.getAttribute('data-id');
 
+                        window.addEventListener('click', function (event) {
+                            if (event.target === modal) {
+                                modal.style.display = "none";
+                            }
+                        });
+                        
+                        const spanClose = document.querySelector(".close");
+
+
+                        spanClose.addEventListener('click', function () {
+                            modal.style.display = "none";
+                        });
+
+                        
                         $.ajax({
                             type: "GET",
                             dataType: "json",
@@ -57,20 +54,20 @@ document.addEventListener("DOMContentLoaded", function () {
                             success: function (response) {
                                 if (response.length > 0) {
                                     var clienteTelefone = response[0].telefone;
-                                    document.getElementById('idvenda').innerText = response[0].idvendas;
+                                    document.getElementById('idvenda').innerText = response[0].vendas_idvendas;
                                     document.getElementById('sabores').value = response[0].pizzas;
+                                    document.getElementById('bebidas').value = response[0].bebidas; // Adicione esta linha
                                     document.getElementById('tamanho').value = response[0].tamanho;
                                     document.getElementById('borda').value = response[0].borda;
-                                    document.getElementById('nome_cliente').value = response[0].nome_cliente;
                                     document.getElementById('nome_cliente').value = response[0].nome_cliente;
                                     document.getElementById('telefone').value = response[0].telefone;
                                     document.getElementById('data_venda').value = response[0].data_venda;
                                     document.getElementById('total').value = response[0].total;
                                     document.getElementById('tempo_espera').value = response[0].tempo_espera;
                                     document.getElementById('status').value = response[0].nome_status;
-
+                            
                                     clienteTelefone = clienteTelefone.replace(/\D/g, '');
-                
+                            
                                     var whatsappLink = document.getElementById('whatsappLink');
                                     whatsappLink.href = `https://wa.me/${clienteTelefone}`;
                                 } else {

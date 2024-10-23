@@ -43,6 +43,19 @@ input[type=number] {
     align-items: center;
 }
 
+.modal2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 50;
+}
+
 @keyframes showModal {
     from {
         transform: scale(0.8);

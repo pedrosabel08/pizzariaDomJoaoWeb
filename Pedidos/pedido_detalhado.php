@@ -20,24 +20,35 @@ if (isset($dados['vendas_idvendas'])) {
     f.tipo AS forma_entrega, 
     s.nome_status, 
     e.numero, 
-    MAX(e.complemento) AS complemento, -- Pega o valor máximo para resolver a duplicação
+    MAX(e.complemento) AS complemento, 
     e.rua, 
     e.bairro, 
     e.cidade,
     v.tempo_espera,
     v.valor_entrega,
-    fp.tipo AS forma_pagamento
-FROM vendas_pizzas vp
-JOIN pizzas p ON vp.pizzas_idpizzas = p.idpizzas
-JOIN tamanho t ON vp.tamanho_idtamanho = t.idtamanho
-JOIN bordas_pizza b ON vp.borda_idbordas_pizza = b.idbordas_pizza
-JOIN vendas v ON v.idvendas = vp.vendas_idvendas
-JOIN forma_pagamento fp ON v.forma_pagamento_id = fp.idforma_pagamento
-JOIN status_venda s ON v.status_id = s.idstatus
-JOIN forma_entrega f ON v.forma_entrega_id = f.idforma_entrega
-JOIN clientes c ON v.cliente_id = c.idclientes
-JOIN endereco e ON c.idclientes = e.cliente_id
-WHERE vp.vendas_idvendas = ?
+    fp.tipo AS forma_pagamento,
+    vb.bebidas AS bebidas,  -- Informações das bebidas
+    vb.quantidade_bebidas AS quantidade_bebidas -- Quantidade de bebidas
+FROM vendas v
+LEFT JOIN vendas_pizzas vp ON v.idvendas = vp.vendas_idvendas
+LEFT JOIN pizzas p ON vp.pizzas_idpizzas = p.idpizzas
+LEFT JOIN tamanho t ON vp.tamanho_idtamanho = t.idtamanho
+LEFT JOIN bordas_pizza b ON vp.borda_idbordas_pizza = b.idbordas_pizza
+LEFT JOIN forma_pagamento fp ON v.forma_pagamento_id = fp.idforma_pagamento
+LEFT JOIN status_venda s ON v.status_id = s.idstatus
+LEFT JOIN forma_entrega f ON v.forma_entrega_id = f.idforma_entrega
+LEFT JOIN clientes c ON v.cliente_id = c.idclientes
+LEFT JOIN endereco e ON c.idclientes = e.cliente_id
+LEFT JOIN (
+    SELECT 
+        vb.vendas_idvendas, 
+        GROUP_CONCAT(b.nomeBebida SEPARATOR ', ') AS bebidas, 
+        SUM(vb.quantidade) AS quantidade_bebidas
+    FROM vendas_bebidas vb
+    LEFT JOIN bebidas b ON vb.bebidas_idbebidas = b.idbebidas
+    GROUP BY vb.vendas_idvendas
+) vb ON v.idvendas = vb.vendas_idvendas
+WHERE v.idvendas = ?
 GROUP BY 
     vp.vendas_idvendas, 
     t.nome, 
@@ -49,7 +60,12 @@ GROUP BY
     e.numero, 
     e.rua, 
     e.bairro, 
-    e.cidade;";
+    e.cidade,
+    v.tempo_espera,
+    v.valor_entrega,
+    fp.tipo,
+    vb.bebidas,
+    vb.quantidade_bebidas;";
 
     if ($stmt = mysqli_prepare($conn, $sql)) {
         mysqli_stmt_bind_param($stmt, "i", $pedidoId);
@@ -57,12 +73,12 @@ GROUP BY
         $result = mysqli_stmt_get_result($stmt);
 
         if ($row = mysqli_fetch_assoc($result)) {
-            // Dados principais do pedido, incluindo os novos campos
+            // Dados principais do pedido, incluindo todos os campos
             $pedidoDetalhado = [
                 'vendas_idvendas' => $row['vendas_idvendas'],
                 'total' => $row['total'],
                 'data_venda' => $row['data_venda'],
-                'tipo' => $row['forma_entrega'], // Atualizado para a forma de entrega
+                'forma_entrega' => $row['forma_entrega'],
                 'nome_status' => $row['nome_status'],
                 'sabores' => $row['sabores'],
                 'tamanho' => $row['tamanho'],
@@ -73,9 +89,10 @@ GROUP BY
                 'bairro' => $row['bairro'],
                 'cidade' => $row['cidade'],
                 'tempo_espera' => $row['tempo_espera'],
-                'forma_pagamento' => $row['forma_pagamento'],
                 'valor_entrega' => $row['valor_entrega'],
-
+                'forma_pagamento' => $row['forma_pagamento'],
+                'bebidas' => $row['bebidas'], // Bebidas
+                'quantidade_bebidas' => $row['quantidade_bebidas'] // Quantidade de bebidas
             ];
 
             // Query para buscar o log de alterações de status

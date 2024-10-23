@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const closeModalBtn = document.getElementById("close-modal-btn")
     const totalPriceElement = document.getElementById('total-price');
     const sidebar = document.getElementById('sidebar')
+    const modalPagamento = document.getElementById('confirmation-modal')
 
     let pizzaSize = '';
     let pizzaSizePrice = 0;
@@ -24,12 +25,12 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
     closeModalBtn.addEventListener("click", function () {
-        sidebar.classList.add("hide"); 
+        sidebar.classList.add("hide");
 
         setTimeout(() => {
-            cartModal.style.display = "none"; 
-            sidebar.classList.remove("hide"); 
-        }, 300); 
+            cartModal.style.display = "none";
+            sidebar.classList.remove("hide");
+        }, 300);
     });
 
     window.onclick = function (event) {
@@ -40,6 +41,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 cartModal.style.display = "none";
                 sidebar.classList.remove("hide");
             }, 300);
+        }
+
+        if (event.target == modalPagamento) {
+            modalPagamento.classList.add('hidden');
         }
     };
 
@@ -191,7 +196,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 inputQtde.value = cartItem.quantity;
                 totalCartPrice += cartItem.price;
                 totalTroco.value = totalCartPrice;
-                console.log(`Valor do troco: R$ ${totalTroco.value}`);
                 totalPriceElement.textContent = `Total: R$ ${totalCartPrice.toFixed(2)}`;
             });
 
@@ -216,7 +220,6 @@ document.addEventListener('DOMContentLoaded', function () {
             totalCartPrice += totalPrice;
 
             totalTroco.value = totalCartPrice;
-            console.log(`Valor do troco: R$ ${totalTroco.value}`);
             totalPriceElement.textContent = `Total: R$ ${totalCartPrice.toFixed(2)}`;
 
             li.appendChild(botaoMenos);
@@ -371,6 +374,9 @@ document.addEventListener('DOMContentLoaded', function () {
         // Convertendo os dados do formulário para FormData
         const formData = new FormData(document.getElementById('cartForm'));
 
+        formData.forEach((value, key) => {
+            console.log(`${key}: ${value}`);
+        });
         // Enviando a requisição para o PHP usando fetch
         fetch('finalizar_venda.php', {
             method: 'POST',
@@ -398,6 +404,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     document.getElementById('total-price').innerHTML = '';
                     cartModal.style.display = "none"
 
+                    const confirmationModal = document.getElementById('confirmation-modal');
+                    confirmationModal.classList.remove('hidden');
                 } else {
                     Toastify({
                         text: "Houve um problema ao finalizar o pedido.",
@@ -426,6 +434,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     },
                 }).showToast();
             });
+    });
+
+    document.getElementById('close-confirmation-modal').addEventListener('click', function () {
+        document.getElementById('confirmation-modal').classList.add('hidden');
     });
     // const params = new URLSearchParams(window.location.search);
     // const nomeCliente = params.get('nome');
@@ -535,12 +547,12 @@ document.addEventListener('DOMContentLoaded', function () {
         if (existingItem) {
             existingItem.quantity++;
             const existingLi = document.querySelector(`#cartItems li[data-id="${bebidaId}"]`);
-            existingLi.querySelector('.item-text').textContent = `${existingItem.nome} - R$${existingItem.preco.toFixed(2)}`;
+            existingLi.querySelector('.item-text').textContent = `${existingItem.nomeBebida} - R$${existingItem.precoBebida.toFixed(2)}`;
         } else {
             const item = {
-                id: bebidaId,
-                nome: bebidaName,
-                preco: parseFloat(bebidaPrice),
+                idBebida: bebidaId,
+                nomeBebida: bebidaName,
+                precoBebida: parseFloat(bebidaPrice),
                 quantity: 1
             };
             cartItems.push(item);
@@ -550,7 +562,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const itemText = document.createElement('span');
             itemText.classList.add('item-text');
-            itemText.textContent = `${item.nome} - R$${item.preco.toFixed(2)}`;
+            itemText.textContent = `${item.nomeBebida} - R$${item.precoBebida.toFixed(2)}`;
 
             const botaoMenos = document.createElement('button');
             botaoMenos.innerHTML = '<img class="ml-4" src="./assets/menos.png">';
@@ -567,11 +579,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (item.quantity > 1) {
                     item.quantity--;
                     inputQtde.value = item.quantity;
-                    totalCartPrice -= item.preco;
+                    totalCartPrice -= item.precoBebida;
                     totalPriceElement.textContent = `Total: R$ ${totalCartPrice.toFixed(2)}`;
-                    itemText.textContent = `${item.nome} - R$${item.preco.toFixed(2)}`;
+                    itemText.textContent = `${item.nomeBebida} - R$${item.precoBebida.toFixed(2)}`;
                 } else {
-                    totalCartPrice -= item.preco;
+                    totalCartPrice -= item.precoBebida;
                     totalPriceElement.textContent = `Total: R$ ${totalCartPrice.toFixed(2)}`;
                     cartItems = cartItems.filter(cartItem => cartItem.id !== item.id);
                     li.remove();
@@ -581,9 +593,9 @@ document.addEventListener('DOMContentLoaded', function () {
             botaoMais.addEventListener('click', function () {
                 item.quantity++;
                 inputQtde.value = item.quantity;
-                totalCartPrice += item.preco;
+                totalCartPrice += item.precoBebida;
                 totalPriceElement.textContent = `Total: R$ ${totalCartPrice.toFixed(2)}`;
-                itemText.textContent = `${item.nome} - R$${item.preco.toFixed(2)}`;
+                itemText.textContent = `${item.nomeBebida} - R$${item.precoBebida.toFixed(2)}`;
             });
 
             inputQtde.addEventListener('input', function () {
@@ -591,13 +603,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!isNaN(newQuantity) && newQuantity > 0) {
                     const difference = newQuantity - item.quantity;
                     item.quantity = newQuantity;
-                    totalCartPrice += difference * item.preco;
+                    totalCartPrice += difference * item.precoBebida;
                     totalPriceElement.textContent = `Total: R$ ${totalCartPrice.toFixed(2)}`;
-                    itemText.textContent = `${item.nome} - R$${item.preco.toFixed(2)}`;
+                    itemText.textContent = `${item.nomeBebida} - R$${item.precoBebida.toFixed(2)}`;
                 } else if (newQuantity === 0) {
-                    totalCartPrice -= item.quantity * item.preco;
+                    totalCartPrice -= item.quantity * item.precoBebida;
                     totalPriceElement.textContent = `Total: R$ ${totalCartPrice.toFixed(2)}`;
-                    cartItems = cartItems.filter(cartItem => cartItem.id !== item.id);
+                    cartItems = cartItems.filter(cartItem => cartItem.idBebida !== item.idBebida);
                     li.remove();
                 } else {
                     inputQtde.value = item.quantity;
@@ -824,11 +836,11 @@ function verificarTroco() {
     const totalTroco = parseFloat(document.getElementById('totalTroco').value);
     const valorTroco = parseFloat(document.getElementById('valorTroco').value);
     const mensagemErro = document.getElementById('mensagemErro');
-    const resultadoTroco = document.getElementById('resultadoTroco'); 
+    const resultadoTroco = document.getElementById('resultadoTroco');
 
     // Verifica se totalTroco é nulo ou NaN
     if (isNaN(totalTroco) || totalTroco === null) {
-        mensagemErro.style.display = 'block'; 
+        mensagemErro.style.display = 'block';
         mensagemErro.innerHTML = 'Adicione um pedido para calcular o troco!';
         resultadoTroco.style.display = 'none';
         return; // Sai da função se totalTroco não for válido
@@ -840,14 +852,14 @@ function verificarTroco() {
             mensagemErro.innerHTML = 'O valor para o troco não pode ser menor que o total do pedido!';
             resultadoTroco.style.display = 'none';
         } else {
-            mensagemErro.style.display = 'none'; 
-            
+            mensagemErro.style.display = 'none';
+
             const troco = valorTroco - totalTroco;
             resultadoTroco.innerHTML = `Troco a ser dado: R$ ${troco.toFixed(2)}`;
-            resultadoTroco.style.display = 'block'; 
+            resultadoTroco.style.display = 'block';
         }
     } else {
-        mensagemErro.style.display = 'none'; 
+        mensagemErro.style.display = 'none';
         resultadoTroco.style.display = 'none';
     }
 }

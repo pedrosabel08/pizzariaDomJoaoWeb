@@ -3,21 +3,32 @@ include('conexao.php');
 
 $sql = "SELECT 
 v.idvendas AS vendas_idvendas,
-GROUP_CONCAT(p.nomePizza) AS pizzas, 
-GROUP_CONCAT(t.nome) AS tamanhos, 
-GROUP_CONCAT(b.nome) AS bordas, 
+GROUP_CONCAT(DISTINCT p.nomePizza) AS pizzas, 
+vb.bebidas, 
+t.nome AS tamanho, 
+b2.nome AS borda, 
 c.nome,
 v.data_venda,
 v.total,
 s.nome_status
-FROM vendas_pizzas vp
-INNER JOIN vendas v ON v.idvendas = vp.vendas_idvendas
+FROM vendas v
+LEFT JOIN vendas_pizzas vp ON v.idvendas = vp.vendas_idvendas
+LEFT JOIN pizzas p ON vp.pizzas_idpizzas = p.idpizzas
+LEFT JOIN tamanho t ON vp.tamanho_idtamanho = t.idtamanho
+LEFT JOIN bordas_pizza b2 ON vp.borda_idbordas_pizza = b2.idbordas_pizza
+LEFT JOIN (
+SELECT 
+    vb.vendas_idvendas, 
+    GROUP_CONCAT(b.nomeBebida SEPARATOR ', ') AS bebidas, 
+    SUM(vb.quantidade) AS quantidade_bebidas
+FROM vendas_bebidas vb
+LEFT JOIN bebidas b ON vb.bebidas_idbebidas = b.idbebidas
+GROUP BY vb.vendas_idvendas
+) vb ON v.idvendas = vb.vendas_idvendas
 INNER JOIN clientes c ON v.cliente_id = c.idclientes
 INNER JOIN status_venda s ON v.status_id = s.idstatus
-INNER JOIN pizzas p ON vp.pizzas_idpizzas = p.idpizzas
-INNER JOIN tamanho t ON vp.tamanho_idtamanho = t.idtamanho
-INNER JOIN bordas_pizza b ON vp.borda_idbordas_pizza = b.idbordas_pizza
-GROUP BY v.idvendas, c.nome, v.data_venda, v.total, s.nome_status";
+GROUP BY v.idvendas, c.nome, v.data_venda, v.total, s.nome_status, t.nome, b2.nome
+ORDER BY v.data_venda DESC;";
 
 $result = $conn->query($sql);
 
