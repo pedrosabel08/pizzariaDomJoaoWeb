@@ -51,7 +51,6 @@ fetchSalesData('ano');
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('startDate').addEventListener('change', carregarDados);
     document.getElementById('endDate').addEventListener('change', carregarDados);
-    document.getElementById('filterButton').addEventListener('click', carregarDados);
 
     function carregarDados() {
         var startDate = document.getElementById('startDate').value;

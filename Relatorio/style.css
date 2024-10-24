@@ -11,14 +11,14 @@
 header {
     display: flex;
     align-items: center;
-    padding: 4px;
+    padding: 6px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     gap: 30px;
     margin-bottom: 30px;
 }
 
 header h1 {
-    font-size: 20px;
+    font-size: 24px;
 }
 
 #voltar {
@@ -66,6 +66,10 @@ header h1 {
 
 .table-container table {
     margin-top: 20px;
+}
+
+h2 {
+    font-size: 20px;
 }
 
 table {
