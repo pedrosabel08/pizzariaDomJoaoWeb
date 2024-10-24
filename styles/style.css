@@ -4,6 +4,10 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background-color: #f6f7f8;
 }
@@ -144,4 +148,15 @@ button#voltar {
 button#voltar:hover {
     background-color: #ff0000;
     font-weight: bold;
+}
+
+footer {
+    background-color: #000000;
+    color: #fff;
+    font-size: 14px;
+    padding: 5px;
+}
+
+footer p {
+    margin-left: 50px;
 }

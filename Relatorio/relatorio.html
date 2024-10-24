@@ -9,7 +9,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 
@@ -31,11 +33,12 @@
 
         <div class="table-container">
             <h2>Sabores Vendidos por Período</h2>
-            <select name="periodo" id="periodo">
-                <option value="ano">Ano</option>
-                <option value="semana">Semana</option>
-                <option value="dia">Dia</option>
-            </select>
+            <label for="startDate">Data de Início:</label>
+            <input type="date" id="startDate" name="startDate">
+
+            <label for="endDate">Data de Fim:</label>
+            <input type="date" id="endDate" name="endDate">
+
             <button id="generatePDF">Gerar PDF</button>
             <table id="pizzasTable">
                 <thead>

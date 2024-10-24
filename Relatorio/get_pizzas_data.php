@@ -1,59 +1,62 @@
 <?php
-// Configuração do banco de dados
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "bd_pizzaria"; // Nome do banco de dados
+header('Content-Type: application/json');
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Conectar ao banco de dados
+$conn = new mysqli('localhost',  'root', '', 'bd_pizzaria');
 
 // Verificar a conexão
 if ($conn->connect_error) {
-    die("Conexão falhou: " . $conn->connect_error);
+    die(json_encode(["error" => "Falha na conexão: " . $conn->connect_error]));
 }
 
-// Receber o período selecionado via GET
-$periodo = isset($_GET['periodo']) ? $_GET['periodo'] : 'ano';
+$conn->set_charset('utf8mb4');
 
-// Preparar a query SQL com base no período
-if ($periodo == 'ano') {
-    $sql = "SELECT p.nomePizza AS nome_pizza, COUNT(DISTINCT v.idvendas) AS qtd_vendida
-            FROM pizzas p
-            INNER JOIN vendas_pizzas vp ON p.idpizzas = vp.pizzas_idpizzas
-            INNER JOIN vendas v ON vp.vendas_idvendas = v.idvendas
-            GROUP BY p.nomePizza, YEAR(v.data_venda)
-            ORDER BY qtd_vendida DESC";
-} elseif ($periodo == 'semana') {
-    $sql = "SELECT p.nomePizza AS nome_pizza, COUNT(DISTINCT v.idvendas) AS qtd_vendida 
-            FROM pizzas p
-            INNER JOIN vendas_pizzas vp ON p.idpizzas = vp.pizzas_idpizzas
-            INNER JOIN vendas v ON vp.vendas_idvendas = v.idvendas
-            GROUP BY p.nomePizza, YEAR(v.data_venda), WEEK(v.data_venda)
-            ORDER BY qtd_vendida DESC";
-} else {
-    $sql = "SELECT p.nomePizza AS nome_pizza, COUNT(DISTINCT v.idvendas) AS qtd_vendida 
-            FROM pizzas p
-            INNER JOIN vendas_pizzas vp ON p.idpizzas = vp.pizzas_idpizzas
-            INNER JOIN vendas v ON vp.vendas_idvendas = v.idvendas
-            GROUP BY p.nomePizza, DATE(v.data_venda)
-            ORDER BY qtd_vendida DESC";
+$startDate = isset($_GET['start_date']) ? $_GET['start_date'] : '';
+$endDate = isset($_GET['end_date']) ? $_GET['end_date'] : '';
+
+// Prepare a consulta SQL
+$sql = "SELECT p.nomePizza AS nome_pizza, COUNT(vp.pizzas_idpizzas) AS qtd_vendida 
+FROM pizzas p
+INNER JOIN vendas_pizzas vp ON p.idpizzas = vp.pizzas_idpizzas
+INNER JOIN vendas v ON vp.vendas_idvendas = v.idvendas";
+
+if ($startDate) {
+    $sql .= " AND data_venda >= ?";
+}
+if ($endDate) {
+    $sql .= " AND data_venda <= ?";
 }
 
-$result = $conn->query($sql);
+// Agrupando por sabor
+$sql .= " GROUP BY nomePizza";
 
-// Preparar os dados para enviar ao JavaScript
-$pizzas = [];
+$stmt = $conn->prepare($sql);
 
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $pizzas[] = [
-            'nome_pizza' => $row['nome_pizza'],
-            'qtd_vendida' => $row['qtd_vendida']
-        ];
-    }
+$bindParams = [];
+$types = '';
+
+if ($startDate) {
+    $types .= 's';
+    $bindParams[] = $startDate;
+}
+if ($endDate) {
+    $types .= 's';
+    $bindParams[] = $endDate;
 }
 
-// Retornar os dados em formato JSON
-echo json_encode($pizzas);
+if ($bindParams) {
+    $stmt->bind_param($types, ...$bindParams);
+}
 
+$stmt->execute();
+$result = $stmt->get_result();
+
+$sabores = [];
+while ($row = $result->fetch_assoc()) {
+    $sabores[] = $row;
+}
+
+echo json_encode($sabores);
+
+$stmt->close();
 $conn->close();

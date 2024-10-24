@@ -48,43 +48,45 @@ document.getElementById('periodo').addEventListener('change', function () {
 fetchSalesData('ano');
 
 
-function fetchPizzasData(periodo) {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', `get_pizzas_data.php?periodo=${periodo}`, true);
-    xhr.onload = function () {
-        if (this.status === 200) {
-            const pizzas = JSON.parse(this.responseText);
-            populateTable(pizzas);
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('startDate').addEventListener('change', carregarDados);
+    document.getElementById('endDate').addEventListener('change', carregarDados);
+    document.getElementById('filterButton').addEventListener('click', carregarDados);
+
+    function carregarDados() {
+        var startDate = document.getElementById('startDate').value;
+        var endDate = document.getElementById('endDate').value;
+
+        var url = 'get_pizzas_data.php?';
+
+        if (startDate) {
+            url += 'start_date=' + encodeURIComponent(startDate);
         }
-    };
-    xhr.send();
-}
+        if (endDate) {
+            url += '&end_date=' + encodeURIComponent(endDate);
+        }
 
-function populateTable(pizzas) {
-    const tbody = document.querySelector('#pizzasTable tbody');
-    tbody.innerHTML = ''; 
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                var tabela = document.querySelector('#pizzasTable tbody');
+                tabela.innerHTML = '';
 
-    pizzas.forEach(pizza => {
-        const row = document.createElement('tr');
-        const pizzaNameCell = document.createElement('td');
-        const pizzaQtyCell = document.createElement('td');
+                data.forEach(function (item) {
+                    var row = document.createElement('tr');
+                    var cellNomeSabor = document.createElement('td');
+                    cellNomeSabor.textContent = item.nome_pizza;
+                    var cellQuantidade = document.createElement('td');
+                    cellQuantidade.textContent = item.qtd_vendida;
 
-        pizzaNameCell.textContent = pizza.nome_pizza;
-        pizzaQtyCell.textContent = pizza.qtd_vendida;
-
-        row.appendChild(pizzaNameCell);
-        row.appendChild(pizzaQtyCell);
-        tbody.appendChild(row);
-    });
-}
-
-document.getElementById('periodo').addEventListener('change', function () {
-    const periodo = this.value;
-    fetchPizzasData(periodo); 
+                    row.appendChild(cellNomeSabor);
+                    row.appendChild(cellQuantidade);
+                    tabela.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Erro ao carregar sabores:', error));
+    }
 });
-
-fetchPizzasData('ano');
-
 
 document.getElementById('generatePDF').addEventListener('click', function () {
     const { jsPDF } = window.jspdf;
@@ -100,7 +102,7 @@ document.getElementById('generatePDF').addEventListener('click', function () {
     doc.setFontSize(18);
     doc.text(title, 14, 20);
     doc.setFontSize(12);
-    doc.text(subtitle, 14, 30); 
+    doc.text(subtitle, 14, 30);
 
     const table = document.getElementById('pizzasTable');
     const rows = [];
