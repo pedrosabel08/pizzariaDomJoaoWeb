@@ -789,6 +789,7 @@ function gerarQRCode() {
     const pixCode = 'assets/Untitled.png';
 
     $('#qrcode').empty();
+    document.getElementById('qrcode').style.marginBottom = '4px';
 
     $('#qrcode').qrcode({
         text: pixCode,
@@ -828,6 +829,7 @@ function selecionarPagamento(forma) {
     if (forma === 'pix') {
         gerarQRCode();
     } else if (forma === 'dinheiro') {
+        document.getElementById('qrcode').style.marginBottom = '0';
         toggleTrocoOptions();
     }
 }
