@@ -52,8 +52,6 @@ $nomeCliente = $_SESSION['nome'];
                     <a href="infos.php" id="editProfile"><i class="fa-regular fa-user"></i>Editar Informações</a>
                     <hr>
                     <a href="Pedidos/index.html" id="pedidos"><i class="fa-solid fa-list"></i>Meus pedidos</a>
-                    <hr>
-                    <a href="#" id="logout"><i class="fa-solid fa-right-from-bracket"></i>Sair</a>
                 </div>
                 <button onclick="window.location.href='login.html'" id="button-sair"
                     class="bg-red-500 hover:bg-red-700 text-white py-1 px-4 rounded focus:outline-none focus:shadow-outline ml-4 hidden">Sair</button>
