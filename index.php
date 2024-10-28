@@ -544,11 +544,13 @@ $nomeCliente = $_SESSION['nome'];
         </div>
     </div>
 
-    <div class="modal2 hidden" id="confirmation-modal">
+    <div class="modal2" id="confirmation-modal">
         <div class="bg-white p-5 rounded-md min-w-[90%] md:min-w-[600px]">
             <h2 class="text-2xl mb-2">Pedido realizado com sucesso!</h2>
             <p class="mb-4">Acesse a aba <strong>Meus Pedidos</strong> para mais detalhes sobre o seu pedido.</p>
-            <p class="mb-4">Se a forma de pagamento for PIX, envie o comprovante de pagamento pelo WhatsApp clicando no link abaixo:</p>
+            <p class="mb-4">Se a forma de pagamento for PIX, escaneio o QR Code abaixo e envie o comprovante de pagamento pelo WhatsApp clicando no link abaixo:</p>
+
+            <img src="./assets/qrcode.jpg" alt="">
             <a href="https://wa.me/SEU_NUMERO_DE_WHATSAPP" target="_blank" class="bg-green-500 text-white px-4 py-2 rounded">
                 Enviar comprovante via WhatsApp
             </a>

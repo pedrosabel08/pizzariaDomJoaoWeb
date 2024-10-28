@@ -37,13 +37,7 @@ LEFT JOIN tamanho t ON vp.tamanho_idtamanho = t.idtamanho
 LEFT JOIN vendas_bebidas vb ON v.idvendas = vb.vendas_idvendas  -- Conexão com as bebidas do pedido
 LEFT JOIN bebidas b ON vb.bebidas_idbebidas = b.idbebidas  -- Conexão com os detalhes das bebidas
 WHERE v.cliente_id = ?
-GROUP BY 
-    vendas_idvendas, 
-    t.nome, 
-    v.data_venda, 
-    v.total, 
-    f.tipo, 
-    s.nome_status
+GROUP BY vendas_idvendas, t.nome, v.data_venda, v.total, f.tipo, s.nome_status, b.tamanho_id
 ORDER BY 
     v.data_venda DESC;';
 

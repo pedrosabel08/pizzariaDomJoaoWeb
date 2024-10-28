@@ -60,6 +60,11 @@ input[type=number] {
     z-index: 50;
 }
 
+.modal2 img {
+    padding: 20px;
+    margin: 0 auto;
+}
+
 @keyframes showModal {
     from {
         transform: scale(0.8);
