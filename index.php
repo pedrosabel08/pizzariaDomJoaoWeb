@@ -495,7 +495,7 @@ $nomeCliente = $_SESSION['nome'];
                             <label for="pix" class="ml-2">Pix</label>
                         </div>
 
-                        <div id="qrcode"></div>
+                        <!-- <div id="qrcode"></div> -->
                     </div>
 
                     <div class="flex items-center mb-2">
@@ -564,6 +564,7 @@ $nomeCliente = $_SESSION['nome'];
 
     <footer>
         <p>&copy;  Pizza Control - 2024</p>
+        <p>&copy;  P. Diddy - 2024</p>
     </footer>
 
     <script>

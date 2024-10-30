@@ -94,6 +94,7 @@ if ($result->num_rows > 0) {
                             <div id="idpedido">
                                 <p>Pedido</p>
                                 <span id="idvenda"></span>
+                                <p style="background-color: green; padding: 0 10px; color: white">PAGO</p>
                             </div>
                             <div id="pedidos">
                                 <input type="text" id="sabores" disabled>
