@@ -56,10 +56,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Contar pedidos não finalizados
         $tempo_espera = isset($_POST["calcTempoDuracao"]) ? floatval($_POST["calcTempoDuracao"]) : 0; // Certifique-se de que seja um número
 
-        // Contar pedidos não finalizados
-        $pedidosPendentes = contarPedidosNaoFinalizados($conn);
-        $tempoAdicional = $pedidosPendentes * 5;
-        $tempo_espera += $tempoAdicional;
+        // // Contar pedidos não finalizados
+        // $pedidosPendentes = contarPedidosNaoFinalizados($conn);
+        // $tempoAdicional = $pedidosPendentes * 5;
+        // $tempo_espera += $tempoAdicional;
 
         if ($formaEntregaId == 2) {
             if (empty($bairro) || empty($rua) || empty($numero)) {

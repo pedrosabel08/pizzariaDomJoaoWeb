@@ -28,6 +28,20 @@ main {
     padding: 30px;
 }
 
+#filtro {
+    padding-bottom: 2rem;
+}
+
+#filtro select,
+#filtro input {
+    padding: 3px 6px;
+    font-size: 16px;
+}
+
+#filtro label {
+    font-size: 16px;
+}
+
 #search {
     padding: 10px;
     font-size: 1rem;

@@ -45,7 +45,22 @@ if ($result->num_rows > 0) {
     </header>
 
     <main>
+        <div id="filtro">
+            <label for="colunaFiltro">Filtrar por:</label>
+            <select id="colunaFiltro">
+                <option value="0">ID</option>
+                <option value="1">Sabores</option>
+                <option value="2">Tamanho</option>
+                <option value="3">Borda</option>
+                <option value="4">Bebidas</option>
+                <option value="5">Cliente</option>
+                <option value="6">Data</option>
+                <option value="7">Status</option>
+                <option value="8">Valor Total</option>
+            </select>
 
+            <input type="text" id="filtro-input" placeholder="Digite para filtrar" onkeyup="filtrarTabela()">
+        </div>
         <table class="order-table">
             <thead>
                 <tr>
@@ -94,7 +109,6 @@ if ($result->num_rows > 0) {
                             <div id="idpedido">
                                 <p>Pedido</p>
                                 <span id="idvenda"></span>
-                                <p style="background-color: green; padding: 0 10px; color: white">PAGO</p>
                             </div>
                             <div id="pedidos">
                                 <input type="text" id="sabores" disabled>

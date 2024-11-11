@@ -104,6 +104,32 @@ document.addEventListener("DOMContentLoaded", function () {
     mostrarDataAtual();
 });
 
+function filtrarTabela() {
+    var indiceColuna = document.getElementById("colunaFiltro").value;
+    var filtro = document.getElementById("filtro-input").value.toLowerCase();
+    var tabela = document.querySelector('.order-table');
+    var linhas = tabela.getElementsByTagName('tr');
+
+    for (var i = 1; i < linhas.length; i++) { // Começar do índice 1 para pular o cabeçalho
+        var cols = linhas[i].getElementsByTagName('td');
+        var mostraLinha = false;
+
+        if (cols[indiceColuna]) {
+            var valorColuna = cols[indiceColuna].textContent || cols[indiceColuna].innerText;
+            if (valorColuna.toLowerCase().indexOf(filtro) > -1) {
+                mostraLinha = true;
+            }
+        }
+
+        if (mostraLinha) {
+            linhas[i].style.display = '';
+        } else {
+            linhas[i].style.display = 'none';
+        }
+    }
+}
+
+
 
 var ctx = document.getElementById('statusChart').getContext('2d');
 var statusChart = new Chart(ctx, {

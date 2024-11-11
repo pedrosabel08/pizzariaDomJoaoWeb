@@ -1,4 +1,7 @@
 <?php
+
+include 'conexao.php';
+
 // Cabeçalhos para permitir requisições CORS
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST");
@@ -31,6 +34,14 @@ if (isset($_GET['enderecoCliente']) && isset($_GET['enderecoPizzaria'])) {
     $coordenadasPizzaria = obterCoordenadas($enderecoPizzaria, $googleApiKey);
     $coordenadasCliente = obterCoordenadas($enderecoCliente, $googleApiKey);
 
+    function contarPedidosNaoFinalizados($conn)
+    {
+        $sql = "SELECT COUNT(*) as totalPedidos FROM vendas WHERE status_id != 3"; // Assumindo que 3 é o status "Finalizado"
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+        return $row['totalPedidos'];
+    }
+
     if ($coordenadasPizzaria && $coordenadasCliente) {
         $origem = "{$coordenadasPizzaria['lat']},{$coordenadasPizzaria['lng']}";
         $destino = "{$coordenadasCliente['lat']},{$coordenadasCliente['lng']}";
@@ -55,6 +66,11 @@ if (isset($_GET['enderecoCliente']) && isset($_GET['enderecoPizzaria'])) {
 
             $valorPadrao = 20;
             $duracaoMinutos += $valorPadrao;
+
+            $totalPedidosNaoFinalizados = contarPedidosNaoFinalizados($conn);
+
+            $tempoExtraPorPedido = 5; // em minutos
+            $duracaoMinutos += $totalPedidosNaoFinalizados * $tempoExtraPorPedido;
 
             $taxaBase = 7;
             if ($distanciaKm <= 7) {

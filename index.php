@@ -544,7 +544,7 @@ $nomeCliente = $_SESSION['nome'];
         </div>
     </div>
 
-    <div class="modal2" id="confirmation-modal">
+    <div class="modal2 hidden" id="confirmation-modal">
         <div class="bg-white p-5 rounded-md min-w-[90%] md:min-w-[600px]">
             <h2 class="text-2xl mb-2">Pedido realizado com sucesso!</h2>
             <p class="mb-4">Acesse a aba <strong>Meus Pedidos</strong> para mais detalhes sobre o seu pedido.</p>
