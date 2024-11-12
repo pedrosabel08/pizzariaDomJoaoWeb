@@ -564,7 +564,6 @@ $nomeCliente = $_SESSION['nome'];
 
     <footer>
         <p>&copy;  Pizza Control - 2024</p>
-        <p>&copy;  P. Diddy - 2024</p>
     </footer>
 
     <script>

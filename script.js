@@ -820,16 +820,13 @@ function toggleTrocoInput() {
 }
 function selecionarPagamento(forma) {
     // Resetando todos os campos para o estado inicial
-    document.getElementById("qrcode").innerHTML = "";
     document.getElementById("trocoOptions").style.display = "none";
     document.getElementById("trocoContainer").style.display = "none";
     document.getElementById("valorTroco").value = "";
 
     // Ações específicas para cada forma de pagamento
     if (forma === 'pix') {
-        gerarQRCode();
     } else if (forma === 'dinheiro') {
-        document.getElementById('qrcode').style.marginBottom = '0';
         toggleTrocoOptions();
     }
 }
