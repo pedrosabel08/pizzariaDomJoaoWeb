@@ -825,10 +825,10 @@ CREATE DEFINER=`root`@`localhost` FUNCTION `inserirProdutos`() RETURNS int(11)
     DETERMINISTIC
 BEGIN
 -- Molho de tomate
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (1, 'Molho de tomate', '18000', 1, '2025-05-20');
+    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (1, 'Molho de tomate', '80000', 1, '2025-05-20');
 
     -- Alho
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (2, 'Alho', '300', 1, '2025-05-20');
+    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (2, 'Alho', '10000', 1, '2025-05-20');
 
     -- Alho Frito
     INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (3, 'Alho Frito', '1500', 1, '2025-05-20');
@@ -837,37 +837,37 @@ BEGIN
     INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (4, 'Óleo', '3000', 2, '2025-05-20');
 
     -- Orégano
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (5, 'Orégano', '300', 1, '2025-05-20');
+    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (5, 'Orégano', '30000', 1, '2025-05-20');
 
     -- Queijo Mussarela
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (6, 'Queijo Mussarela', '45000', 1, '2025-05-20');
+    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (6, 'Queijo Mussarela', '75000', 1, '2025-05-20');
 
     -- Atum
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (7, 'Atum', '4500', 1, '2025-05-20');
+    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (7, 'Atum', '10000', 1, '2025-05-20');
 
     -- Cebola
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (8, 'Cebola', '6000', 1, '2025-05-20');
+    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (8, 'Cebola', '10000', 1, '2025-05-20');
 
     -- Bacon
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (9, 'Bacon', '6000', 1, '2025-05-20');
+    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (9, 'Bacon', '10000', 1, '2025-05-20');
 
     -- Milho
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (10, 'Milho', '300', 1, '2025-05-20');
+    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (10, 'Milho', '25000', 1, '2025-05-20');
 
     -- Carne Moída
     INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (11, 'Carne Moída', '9000', 1, '2025-05-20');
 
     -- Brócolis
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (12, 'Brócolis', '3000', 1, '2025-05-20');
+    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (12, 'Brócolis', '30000', 1, '2025-05-20');
 
     -- Calabresa
     INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (13, 'Calabresa', '15000', 1, '2025-05-20');
 
     -- Chester
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (14, 'Chester', '3000', 1, '2025-05-20');
+    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (14, 'Chester', '6000', 1, '2025-05-20');
 
     -- Catupiry
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (15, 'Catupiry', '4500', 1, '2025-05-20');
+    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (15, 'Catupiry', '7000', 1, '2025-05-20');
 
     -- Frango
     INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (16, 'Frango', '15000', 1, '2025-05-20');
@@ -879,13 +879,13 @@ BEGIN
     INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (18, 'Tomate', '15000', 1, '2025-05-20');
 
     -- Manjericão
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (19, 'Manjericão', '300', 1, '2025-05-20');
+    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (19, 'Manjericão', '3000', 1, '2025-05-20');
 
     -- Parmesão
     INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (20, 'Parmesão', '6000', 1, '2025-05-20');
 
     -- Palmito
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (21, 'Palmito', '3000', 1, '2025-05-20');
+    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (21, 'Palmito', '7000', 1, '2025-05-20');
 
     -- Peito de Peru
     INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (22, 'Peito de Peru', '4500', 1, '2025-05-20');
@@ -897,19 +897,19 @@ BEGIN
     INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (24, 'Ovo', '3000', 1, '2025-05-20');
 
     -- Azeitona
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (25, 'Azeitona', '1500', 1, '2025-05-20');
+    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (25, 'Azeitona', '3000', 1, '2025-05-20');
 
     -- Provolone
     INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (26, 'Provolone', '3000', 1, '2025-05-20');
 
     -- Batata Palha
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (27, 'Batata Palha', '800', 1, '2025-05-20');
+    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (27, 'Batata Palha', '8000', 1, '2025-05-20');
 
     -- Creme de Leite
     INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (28, 'Creme de Leite', '6000', 1, '2025-05-20');
 
 	-- Salame Italiano
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (29, 'Salame Italiano', '3000', 1, '2025-05-20');
+    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (29, 'Salame Italiano', '12000', 1, '2025-05-20');
 
 	-- Pepperoni
 INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (30, 'Pepperoni', '6000', 1, '2025-05-20');
@@ -920,44 +920,44 @@ INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, valida
 -- Coração
 INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (32, 'Coração', '3000', 1, '2025-05-20');
 
--- Barbecue
+-- Barbecue	
 INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (33, 'Barbecue', '3000', 1, '2025-05-20');
 
 -- Cream cheese
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (34, 'Cream Cheese', '1500', 1, '2025-05-20');
+INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (34, 'Cream Cheese', '5000', 1, '2025-05-20');
 
 -- Tiras de Carne
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (35, 'Tiras de Carne', '6000', 1, '2025-05-20');
+INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (35, 'Tiras de Carne', '10000', 1, '2025-05-20');
 
 -- Linguiça Blumenau
 INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (36, 'Linguiça Blumenau', '3000', 1, '2025-05-20');
 
 -- Cheddar
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (37, 'Cheddar', '1500', 1, '2025-05-20');
+INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (37, 'Cheddar', '4000', 1, '2025-05-20');
 
 -- Pimenta biquinho
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (38, 'Pimenta biquinho', '200', 1, '2025-05-20');
+INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (38, 'Pimenta biquinho', '3000', 1, '2025-05-20');
 
 -- Doritos
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (39, 'Doritos', '1500', 1, '2025-05-20');
+INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (39, 'Doritos', '2000', 1, '2025-05-20');
 
 -- Tomate Seco
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (40, 'Tomate seco', '3000', 1, '2025-05-20');
+INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (40, 'Tomate seco', '10000', 1, '2025-05-20');
 
 -- Rúcula
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (41, 'Rúcula', '1500', 1, '2025-05-20');
+INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (41, 'Rúcula', '10000', 1, '2025-05-20');
 
 -- Azeitonas Pretas
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (42, 'Azeitonas pretas', '1500', 1, '2025-05-20');
+INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (42, 'Azeitonas pretas', '10000', 1, '2025-05-20');
 
 -- Strogonoff de carne
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (43, 'Strogonoff de carne', '3000', 1, '2025-05-20');
+INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (43, 'Strogonoff de carne', '10000', 1, '2025-05-20');
 
 -- Strogonoff de frango
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (44, 'Strogonoff de frango', '3000', 1, '2025-05-20');
+INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (44, 'Strogonoff de frango', '10000', 1, '2025-05-20');
 
 -- Champignon
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (45, 'Champignon', '1500', 1, '2025-05-20');
+INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (45, 'Champignon', '10000', 1, '2025-05-20');
 
 -- Chocolate Preto
 INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (46, 'Chocolate Preto', '3000', 1, '2025-05-20');
@@ -1008,31 +1008,31 @@ INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, valida
 INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (61, 'Cereja', '1500', 1, '2025-05-20');
 
 -- Marshmallow
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (62, 'Marshmallow', '1500', 1, '2025-05-20');
+INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (62, 'Marshmallow', '10000', 1, '2025-05-20');
 
 -- Queijo brie
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (63, 'Queijo brie', '1500', 1, '2025-05-20');
+INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (63, 'Queijo brie', '10000', 1, '2025-05-20');
 
 -- Geleia de pimenta
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (64, 'Geleia de pimenta', '900', 1, '2025-05-20');
+INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (64, 'Geleia de pimenta', '10000', 1, '2025-05-20');
 
 -- Camarão
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (65, 'Camarão', '1500', 1, '2025-05-20');
+INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (65, 'Camarão', '5000', 1, '2025-05-20');
 
 -- Mignon
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (66, 'Mignon', '1500', 1, '2025-05-20');
+INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (66, 'Mignon', '10000', 1, '2025-05-20');
 
 -- Filé
 INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (67, 'Filé', '1500', 1, '2025-05-20');
 
 -- Carne seca desfiada
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (68, 'Carne seca desfiada', '1500', 1, '2025-05-20');
+INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (68, 'Carne seca desfiada', '3000', 1, '2025-05-20');
 
 -- Costelinha suína desfiada
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (69, 'Costelinha suína desfiada', '1500', 1, '2025-05-20');
+INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (69, 'Costelinha suína desfiada', '3000', 1, '2025-05-20');
 
 -- Gorgonzola
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (70, 'Gorgonzola', '1500', 1, '2025-05-20');
+INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (70, 'Gorgonzola', '2500', 1, '2025-05-20');
 
 RETURN 1;
 
@@ -1233,3 +1233,8 @@ INSERT INTO status_venda (nome_status) values
 ('Em andamento'),
 ('Finalizado'),
 ('Pedido feito');
+
+
+insert into clientes (nome, sobrenome, telefone, email, senha) values ('Pedro', 'Sabel', '47999160344', 'pedrosabel08@gmail.com', '123');
+UPDATE produtos 
+SET quantidade = quantidade * 5;
