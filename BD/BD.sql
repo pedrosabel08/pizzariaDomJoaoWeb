@@ -106,6 +106,7 @@ CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`produtos` (
   `unidadeMedida` INT(11) NOT NULL,
   `validade` DATE NOT NULL,
   PRIMARY KEY (`idprodutos`),
+  UNIQUE (nomeProduto, validade),
   INDEX `fk_produtos_unidadeMedida1_idx` (`unidadeMedida` ASC),
   CONSTRAINT `fk_produtos_unidadeMedida1`
     FOREIGN KEY (`unidadeMedida`)
@@ -130,7 +131,8 @@ CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`pizzas_produtos` (
     REFERENCES `bd_pizzaria`.`pizzas` (`idpizzas`),
   CONSTRAINT `fk_produto`
     FOREIGN KEY (`produto_id`)
-    REFERENCES `bd_pizzaria`.`produtos` (`idprodutos`))
+    REFERENCES `bd_pizzaria`.`produtos` (`idprodutos`)
+    ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 

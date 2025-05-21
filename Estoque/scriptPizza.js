@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+
     const ingredientsContainer = document.getElementById('ingredients-container');
     const addIngredientButton = document.getElementById('add-ingredient');
 
@@ -54,6 +55,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
             var idPizzaSelecionada = linha.getAttribute("data-id");
             console.log("Linha selecionada: ID da pizza = " + idPizzaSelecionada);
+
+            // Atualiza campo hidden do formulário de exclusão
+            document.getElementById("idPizzaExcluir").value = idPizzaSelecionada;
+
+            // Faz a requisição para buscar dados da pizza
+            fetch(`get_pizzas.php?id=${idPizzaSelecionada}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("pizza_name").value = data.nome;
+                    document.getElementById("tipoPizza").value = data.tipo;
+
+                    // Limpa os ingredientes anteriores
+                    const container = document.getElementById("ingredients-container");
+                    container.innerHTML = '';
+
+                    data.ingredientes.forEach(ing => {
+                        const div = document.createElement('div');
+                        div.className = 'ingredient-row';
+                        div.innerHTML = `
+                        <select name="ingredients[]" class="ingredient-select">
+                            ${document.querySelector('.ingredient-select').innerHTML}
+                        </select>
+                        <input type="number" name="quantities[]" class="ingredient-quantity" placeholder="Quantidade" min="1" value="${ing.quantidade}">
+                        <button type="button" class="remove-ingredient">Remover</button>
+                    `;
+                        // Seleciona o valor correto no select
+                        div.querySelector('select').value = ing.produto_id;
+
+                        container.appendChild(div);
+                    });
+                });
         });
     });
 

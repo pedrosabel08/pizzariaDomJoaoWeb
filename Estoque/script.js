@@ -1,4 +1,28 @@
 document.addEventListener("DOMContentLoaded", function () {
+
+    const tooltip = document.getElementById('tooltip');
+
+    document.querySelectorAll('.btn').forEach(btn => {
+        btn.addEventListener('mouseenter', (event) => {
+            const tooltipText = btn.getAttribute('data-tooltip');
+            if (tooltipText) {
+                tooltip.textContent = tooltipText;
+                tooltip.style.display = 'block';
+                tooltip.style.left = event.clientX + 'px';
+                tooltip.style.top = event.clientY - 30 + 'px';
+            }
+        });
+
+        btn.addEventListener('mouseleave', () => {
+            tooltip.style.display = 'none';
+        });
+
+        btn.addEventListener('mousemove', (event) => {
+            tooltip.style.left = event.clientX + 'px';
+            tooltip.style.top = event.clientY - 30 + 'px';
+        });
+    });
+
     var linhasTabela = document.querySelectorAll(".linha-tabela");
 
     linhasTabela.forEach(function (linha) {

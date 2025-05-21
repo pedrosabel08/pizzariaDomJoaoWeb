@@ -49,15 +49,32 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="./assets/caixa.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <title>Estoque</title>
 </head>
 
 <body>
     <div class="buttons">
-        <button class="btn" onclick="window.location.href='produtos.html'">Voltar</button>
-        <button class="btn" onclick="window.location.href='relatorio.html'">Relatórios de venda</button>
+        <button class="btn" data-tooltip="Voltar" onclick="window.location.href='produtos.html'">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <button class="btn" data-tooltip="Relatórios de venda" onclick="window.location.href='relatorio.html'">
+            <i class="fas fa-chart-line"></i>
+        </button>
     </div>
 
+    <div id="tooltip" style="
+    position: fixed;
+    background: #333;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    display: none;
+    pointer-events: none;
+    z-index: 9999;
+"></div>
     <main>
 
         <div class="tabela">
