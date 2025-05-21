@@ -7,10 +7,6 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema bd_pizzaria
 -- -----------------------------------------------------
-
--- -----------------------------------------------------
--- Schema bd_pizzaria
--- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `bd_pizzaria` DEFAULT CHARACTER SET utf8mb4 ;
 USE `bd_pizzaria` ;
 
@@ -106,7 +102,6 @@ CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`produtos` (
   `unidadeMedida` INT(11) NOT NULL,
   `validade` DATE NOT NULL,
   PRIMARY KEY (`idprodutos`),
-  UNIQUE (nomeProduto, validade),
   INDEX `fk_produtos_unidadeMedida1_idx` (`unidadeMedida` ASC),
   CONSTRAINT `fk_produtos_unidadeMedida1`
     FOREIGN KEY (`unidadeMedida`)
@@ -218,8 +213,8 @@ CREATE TABLE IF NOT EXISTS `vendas_pizzas` (
   CONSTRAINT `fk_vendas_pizzas_pizzas`
     FOREIGN KEY (`pizzas_idpizzas`)
     REFERENCES `pizzas` (`idpizzas`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT `fk_vendas_pizzas_tamanho`
     FOREIGN KEY (`tamanho_idtamanho`)
     REFERENCES `tamanho` (`idtamanho`)
