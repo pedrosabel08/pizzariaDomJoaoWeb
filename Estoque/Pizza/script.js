@@ -125,6 +125,60 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+document.getElementById("save-pizza").addEventListener("click", function () {
+    const pizzaName = document.getElementById("pizza_name").value;
+    const tipoPizza = document.getElementById("tipoPizza").value;
+
+    // Pega todas as linhas de ingrediente
+    const rows = document.querySelectorAll("#ingredients-container .ingredient-row");
+    const ingredientes = [];
+
+    rows.forEach(row => {
+        const select = row.querySelector("select.ingredient-select");
+        const quantityInput = row.querySelector("input.ingredient-quantity");
+
+        const produtoId = select.value;
+        const quantidade = parseInt(quantityInput.value);
+
+        if (produtoId && quantidade > 0) {
+            ingredientes.push({ produto_id: produtoId, quantidade: quantidade });
+        }
+    });
+
+    if (!pizzaName || ingredientes.length === 0) {
+        alert("Preencha o nome da pizza e pelo menos um ingrediente com quantidade.");
+        return;
+    }
+
+    // Monta o JSON para enviar
+    const dados = {
+        nome: pizzaName,
+        tipo: tipoPizza,
+        ingredientes: ingredientes
+    };
+
+    fetch("adicionar_pizza.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(dados)
+    })
+        .then(response => response.json())
+        .then(resposta => {
+            if (resposta.sucesso) {
+                alert("Pizza salva com sucesso!");
+
+            } else {
+                alert("Erro: " + resposta.mensagem);
+            }
+        })
+        .catch(erro => {
+            console.error("Erro:", erro);
+            alert("Erro ao salvar pizza.");
+        });
+});
+
 function filterTable() {
     const input = document.getElementById('filterInput');
     const filter = input.value.toLowerCase();

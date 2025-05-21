@@ -55,7 +55,7 @@
                 </div>
                 <div class="buttons">
                     <button type="button" id="add-ingredient">Adicionar Ingrediente</button>
-                    <button type="submit">Salvar Pizza</button>
+                    <button type="button" id="save-pizza">Salvar Pizza</button>
                 </div>
             </form>
             <form id="formExcluirPizza" action="excluirPizza.php" method="POST">
