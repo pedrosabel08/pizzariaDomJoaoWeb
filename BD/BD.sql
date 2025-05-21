@@ -131,8 +131,7 @@ CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`pizzas_produtos` (
     REFERENCES `bd_pizzaria`.`pizzas` (`idpizzas`),
   CONSTRAINT `fk_produto`
     FOREIGN KEY (`produto_id`)
-    REFERENCES `bd_pizzaria`.`produtos` (`idprodutos`)
-    ON DELETE CASCADE)
+    REFERENCES `bd_pizzaria`.`produtos` (`idprodutos`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
@@ -219,8 +218,8 @@ CREATE TABLE IF NOT EXISTS `vendas_pizzas` (
   CONSTRAINT `fk_vendas_pizzas_pizzas`
     FOREIGN KEY (`pizzas_idpizzas`)
     REFERENCES `pizzas` (`idpizzas`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_vendas_pizzas_tamanho`
     FOREIGN KEY (`tamanho_idtamanho`)
     REFERENCES `tamanho` (`idtamanho`)
