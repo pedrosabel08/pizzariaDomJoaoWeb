@@ -45,6 +45,17 @@ document.addEventListener("DOMContentLoaded", function () {
         const linha = event.target.closest(".linha-tabela");
 
         if (linha) {
+            // Remove a classe "selecionada" da linha clicada,
+            // se já estiver selecionada, limpa os campos
+            // de exclusão e retorna para não chamar o fetch
+            if (linha.classList.contains("selecionada")) {
+                document.getElementById("idPizzaExcluir").value = "";
+                document.getElementById("pizza_name").value = "";
+                document.getElementById("tipoPizza").value = "";
+                linha.classList.remove("selecionada");
+                return;
+            }
+            
             tbody.querySelectorAll(".linha-tabela").forEach(l => l.classList.remove("selecionada"));
             linha.classList.add("selecionada");
 

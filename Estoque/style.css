@@ -204,7 +204,7 @@ table {
 }
 
 .selecionada {
-    background-color: #ffbb00;
+    background-color: #ffbb00 !important;
 }
 
 footer {

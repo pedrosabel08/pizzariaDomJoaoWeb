@@ -51,7 +51,7 @@ table {
 }
 
 .table-wrapper {
-    max-height: 713px;
+    max-height: 350px;
     overflow-y: auto;
     width: 100%;
 }
@@ -182,4 +182,11 @@ footer {
     padding-left: 10px;
     background-color: #000000;
     color: #ffffff;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.selecionada {
+    background-color: #ffbb00 !important;
 }
