@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -27,28 +26,11 @@
                             <th>Ingredientes</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php foreach ($pizzas as $pizzaId => $pizza): ?>
-                            <tr class="linha-tabela" data-id="<?php echo htmlspecialchars($pizzaId); ?>">
-                                <td><?php echo htmlspecialchars($pizza['idpizzas']); ?></td>
-                                <td><?php echo htmlspecialchars($pizza['nomePizza']); ?></td>
-                                <td>
-                                    <?php if (count($pizza['ingredientes']) > 0): ?>
-                                        <ul>
-                                            <?php foreach ($pizza['ingredientes'] as $ingrediente): ?>
-                                                <li>
-                                                    <?php echo htmlspecialchars($ingrediente['nomeProduto']) . " - " . htmlspecialchars($ingrediente['quantidade']) . " " . htmlspecialchars($ingrediente['unidadeMedida']); ?>
-                                                </li>
-                                            <?php endforeach; ?>
-                                        </ul>
-                                    <?php else: ?>
-                                        Nenhum ingrediente cadastrado.
-                                    <?php endif; ?>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
+                    <tbody id="corpoTabela">
+                        <!-- Os dados serão preenchidos aqui via JS -->
                     </tbody>
                 </table>
+
             </div>
         </div>
         <div class="addPizza">
@@ -65,23 +47,6 @@
                 <div id="ingredients-container">
                     <div class="ingredient-row">
                         <select name="ingredients[]" class="ingredient-select">
-                            <?php
-                            $conn = new mysqli($servername, $username, $password, $dbname, $port);
-                            if ($conn->connect_error) {
-                                die("Conexão falhou: " . $conn->connect_error);
-                            }
-
-                            $sql = "SELECT idprodutos, nomeProduto FROM produtos ORDER BY nomeProduto asc";
-                            $result = $conn->query($sql);
-
-                            if ($result->num_rows > 0) {
-                                while ($row = $result->fetch_assoc()) {
-                                    echo "<option value='" . $row["idprodutos"] . "'>" . $row["nomeProduto"] . "</option>";
-                                }
-                            }
-
-                            $conn->close();
-                            ?>
                         </select>
                         <input type="number" name="quantities[]" class="ingredient-quantity" placeholder="Quantidade"
                             min="1">
@@ -102,7 +67,7 @@
     <footer>
         <p>&copy; Arthur, Pedro e Vitor</p>
     </footer>
+    <script src="script.js"></script>
 </body>
-<script src="scriptPizza.js"></script>
 
 </html>
