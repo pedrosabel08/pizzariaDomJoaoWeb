@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="stylePizza.css">
+    <link rel="icon" href="../assets/pizzaIcone.png" type="image/png">
+
     <title>Adicionar Pizza</title>
 </head>
 
@@ -37,8 +39,7 @@
             <h2>Adicionar Pizza</h2>
             <form id="pizza-form" method="post" action="adicionar_pizza.php">
                 <div class="Nome">
-                    <label for="pizza_name">Nome da Pizza:</label>
-                    <input type="text" id="pizza_name" name="pizza_name" required>
+                    <input type="text" id="pizza_name" name="pizza_name" placeholder="Nome da pizza" required>
                     <select id="tipoPizza" name="tipoPizza">
                         <option value="salgada">Salgada</option>
                         <option value="doce">Doce</option>

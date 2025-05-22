@@ -52,6 +52,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.getElementById("idPizzaExcluir").value = "";
                 document.getElementById("pizza_name").value = "";
                 document.getElementById("tipoPizza").value = "";
+                container.innerHTML = '';
+                criarIngrediente();
                 linha.classList.remove("selecionada");
                 return;
             }
@@ -125,7 +127,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let produtosDisponiveis = [];
 
     // Função para criar um novo bloco de ingrediente
-    function criarIngrediente(produtoSelecionado = null, quantidade = 1) {
+    function criarIngrediente(produtoSelecionado = null) {
         const div = document.createElement('div');
         div.className = 'ingredient-row';
 
@@ -151,7 +153,7 @@ document.addEventListener("DOMContentLoaded", function () {
         input.className = 'ingredient-quantity';
         input.placeholder = 'Quantidade';
         input.min = '1';
-        input.value = quantidade;
+        input.value = '';
 
         // Botão para remover ingrediente
         const botao = document.createElement('button');
