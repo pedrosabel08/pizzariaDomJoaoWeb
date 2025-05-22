@@ -1,7 +1,8 @@
 <?php
 include 'conexao.php';
 
-$sql = "SELECT produtos.idprodutos, produtos.nomeProduto, produtos.quantidade, unidademedida.nome as unidadeMedida, produtos.validade 
+$sql = "SELECT produtos.idprodutos, produtos.nomeProduto, produtos.quantidade,
+               produtos.1 as tipoProduto, unidademedida.nome as unidadeMedida, produtos.validade 
         FROM produtos 
         INNER JOIN unidademedida ON produtos.unidadeMedida = unidademedida.idunidadeMedida 
         ORDER BY produtos.nomeProduto ASC;";
@@ -25,12 +26,37 @@ if ($result_unidades->num_rows > 0) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $tipoProduto = $_POST['tipoProduto'];
     $nomeProduto = $_POST['nomeProduto'];
     $quantidade = $_POST['quantidade'];
     $unidadeMedida = $_POST['unidadeMedida'];
     $validadeFormatada = date('Y-m-d', strtotime($_POST['validade']));
 
-    $sql = "INSERT INTO produtos (nomeProduto, quantidade, unidadeMedida, validade) VALUES ('$nomeProduto', '$quantidade', '$unidadeMedida', '$validadeFormatada')";
+    if (empty($nomeProduto) || empty($quantidade) || empty($unidadeMedida) || empty($validadeFormatada)) {
+        echo "<script>alert('Preencha todos os campos!');</script>";
+        exit;
+    }
+    if (!is_numeric($quantidade) || $quantidade <= 0) {
+        echo "<script>alert('Quantidade deve ser um número positivo!');</script>";
+        exit;
+    }
+    if (!in_array($unidadeMedida, array_column($unidades, 'idunidadeMedida'))) {
+        echo "<script>alert('Unidade de medida inválida!');</script>";
+        exit;
+    }
+    if ($tipoProduto != 1 && $tipoProduto != 2) {
+        echo "<script>alert('Tipo de produto inválido!');</script>";
+        exit;
+    }
+    if (strtotime($validadeFormatada) < strtotime(date('Y-m-d'))) {
+        echo "<script>alert('Data de validade deve ser maior que a data atual!');</script>";
+        exit;
+    }
+    if ($tipoProduto == 1) {
+        $sql = "INSERT INTO produtos (nomeProduto, quantidade, unidadeMedida, validade) VALUES ('$nomeProduto', '$quantidade', '$unidadeMedida', '$validadeFormatada')";
+    } else {
+        $sql = "INSERT INTO produtos (nomeProduto, quantidade, unidadeMedida, validade) VALUES ('$nomeProduto', '$quantidade', '$unidadeMedida', '$validadeFormatada')";
+    }
 
     if ($conn->query($sql) === TRUE) {
         echo "<script>alert('Novo produto inserido com sucesso!');window.location.href='estoque.php';</script>";
@@ -83,6 +109,7 @@ $conn->close();
             <div class="table-wrapper">
                 <table id="tabelaEstoque">
                     <tr>
+                        <th>Tipo</th>
                         <th>Nome do Produto</th>
                         <th>Quantidade</th>
                         <th class="unidadeMedida">Unidade Medida</th>
@@ -90,6 +117,7 @@ $conn->close();
                     </tr>
                     <?php foreach ($data as $produto): ?>
                         <tr class="linha-tabela" data-id="<?php echo $produto['idprodutos']; ?>">
+                            <td><?php echo $produto['tipoProduto'] == 1 ? 'Ingrediente' : 'Bebida'; ?></td>
                             <td><?php echo $produto['nomeProduto']; ?></td>
                             <td><?php echo $produto['quantidade']; ?></td>
                             <td><?php echo $produto['unidadeMedida']; ?></td>
@@ -107,6 +135,14 @@ $conn->close();
                     <li>
                         <label for="nomeProduto">Nome Produto: </label>
                         <input type="text" name="nomeProduto" id="nomeProduto">
+                    </li>
+                    <li>
+                        <label for="tipoProduto">Tipo: </label>
+                        <select name="tipoProduto" id="tipoProduto">
+                            <option value="0"></option>
+                            <option value="1">Ingrediente</option>
+                            <option value="2">Bebida</option>
+                        </select>
                     </li>
                     <li>
                         <label for="quantidade">Quantidade: </label>
