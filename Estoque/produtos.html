@@ -1,27 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styleInicio.css">
     <link rel="icon" href="./assets/pizzaIcone.png" type="image/png">
-    <title>Pizzaria</title>
+    <title>Pizzaria Dom João</title>
 </head>
 
 <body>
     <main>
-        <div class="container">
+        <header class="titulo">
             <h1>Pizzaria Dom João</h1>
-            <div class="buttons">
-                <button class="btn" onclick="window.location.href='estoque.php'">Estoque</button>
-                <button class="btn" onclick="window.location.href='relatorio.html'">Relatório</button>
-                <button class="btn" onclick="window.location.href='pizzas.php'">Pizzas</button>
-                <button class="btn" onclick="window.location.href='/pizzariaDomJoaoWeb/index.php'">Vendas</button>
-
+        </header>
+        <section class="conteudo">
+            <div class="container">
+                <div class="buttons">
+                    <button class="btn" onclick="window.location.href='estoque.php'">Estoque</button>
+                    <button class="btn" onclick="window.location.href='../Relatorio/relatorio.html'">Relatório</button>
+                    <button class="btn" onclick="window.location.href='./Pizza'">Pizzas</button>
+                    <button class="btn" onclick="window.location.href='/pizzariaDomJoaoWeb/index.php'">Vendas</button>
+                </div>
             </div>
-        </div>
-            <img src="./assets/pizza.png" alt="pizza">
+            <div class="imagem">
+                <img src="./assets/pizza.png" alt="pizza">
+            </div>
+        </section>
     </main>
 </body>
 
