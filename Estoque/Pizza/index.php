@@ -10,7 +10,7 @@
 
 <body>
     <div class="buttons">
-        <button class="btn" onclick="window.location.href='produtos.html'">Voltar</button>
+        <button class="btn" onclick="window.location.href='../produtos.html'">Voltar</button>
     </div>
 
     <main>

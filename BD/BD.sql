@@ -119,6 +119,7 @@ CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`pizzas_produtos` (
   `produto_id` INT(11) NOT NULL,
   `quantidade` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE (pizza_id, produto_id),
   INDEX `fk_pizza_idx` (`pizza_id` ASC),
   INDEX `fk_produto_idx` (`produto_id` ASC),
   CONSTRAINT `fk_pizza`
@@ -788,7 +789,6 @@ INSERT INTO pizzas_produtos (id, pizza_id, produto_id, quantidade) VALUES
 ('2460', '70', '56', '100'),
 ('2429', '71', '28', '40'),
 ('2430', '71', '56', '100'),
-('2431', '71', '28', '30'),
 ('2432', '71', '57', '40'),
 ('2433', '71', '50', '100'),
 ('2434', '71', '58', '20'),

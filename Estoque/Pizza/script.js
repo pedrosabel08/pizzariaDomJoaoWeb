@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 linha.classList.remove("selecionada");
                 return;
             }
-            
+
             tbody.querySelectorAll(".linha-tabela").forEach(l => l.classList.remove("selecionada"));
             linha.classList.add("selecionada");
 
@@ -122,6 +122,69 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    let produtosDisponiveis = [];
+
+    // Função para criar um novo bloco de ingrediente
+    function criarIngrediente(produtoSelecionado = null, quantidade = 1) {
+        const div = document.createElement('div');
+        div.className = 'ingredient-row';
+
+        // Cria o select com os produtos disponíveis
+        const select = document.createElement('select');
+        select.name = 'ingredients[]';
+        select.className = 'ingredient-select';
+
+        produtosDisponiveis.forEach(prod => {
+            const option = document.createElement('option');
+            option.value = prod.idprodutos;
+            option.textContent = prod.nomeProduto;
+            if (produtoSelecionado && prod.id === produtoSelecionado) {
+                option.selected = true;
+            }
+            select.appendChild(option);
+        });
+
+        // Campo de quantidade
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.name = 'quantities[]';
+        input.className = 'ingredient-quantity';
+        input.placeholder = 'Quantidade';
+        input.min = '1';
+        input.value = quantidade;
+
+        // Botão para remover ingrediente
+        const botao = document.createElement('button');
+        botao.type = 'button';
+        botao.className = 'remove-ingredient';
+        botao.textContent = 'Remover';
+        botao.addEventListener('click', () => div.remove());
+
+        // Adiciona os elementos ao bloco
+        div.appendChild(select);
+        div.appendChild(input);
+        div.appendChild(botao);
+        container.appendChild(div);
+    }
+
+    // Carrega os produtos antes de permitir adicionar ingredientes
+    fetch('get_produtos.php')
+        .then(response => response.json())
+        .then(data => {
+            produtosDisponiveis = data.produtos;
+        })
+        .catch(error => {
+            console.error('Erro ao carregar produtos:', error);
+        });
+
+    // Evento do botão para adicionar ingrediente
+    document.getElementById('add-ingredient').addEventListener('click', () => {
+        if (produtosDisponiveis.length === 0) {
+            alert('Produtos ainda não carregados. Tente novamente em instantes.');
+            return;
+        }
+        criarIngrediente();
+    });
     // Exclusão
     const botaoExcluir = document.getElementById("botaoExcluir");
     botaoExcluir.addEventListener("click", function () {
@@ -163,6 +226,7 @@ document.getElementById("save-pizza").addEventListener("click", function () {
 
     // Monta o JSON para enviar
     const dados = {
+        idpizza: document.getElementById("idPizzaExcluir").value,
         nome: pizzaName,
         tipo: tipoPizza,
         ingredientes: ingredientes
