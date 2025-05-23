@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Nova Compra</title>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="script.js" defer></script>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 1em;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+
+        th {
+            background: #eee;
+        }
+
+        .produto-row input[type="number"] {
+            width: 70px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Nova Compra</h1>
+    <form id="formCompra">
+        <label>Fornecedor:</label>
+        <select name="idfornecedor" id="idfornecedor" required>
+            <option value="">Selecione...</option>
+        </select>
+        <br><br>
+        <div id="produtos-container"></div>
+        <br>
+        <label>Observações:</label>
+        <textarea name="observacoes"></textarea><br>
+        <button type="submit">Registrar Compra</button>
+    </form>
+</body>
+
+</html>

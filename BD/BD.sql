@@ -101,11 +101,15 @@ CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`produtos` (
   `quantidade` VARCHAR(45) NOT NULL,
   `unidadeMedida` INT(11) NOT NULL,
   `validade` DATE NOT NULL,
+  `tipo_id` INT(11) NOT NULL,
   PRIMARY KEY (`idprodutos`),
   INDEX `fk_produtos_unidadeMedida1_idx` (`unidadeMedida` ASC),
   CONSTRAINT `fk_produtos_unidadeMedida1`
     FOREIGN KEY (`unidadeMedida`)
-    REFERENCES `bd_pizzaria`.`unidademedida` (`idunidadeMedida`))
+    REFERENCES `bd_pizzaria`.`unidademedida` (`idunidadeMedida`),
+      CONSTRAINT `fk_produtos_tipoProduto`
+      FOREIGN KEY (`tipo_id`)
+  REFERENCES `bd_pizzaria`.`tipo_produtos` (`idtipo_produtos`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
@@ -130,6 +134,16 @@ CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`pizzas_produtos` (
     REFERENCES `bd_pizzaria`.`produtos` (`idprodutos`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
+
+-- -----------------------------------------------------
+-- Table `bd_pizzaria`.`tipo_produtos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`tipo_produtos` (
+  `idtipo_produtos` INT(11) NOT NULL AUTO_INCREMENT,
+  `nome_tipo` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`idtipo_produtos`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 -- -----------------------------------------------------
 -- Table `bd_pizzaria`.`bordas_pizza`
@@ -304,7 +318,7 @@ CREATE TABLE IF NOT EXISTS status_venda (
     );
 
 
-CREATE TABLE log_status (
+CREATE TABLE IF NOT EXISTS log_status (
     id_log INT AUTO_INCREMENT PRIMARY KEY,
     venda_id INT NOT NULL, -- ID do registro original
     status_anterior VARCHAR(50),
@@ -312,6 +326,91 @@ CREATE TABLE log_status (
     data_alteracao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (venda_id) references vendas (idvendas)
 );
+
+CREATE TABLE IF NOT EXISTS  fornecedores_tipos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    idfornecedor INT NOT NULL,
+    idtipo INT NOT NULL,
+    FOREIGN KEY (idfornecedor) REFERENCES fornecedores(idfornecedor),
+    FOREIGN KEY (idtipo) REFERENCES tipos_produtos(idtipo)
+);
+
+
+-- Tabela de Fornecedores (com dados fictícios)
+CREATE TABLE IF NOT EXISTS  fornecedores (
+    idfornecedor INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    cnpj_cpf VARCHAR(20),
+    telefone VARCHAR(20),
+    email VARCHAR(100),
+    endereco TEXT,
+    status BOOLEAN DEFAULT TRUE
+);
+
+INSERT INTO fornecedores (nome, cnpj_cpf, telefone, email, endereco, status) VALUES
+('Laticínios Minas', '12.345.678/0001-99', '(31) 99999-0001', 'contato@minas.com', 'Rua A, Belo Horizonte', TRUE),
+('Distribuidora Sul', '23.456.789/0001-88', '(51) 98888-1111', 'vendas@sul.com', 'Av. Central, Porto Alegre', TRUE),
+('Alimentos do Norte', '34.567.890/0001-77', '(91) 97777-2222', 'norte@alimentos.com', 'Rua Pará, Belém', TRUE),
+('Bebidas Brasil', '45.678.901/0001-66', '(11) 96666-3333', 'suporte@bebidasbr.com', 'Av. Paulista, São Paulo', TRUE),
+('Embalagens Flex', '56.789.012/0001-55', '(21) 95555-4444', 'embalagens@flex.com', 'Rua Rio, Rio de Janeiro', TRUE);
+
+INSERT INTO fornecedores_tipos (idfornecedor, idtipo) values
+(1, 1),
+(1, 2),
+(1, 3),
+(2, 2),
+(2, 4),
+(3, 6),
+(3, 4),
+(3, 5),
+(4, 7),
+(5, 7);
+
+-- Tabela de Compras
+CREATE TABLE IF NOT EXISTS  compras (
+    idcompra INT AUTO_INCREMENT PRIMARY KEY,
+    idfornecedor INT,
+    data_compra DATE,
+    valor_total DECIMAL(10,2),
+    observacoes TEXT,
+    FOREIGN KEY (idfornecedor) REFERENCES fornecedores(idfornecedor)
+);
+
+-- Tabela de Itens da Compra
+CREATE TABLE IF NOT EXISTS itens_compra (
+    iditem INT AUTO_INCREMENT PRIMARY KEY,
+    idcompra INT,
+    idproduto INT,
+    quantidade DECIMAL(10,2),
+    preco_unitario DECIMAL(10,2),
+    subtotal DECIMAL(10,2),
+    FOREIGN KEY (idcompra) REFERENCES compras(idcompra),
+    FOREIGN KEY (idproduto) REFERENCES produtos(idprodutos)
+);
+
+
+-- -----------------------------------------------------
+-- function inserirTipoProdutos
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `bd_pizzaria`$$
+CREATE DEFINER=`root`@`localhost` FUNCTION `inserirTipoProdutos`() RETURNS int(11)
+    DETERMINISTIC
+BEGIN
+INSERT INTO tipo_produtos (idtipo_produtos, nome_tipo) VALUES
+(1, 'Molhos'),
+(2, 'Temperos'),
+(3, 'Laticínios'),
+(4, 'Carnes'),
+(5, 'Vegetais'),
+(6, 'Embutidos'),
+(7, 'Outros');
+RETURN 1;
+END$$
+
+DELIMITER ;
+
 
 -- -----------------------------------------------------
 -- function inserirFormaEntrega
@@ -820,215 +919,77 @@ USE `bd_pizzaria`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION `inserirProdutos`() RETURNS int(11)
     DETERMINISTIC
 BEGIN
--- Molho de tomate
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (1, 'Molho de tomate', '80000', 1, '2025-05-20');
-
-    -- Alho
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (2, 'Alho', '10000', 1, '2025-05-20');
-
-    -- Alho Frito
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (3, 'Alho Frito', '1500', 1, '2025-05-20');
-
-    -- Óleo
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (4, 'Óleo', '3000', 2, '2025-05-20');
-
-    -- Orégano
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (5, 'Orégano', '30000', 1, '2025-05-20');
-
-    -- Queijo Mussarela
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (6, 'Queijo Mussarela', '75000', 1, '2025-05-20');
-
-    -- Atum
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (7, 'Atum', '10000', 1, '2025-05-20');
-
-    -- Cebola
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (8, 'Cebola', '10000', 1, '2025-05-20');
-
-    -- Bacon
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (9, 'Bacon', '10000', 1, '2025-05-20');
-
-    -- Milho
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (10, 'Milho', '25000', 1, '2025-05-20');
-
-    -- Carne Moída
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (11, 'Carne Moída', '9000', 1, '2025-05-20');
-
-    -- Brócolis
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (12, 'Brócolis', '30000', 1, '2025-05-20');
-
-    -- Calabresa
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (13, 'Calabresa', '15000', 1, '2025-05-20');
-
-    -- Chester
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (14, 'Chester', '6000', 1, '2025-05-20');
-
-    -- Catupiry
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (15, 'Catupiry', '7000', 1, '2025-05-20');
-
-    -- Frango
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (16, 'Frango', '15000', 1, '2025-05-20');
-
-    -- Lombo
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (17, 'Lombo', '6000', 1, '2025-05-20');
-
-    -- Tomate
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (18, 'Tomate', '15000', 1, '2025-05-20');
-
-    -- Manjericão
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (19, 'Manjericão', '3000', 1, '2025-05-20');
-
-    -- Parmesão
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (20, 'Parmesão', '6000', 1, '2025-05-20');
-
-    -- Palmito
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (21, 'Palmito', '7000', 1, '2025-05-20');
-
-    -- Peito de Peru
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (22, 'Peito de Peru', '4500', 1, '2025-05-20');
-
-    -- Presunto
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (23, 'Presunto', '9000', 1, '2025-05-20');
-
-    -- Ovo
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (24, 'Ovo', '3000', 1, '2025-05-20');
-
-    -- Azeitona
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (25, 'Azeitona', '3000', 1, '2025-05-20');
-
-    -- Provolone
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (26, 'Provolone', '3000', 1, '2025-05-20');
-
-    -- Batata Palha
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (27, 'Batata Palha', '8000', 1, '2025-05-20');
-
-    -- Creme de Leite
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (28, 'Creme de Leite', '6000', 1, '2025-05-20');
-
-	-- Salame Italiano
-    INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (29, 'Salame Italiano', '12000', 1, '2025-05-20');
-
-	-- Pepperoni
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (30, 'Pepperoni', '6000', 1, '2025-05-20');
-
--- Molho de Pimenta
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (31, 'Molho de pimenta', '1500', 1, '2025-05-20');
-
--- Coração
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (32, 'Coração', '3000', 1, '2025-05-20');
-
--- Barbecue	
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (33, 'Barbecue', '3000', 1, '2025-05-20');
-
--- Cream cheese
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (34, 'Cream Cheese', '5000', 1, '2025-05-20');
-
--- Tiras de Carne
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (35, 'Tiras de Carne', '10000', 1, '2025-05-20');
-
--- Linguiça Blumenau
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (36, 'Linguiça Blumenau', '3000', 1, '2025-05-20');
-
--- Cheddar
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (37, 'Cheddar', '4000', 1, '2025-05-20');
-
--- Pimenta biquinho
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (38, 'Pimenta biquinho', '3000', 1, '2025-05-20');
-
--- Doritos
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (39, 'Doritos', '2000', 1, '2025-05-20');
-
--- Tomate Seco
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (40, 'Tomate seco', '10000', 1, '2025-05-20');
-
--- Rúcula
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (41, 'Rúcula', '10000', 1, '2025-05-20');
-
--- Azeitonas Pretas
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (42, 'Azeitonas pretas', '10000', 1, '2025-05-20');
-
--- Strogonoff de carne
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (43, 'Strogonoff de carne', '10000', 1, '2025-05-20');
-
--- Strogonoff de frango
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (44, 'Strogonoff de frango', '10000', 1, '2025-05-20');
-
--- Champignon
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (45, 'Champignon', '10000', 1, '2025-05-20');
-
--- Chocolate Preto
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (46, 'Chocolate Preto', '3000', 1, '2025-05-20');
-
--- Chocolate Branco
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (47, 'Chocolate Branco', '3000', 1, '2025-05-20');
-
--- Morango
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (48, 'Morango', '1500', 1, '2025-05-20');
-
--- Leite Condensado
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (49, 'Leite Condensado', '6000', 1, '2025-05-20');
-
--- Banana
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (50, 'Banana', '1500', 1, '2025-05-20');
-
--- Granulado
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (51, 'Granulado', '600', 1, '2025-05-20');
-
--- Confetti
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (52, 'Confetti', '600', 1, '2025-05-20');
-
--- Creme de coco
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (53, 'Creme de coco', '1500', 1, '2025-05-20');
-
--- Goiabada
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (54, 'Goiabada', '1500', 1, '2025-05-20');
-
--- Sonho de valsa
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (55, 'Sonho de valsa', '1500', 1, '2025-05-20');
-
--- Capuccino
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (56, 'Capuccino', '1500', 1, '2025-05-20');
-
--- Doce de leite
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (57, 'Doce de leite', '1500', 1, '2025-05-20');
-
--- Canela
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (58, 'Canela', '300', 1, '2025-05-20');
-
--- Amendoim
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (59, 'Amendoim', '1500', 1, '2025-05-20');
-
--- Coco ralado
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (60, 'Coco ralado', '1500', 1, '2025-05-20');
-
--- Cereja
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (61, 'Cereja', '1500', 1, '2025-05-20');
-
--- Marshmallow
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (62, 'Marshmallow', '10000', 1, '2025-05-20');
-
--- Queijo brie
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (63, 'Queijo brie', '10000', 1, '2025-05-20');
-
--- Geleia de pimenta
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (64, 'Geleia de pimenta', '10000', 1, '2025-05-20');
-
--- Camarão
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (65, 'Camarão', '5000', 1, '2025-05-20');
-
--- Mignon
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (66, 'Mignon', '10000', 1, '2025-05-20');
-
--- Filé
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (67, 'Filé', '1500', 1, '2025-05-20');
-
--- Carne seca desfiada
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (68, 'Carne seca desfiada', '3000', 1, '2025-05-20');
-
--- Costelinha suína desfiada
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (69, 'Costelinha suína desfiada', '3000', 1, '2025-05-20');
-
--- Gorgonzola
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade) VALUES (70, 'Gorgonzola', '2500', 1, '2025-05-20');
+INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade, tipo_id) VALUES
+(1, 'Molho de tomate', '80000', 1, '2025-05-20', 1),
+(2, 'Alho', '10000', 1, '2025-05-20', 2),
+(3, 'Alho Frito', '1500', 1, '2025-05-20', 2),
+(4, 'Óleo', '3000', 2, '2025-05-20', 8),
+(5, 'Orégano', '30000', 1, '2025-05-20', 2),
+(6, 'Queijo Mussarela', '75000', 1, '2025-05-20', 3),
+(7, 'Atum', '10000', 1, '2025-05-20', 4),
+(8, 'Cebola', '10000', 1, '2025-05-20', 5),
+(9, 'Bacon', '10000', 1, '2025-05-20', 4),
+(10, 'Milho', '25000', 1, '2025-05-20', 5),
+(11, 'Carne Moída', '9000', 1, '2025-05-20', 4),
+(12, 'Brócolis', '30000', 1, '2025-05-20', 5),
+(13, 'Calabresa', '15000', 1, '2025-05-20', 6),
+(14, 'Chester', '6000', 1, '2025-05-20', 4),
+(15, 'Catupiry', '7000', 1, '2025-05-20', 3),
+(16, 'Frango', '15000', 1, '2025-05-20', 4),
+(17, 'Lombo', '6000', 1, '2025-05-20', 4),
+(18, 'Tomate', '15000', 1, '2025-05-20', 5),
+(19, 'Manjericão', '3000', 1, '2025-05-20', 2),
+(20, 'Parmesão', '6000', 1, '2025-05-20', 3),
+(21, 'Palmito', '7000', 1, '2025-05-20', 5),
+(22, 'Peito de Peru', '4500', 1, '2025-05-20', 6),
+(23, 'Presunto', '9000', 1, '2025-05-20', 6),
+(24, 'Ovo', '3000', 1, '2025-05-20', 4),
+(25, 'Azeitona', '3000', 1, '2025-05-20', 7),
+(26, 'Provolone', '3000', 1, '2025-05-20', 3),
+(27, 'Batata Palha', '8000', 1, '2025-05-20', 9),
+(28, 'Creme de Leite', '6000', 1, '2025-05-20', 3),
+(29, 'Salame Italiano', '12000', 1, '2025-05-20', 6),
+(30, 'Pepperoni', '6000', 1, '2025-05-20', 6),
+(31, 'Molho de pimenta', '1500', 1, '2025-05-20', 8),
+(32, 'Coração', '3000', 1, '2025-05-20', 4),
+(33, 'Barbecue', '3000', 1, '2025-05-20', 8),
+(34, 'Cream Cheese', '5000', 1, '2025-05-20', 3),
+(35, 'Tiras de Carne', '10000', 1, '2025-05-20', 4),
+(36, 'Linguiça Blumenau', '3000', 1, '2025-05-20', 6),
+(37, 'Cheddar', '4000', 1, '2025-05-20', 3),
+(38, 'Pimenta biquinho', '3000', 1, '2025-05-20', 2),
+(39, 'Doritos', '2000', 1, '2025-05-20', 9),
+(40, 'Tomate seco', '10000', 1, '2025-05-20', 5),
+(41, 'Rúcula', '10000', 1, '2025-05-20', 5),
+(42, 'Azeitonas pretas', 10000, 1, '2025-05-20', 5), -- Vegetais
+(43, 'Strogonoff de carne', 10000, 1, '2025-05-20', 4), -- Carnes
+(44, 'Strogonoff de frango', 10000, 1, '2025-05-20', 4), -- Carnes
+(45, 'Champignon', 10000, 1, '2025-05-20', 5), -- Vegetais
+(46, 'Chocolate Preto', 3000, 1, '2025-05-20', 7), -- Outros
+(47, 'Chocolate Branco', 3000, 1, '2025-05-20', 7), -- Outros
+(48, 'Morango', 1500, 1, '2025-05-20', 5), -- Vegetais
+(49, 'Leite Condensado', 6000, 1, '2025-05-20', 3), -- Laticínios
+(50, 'Banana', 1500, 1, '2025-05-20', 5), -- Vegetais
+(51, 'Granulado', 600, 1, '2025-05-20', 7), -- Outros
+(52, 'Confetti', 600, 1, '2025-05-20', 7), -- Outros
+(53, 'Creme de coco', 1500, 1, '2025-05-20', 7), -- Outros
+(54, 'Goiabada', 1500, 1, '2025-05-20', 7), -- Outros
+(55, 'Sonho de valsa', 1500, 1, '2025-05-20', 7), -- Outros
+(56, 'Capuccino', 1500, 1, '2025-05-20', 7), -- Outros
+(57, 'Doce de leite', 1500, 1, '2025-05-20', 7), -- Outros
+(58, 'Canela', 300, 1, '2025-05-20', 2), -- Temperos
+(59, 'Amendoim', 1500, 1, '2025-05-20', 7), -- Outros
+(60, 'Coco ralado', 1500, 1, '2025-05-20', 7), -- Outros
+(61, 'Cereja', 1500, 1, '2025-05-20', 7), -- Outros
+(62, 'Marshmallow', 10000, 1, '2025-05-20', 7), -- Outros
+(63, 'Queijo brie', 10000, 1, '2025-05-20', 3), -- Laticínios
+(64, 'Geleia de pimenta', 10000, 1, '2025-05-20', 7), -- Outros
+(65, 'Camarão', 5000, 1, '2025-05-20', 4), -- Carnes (pode ser classificado como frutos do mar)
+(66, 'Mignon', 10000, 1, '2025-05-20', 4), -- Carnes
+(67, 'Filé', 1500, 1, '2025-05-20', 4), -- Carnes
+(68, 'Carne seca desfiada', 3000, 1, '2025-05-20', 4), -- Carnes
+(69, 'Costelinha suína desfiada', 3000, 1, '2025-05-20', 6), -- Embutidos
+(70, 'Gorgonzola', 2500, 1, '2025-05-20', 3); -- Laticínios
 
 RETURN 1;
 
@@ -1200,6 +1161,7 @@ DELIMITER ;
 select bd_pizzaria.inserirBordaPizza();
 select bd_pizzaria.inserirUnidadeMedida();
 select bd_pizzaria.inserirFormaEntrega();
+select bd_pizzaria.inserirTipoProdutos();
 select bd_pizzaria.inserirProdutos();
 select bd_pizzaria.inserirTamanho();
 select bd_pizzaria.inserirPizzas();
