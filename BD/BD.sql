@@ -262,13 +262,13 @@ CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`bebidas` (
   CONSTRAINT `fk_bebidas_marcaBebidas`
     FOREIGN KEY (`marca_id`)
     REFERENCES `bd_pizzaria`.`marcaBebidas` (`idmarcaBebidas`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_bebidas_tamanhoBebidas`
     FOREIGN KEY (`tamanho_id`)
     REFERENCES `bd_pizzaria`.`tamanhoBebidas` (`idtamanhoBebidas`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
