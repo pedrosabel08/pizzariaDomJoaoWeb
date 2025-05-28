@@ -24,7 +24,6 @@ CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`clientes` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
-
 -- -----------------------------------------------------
 -- Table `bd_pizzaria`.`endereco`
 -- -----------------------------------------------------
@@ -252,6 +251,9 @@ CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`marcaBebidas` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
+-- -----------------------------------------------------
+-- Table `bd_pizzaria`.`tamanhoBebidas`
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`tamanhoBebidas` (
   `idtamanhoBebidas` INT(11) NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NOT NULL,
@@ -260,32 +262,48 @@ CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`tamanhoBebidas` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
+-- -----------------------------------------------------
+-- Table `bd_pizzaria`.`categoriaBebidas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`categoriabebidas` (
+  `idcategoriaBebidas` INT(11) NOT NULL,
+  `nome` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idcategoriaBebidas`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
 
 -- -----------------------------------------------------
 -- Table `bd_pizzaria`.`bebidas`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`bebidas` (
   `idbebidas` INT(11) NOT NULL AUTO_INCREMENT,
-  `nomeBebida` VARCHAR(45) NOT NULL,
   `marca_id` INT(11) NOT NULL,
-  `tamanho_id` INT(11) NOT NULL,
   `preco` DECIMAL(10,2) NOT NULL,
+  `quantidade` DOUBLE NOT NULL,
+  `validade` DATE NOT NULL,
+  `tamanhobebidas_idtamanhoBebidas` INT(11) NOT NULL,
+  `categoriabebidas_idcategoriaBebidas` INT(11) NOT NULL,
   PRIMARY KEY (`idbebidas`),
-  INDEX `fk_bebidas_marcaBebidas_idx` (`marca_id` ASC),
-  INDEX `fk_bebidas_tamanhoBebidas_idx` (`tamanho_id` ASC),
+  INDEX `fk_bebidas_marcaBebidas_idx` (`marca_id` ASC) VISIBLE,
+  INDEX `fk_bebidas_tamanhobebidas1_idx` (`tamanhobebidas_idtamanhoBebidas` ASC) VISIBLE,
+  INDEX `fk_bebidas_categoriabebidas1_idx` (`categoriabebidas_idcategoriaBebidas` ASC) VISIBLE,
   CONSTRAINT `fk_bebidas_marcaBebidas`
     FOREIGN KEY (`marca_id`)
-    REFERENCES `bd_pizzaria`.`marcaBebidas` (`idmarcaBebidas`)
+    REFERENCES `bd_pizzaria`.`marcabebidas` (`idmarcaBebidas`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_bebidas_tamanhoBebidas`
-    FOREIGN KEY (`tamanho_id`)
-    REFERENCES `bd_pizzaria`.`tamanhoBebidas` (`idtamanhoBebidas`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
+  CONSTRAINT `fk_bebidas_tamanhobebidas1`
+    FOREIGN KEY (`tamanhobebidas_idtamanhoBebidas`)
+    REFERENCES `bd_pizzaria`.`tamanhobebidas` (`idtamanhoBebidas`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_bebidas_categoriabebidas1`
+    FOREIGN KEY (`categoriabebidas_idcategoriaBebidas`)
+    REFERENCES `bd_pizzaria`.`categoriabebidas` (`idcategoriaBebidas`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
-
 
 -- -----------------------------------------------------
 -- Table `bd_pizzaria`.`vendas_bebidas`
@@ -315,8 +333,7 @@ DEFAULT CHARACTER SET = utf8mb4;
 CREATE TABLE IF NOT EXISTS status_venda (
 	idstatus INT AUTO_INCREMENT PRIMARY KEY,
     nome_status VARCHAR(50)
-    );
-
+);
 
 CREATE TABLE IF NOT EXISTS log_status (
     id_log INT AUTO_INCREMENT PRIMARY KEY,
@@ -334,7 +351,6 @@ CREATE TABLE IF NOT EXISTS  fornecedores_tipos (
     FOREIGN KEY (idfornecedor) REFERENCES fornecedores(idfornecedor),
     FOREIGN KEY (idtipo) REFERENCES tipos_produtos(idtipo)
 );
-
 
 -- Tabela de Fornecedores (com dados fictícios)
 CREATE TABLE IF NOT EXISTS  fornecedores (
