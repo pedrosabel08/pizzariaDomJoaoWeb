@@ -284,9 +284,6 @@ CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`bebidas` (
   `tamanhobebidas_idtamanhoBebidas` INT(11) NOT NULL,
   `categoriabebidas_idcategoriaBebidas` INT(11) NOT NULL,
   PRIMARY KEY (`idbebidas`),
-  INDEX `fk_bebidas_marcaBebidas_idx` (`marca_id` ASC) VISIBLE,
-  INDEX `fk_bebidas_tamanhobebidas1_idx` (`tamanhobebidas_idtamanhoBebidas` ASC) VISIBLE,
-  INDEX `fk_bebidas_categoriabebidas1_idx` (`categoriabebidas_idcategoriaBebidas` ASC) VISIBLE,
   CONSTRAINT `fk_bebidas_marcaBebidas`
     FOREIGN KEY (`marca_id`)
     REFERENCES `bd_pizzaria`.`marcabebidas` (`idmarcaBebidas`)
@@ -1050,91 +1047,93 @@ END$$
 
 DELIMITER ;
 
+-- -----------------------------------------------------
+-- function inserircategoriaBebidas
+-- -----------------------------------------------------
+DELIMITER $$
+USE `bd_pizzaria`$$
+CREATE DEFINER=`root`@`localhost` FUNCTION `inserircategoriaBebidas`() RETURNS int(11)
+    DETERMINISTIC
+BEGIN
+INSERT INTO `bd_pizzaria`.`categoriabebidas` (`idcategoriaBebidas`, `nome`) 
+VALUES 
+(1, 'Refrigerante'), 
+(2, 'Água Mineral'), 
+(3, 'Cerveja');
+RETURN 1;
+END$$
+DELIMITER ;
 
 -- -----------------------------------------------------
 -- function inserirMarcaBebidas
 -- -----------------------------------------------------
-
 DELIMITER $$
 USE `bd_pizzaria`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION `inserirMarcaBebidas`() RETURNS int(11)
     DETERMINISTIC
 BEGIN
-INSERT INTO `bd_pizzaria`.`marcaBebidas` (`nome`) 
+INSERT INTO `bd_pizzaria`.`marcaBebidas` (`idmarcaBebidas`, `nome`) 
 VALUES 
-('Coca Cola'), 
-('Guaraná'), 
-('Sprite'), 
-('Fanta'), 
-('Coca Cola Zero'), 
-('Com gás'), 
-('Sem gás'), 
-('Budweiser'), 
-('Heineken');
-
+(1, 'Coca Cola'), 
+(2, 'Guaraná'), 
+(3, 'Sprite'), 
+(4, 'Fanta'), 
+(5, 'Budweiser'), 
+(6, 'Heineken'),
+(7, 'Cristal');
 RETURN 1;
 END$$
-
 DELIMITER ;
-
 
 -- -----------------------------------------------------
 -- function inserirTamanhoBebidas
 -- -----------------------------------------------------
-
 DELIMITER $$
 USE `bd_pizzaria`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION `inserirTamanhoBebidas`() RETURNS int(11)
     DETERMINISTIC
 BEGIN
-INSERT INTO `bd_pizzaria`.`tamanhoBebidas` (`nome`, `volume`) 
+INSERT INTO `bd_pizzaria`.`tamanhoBebidas` (`idtamanhoBebidas`, `nome`, `volume`) 
 VALUES 
-('Lata', 350), 
-('600ml', 600), 
-('2L', 2000), 
-('Agua mineral', 500), 
-('Cerveja Longneck', 330);
-
-
+(1, 'Lata', 350), 
+(2, '600ml', 600), 
+(3, '2L', 2000), 
+(4, 'Garrafinha', 500), 
+(5, 'Garrafa Longneck', 330);
 RETURN 1;
 END$$
 
 -- -----------------------------------------------------
 -- function inserirBebidas
 -- -----------------------------------------------------
-
 DELIMITER $$
 USE `bd_pizzaria`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION `inserirBebidas`() RETURNS int(11)
     DETERMINISTIC
 BEGIN
-INSERT INTO `bd_pizzaria`.`bebidas` (`nomeBebida`, `marca_id`, `tamanho_id`, `preco`) 
+INSERT INTO `bd_pizzaria`.`bebidas` (`marca_id`, `preco`, `quantidade`, `validade`, `tamanhobebidas_idtamanhoBebidas`, `categoriabebidas_idcategoriaBebidas`) 
 VALUES 
-('Coca Cola Lata', 1, 1, 6.00),
-('Guaraná Lata', 2, 1, 6.00),
-('Sprite Lata', 3, 1, 6.00),
-('Fanta Lata', 4, 1, 6.00),
-('Coca Cola 600ml', 1, 2, 8.00),
-('Sprite 600ml', 3, 2, 8.00),
-('Fanta 600ml', 4, 2, 8.00),
-('Coca Cola 2L', 1, 3, 15.00),
-('Coca Cola Zero 2L', 5, 3, 15.00),
-('Guaraná 2L', 2, 3, 12.00),
-('Sprite 2L', 3, 3, 12.00),
-('Fanta 2L', 4, 3, 12.00),
-('Agua mineral Com gás', 6, 4, 3.50),
-('Agua mineral Sem gás', 7, 4, 3.50),
-('Budweiser Cerveja Longneck', 8, 5, 10.00),
-('Heineken Cerveja Longneck', 9, 5, 10.00);
-
-
+(1, 6.00, 1, '2025-06-28', 1, 1),
+(2, 6.00, 2, '2025-06-28', 1, 1),
+(3, 6.00, 3, '2025-06-28', 1, 1),
+(4, 6.00, 4, '2025-06-28', 1, 1),
+(1, 8.00, 1, '2025-06-28', 2, 1),
+(3, 8.00, 3, '2025-06-28', 2, 1),
+(4, 8.00, 4, '2025-06-28', 2, 1),
+(1, 15.0, 1, '2025-06-28', 3, 1),
+(2, 12.0, 2, '2025-06-28', 3, 1),
+(3, 12.0, 3, '2025-06-28', 3, 1),
+(4, 12.0, 4, '2025-06-28', 3, 1),
+(5, 3.50, 2, '2025-06-28', 4, 2),
+(5, 3.50, 7, '2025-06-28', 4, 2),
+(6, 10.0, 8, '2025-06-28', 5, 3),
+(7, 10.0, 9, '2025-06-28', 5, 3);
 RETURN 1;
 END$$
 
 -- -----------------------------------------------------
 -- function inserirFormaPagamento
 -- -----------------------------------------------------
-
 DELIMITER $$
 USE `bd_pizzaria`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION `inserirFormaPagamento`() RETURNS int(11)
@@ -1153,7 +1152,6 @@ END$$
 -- -----------------------------------------------------
 -- function inserirUsuarios
 -- -----------------------------------------------------
-
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
@@ -1181,6 +1179,7 @@ select bd_pizzaria.inserirTipoProdutos();
 select bd_pizzaria.inserirProdutos();
 select bd_pizzaria.inserirTamanho();
 select bd_pizzaria.inserirPizzas();
+select bd_pizzaria.inserirCategoriaBebidas();
 select bd_pizzaria.inserirMarcaBebidas();
 select bd_pizzaria.inserirTamanhoBebidas();
 select bd_pizzaria.inserirBebidas();
