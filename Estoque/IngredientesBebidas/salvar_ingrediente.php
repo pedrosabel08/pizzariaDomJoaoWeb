@@ -5,18 +5,19 @@ $id = isset($_POST['id']) ? intval($_POST['id']) : 0;
 $nome = trim($_POST['nome']);
 $quantidade = floatval($_POST['quantidade']);
 $unidadeMedida = intval($_POST['unidadeMedida']);
+$tipo_id = intval($_POST['tipo_id']);
 $validade = $_POST['validade'];
 
 if ($id > 0) {
     // UPDATE
-    $sql = "UPDATE produtos SET quantidade=?, unidadeMedida=?, validade=? WHERE idprodutos=?";
+    $sql = "UPDATE produtos SET quantidade=?, unidadeMedida=?, tipo_id=?, validade=? WHERE idprodutos=?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("diss", $quantidade, $unidadeMedida, $validade, $id);
+    $stmt->bind_param("diisi", $quantidade, $unidadeMedida, $tipo_id, $validade, $id);
 } else {
     // INSERT
-    $sql = "INSERT INTO produtos (nomeProduto, quantidade, unidadeMedida, validade) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO produtos (nomeProduto, quantidade, unidadeMedida, tipo_id, validade) VALUES (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sdss", $nome, $quantidade, $unidadeMedida, $validade);
+    $stmt->bind_param("sdiis", $nome, $quantidade, $unidadeMedida, $tipo_id, $validade);
 }
 
 if ($stmt->execute()) {

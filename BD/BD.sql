@@ -41,8 +41,7 @@ CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`endereco` (
   CONSTRAINT `fk_endereco_cliente1`
     FOREIGN KEY (`cliente_id`)
     REFERENCES `bd_pizzaria`.`clientes` (`idclientes`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
@@ -183,24 +182,16 @@ CREATE TABLE IF NOT EXISTS `vendas` (
   INDEX `fk_vendas_forma_entrega_idx` (`forma_entrega_id` ASC),
   CONSTRAINT `fk_vendas_clientes`
     FOREIGN KEY (`cliente_id`)
-    REFERENCES `clientes` (`idclientes`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `clientes` (`idclientes`),
     CONSTRAINT `fk_vendas_forma_entrega`
     FOREIGN KEY (`forma_entrega_id`)
-    REFERENCES `forma_entrega` (`idforma_entrega`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `forma_entrega` (`idforma_entrega`),
 	CONSTRAINT `fk_vendas_endereco`
     FOREIGN KEY (`endereco_id`)
-    REFERENCES `endereco` (`idendereco`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `endereco` (`idendereco`),
 	CONSTRAINT `fk_vendas_forma_pagamento`
     FOREIGN KEY (`forma_pagamento_id`)
-    REFERENCES `forma_pagamento` (`idforma_pagamento`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `forma_pagamento` (`idforma_pagamento`),
     foreign key (status_id) references status_venda (idstatus)
     
 );
@@ -221,24 +212,16 @@ CREATE TABLE IF NOT EXISTS `vendas_pizzas` (
   INDEX `fk_vendas_pizzas_borda_idx` (`borda_idbordas_pizza` ASC),
   CONSTRAINT `fk_vendas_pizzas_vendas`
     FOREIGN KEY (`vendas_idvendas`)
-    REFERENCES `vendas` (`idvendas`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `vendas` (`idvendas`),
   CONSTRAINT `fk_vendas_pizzas_pizzas`
     FOREIGN KEY (`pizzas_idpizzas`)
-    REFERENCES `pizzas` (`idpizzas`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `pizzas` (`idpizzas`),
   CONSTRAINT `fk_vendas_pizzas_tamanho`
     FOREIGN KEY (`tamanho_idtamanho`)
-    REFERENCES `tamanho` (`idtamanho`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `tamanho` (`idtamanho`),
   CONSTRAINT `fk_vendas_pizzas_borda`
     FOREIGN KEY (`borda_idbordas_pizza`)
     REFERENCES `bordas_pizza` (`idbordas_pizza`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
 );
 
 -- -----------------------------------------------------
@@ -286,19 +269,14 @@ CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`bebidas` (
   PRIMARY KEY (`idbebidas`),
   CONSTRAINT `fk_bebidas_marcaBebidas`
     FOREIGN KEY (`marca_id`)
-    REFERENCES `bd_pizzaria`.`marcabebidas` (`idmarcaBebidas`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
+    REFERENCES `bd_pizzaria`.`marcabebidas` (`idmarcaBebidas`),
   CONSTRAINT `fk_bebidas_tamanhobebidas1`
     FOREIGN KEY (`tamanhobebidas_idtamanhoBebidas`)
-    REFERENCES `bd_pizzaria`.`tamanhobebidas` (`idtamanhoBebidas`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `bd_pizzaria`.`tamanhobebidas` (`idtamanhoBebidas`),
   CONSTRAINT `fk_bebidas_categoriabebidas1`
     FOREIGN KEY (`categoriabebidas_idcategoriaBebidas`)
     REFERENCES `bd_pizzaria`.`categoriabebidas` (`idcategoriaBebidas`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
@@ -315,14 +293,11 @@ CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`vendas_bebidas` (
   INDEX `fk_vendas_bebidas_bebidas_idx` (`bebidas_idbebidas` ASC),
   CONSTRAINT `fk_vendas_bebidas_vendas`
     FOREIGN KEY (`vendas_idvendas`)
-    REFERENCES `bd_pizzaria`.`vendas` (`idvendas`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `bd_pizzaria`.`vendas` (`idvendas`),
   CONSTRAINT `fk_vendas_bebidas_bebidas`
     FOREIGN KEY (`bebidas_idbebidas`)
     REFERENCES `bd_pizzaria`.`bebidas` (`idbebidas`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 

@@ -4,20 +4,21 @@ include '../conexao.php';
 $id = isset($_POST['id']) ? intval($_POST['id']) : 0;
 $marca_id = intval($_POST['marca_id']);
 $categoria_id = intval($_POST['categoria_id']);
+$tamanho_id = intval($_POST['tamanho_id']);
 $quantidade = floatval($_POST['quantidade']);
 $validade = $_POST['validade'];
 $preco = floatval($_POST['preco']);
-
+echo $validade;
 if ($id > 0) {
     // UPDATE
-    $sql = "UPDATE bebidas SET marca_id=?, categoria_id=?, quantidade=?, validade=?, preco=? WHERE idbebidas=?";
+    $sql = "UPDATE bebidas SET marca_id=?, categoriabebidas_idcategoriaBebidas=?, tamanhobebidas_idtamanhoBebidas=?, quantidade=?, validade=?, preco=? WHERE idbebidas=?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iidssd", $marca_id, $categoria_id, $quantidade, $validade, $preco, $id);
+    $stmt->bind_param("iiiissi", $marca_id, $categoria_id, $tamanho_id, $quantidade, $validade, $preco, $id);
 } else {
     // INSERT
-    $sql = "INSERT INTO bebidas (marca_id, categoria_id, quantidade, validade, preco) VALUES (?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO bebidas (marca_id, categoriabebidas_idcategoriaBebidas, tamanhobebidas_idtamanhoBebidas, quantidade, validade, preco) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iidss", $marca_id, $categoria_id, $quantidade, $validade, $preco);
+    $stmt->bind_param("iiiiss", $marca_id, $categoria_id, $tamanho_id, $quantidade, $validade, $preco);
 }
 
 if ($stmt->execute()) {
