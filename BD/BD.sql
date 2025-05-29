@@ -401,6 +401,18 @@ CREATE TABLE IF NOT EXISTS itens_compra (
     FOREIGN KEY (idproduto) REFERENCES produtos(idprodutos)
 );
 
+CREATE TABLE saidas_estoque (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    produto_id INT,
+    quantidade DECIMAL(10,2),
+    pizza_id INT,
+    venda_id INT,
+    motivo VARCHAR(100),
+    data_saida DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (produto_id) REFERENCES produtos(idprodutos)
+);
+
+
 
 -- -----------------------------------------------------
 -- function inserirTipoProdutos

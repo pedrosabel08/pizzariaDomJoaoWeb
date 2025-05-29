@@ -171,6 +171,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 echo json_encode(['success' => false, 'message' => "Erro ao atualizar estoque."]);
                                 exit;
                             }
+
+                            $sqlSaida = "SELECT produto_id, quantidade
+             FROM pizzas_produtos
+             WHERE pizza_id = ?";
+
+                            if ($stmtSelect = mysqli_prepare($conn, $sqlSaida)) {
+                                mysqli_stmt_bind_param($stmtSelect, "i", $pizzaId);
+                                mysqli_stmt_execute($stmtSelect);
+                                mysqli_stmt_bind_result($stmtSelect, $produtoId, $quantidade);
+
+                                $saidas = [];
+                                while (mysqli_stmt_fetch($stmtSelect)) {
+                                    // Armazena cada item em um array
+                                    $saidas[] = ['produto_id' => $produtoId, 'quantidade' => $quantidade];
+                                }
+
+                                mysqli_stmt_close($stmtSelect); // Fecha ANTES de iniciar outro prepare
+
+                                // Agora sim, insere as saídas
+                                foreach ($saidas as $saida) {
+                                    $sqlInsertSaida = "INSERT INTO saidas_estoque (produto_id, quantidade, pizza_id, venda_id, motivo)
+                                      VALUES (?, ?, ?, ?, 'produção')";
+
+                                    if ($stmtInsert = mysqli_prepare($conn, $sqlInsertSaida)) {
+                                        mysqli_stmt_bind_param(
+                                            $stmtInsert,
+                                            "idii",
+                                            $saida['produto_id'],
+                                            $saida['quantidade'],
+                                            $pizzaId,
+                                            $vendaId
+                                        );
+                                        mysqli_stmt_execute($stmtInsert);
+                                        mysqli_stmt_close($stmtInsert);
+                                    } else {
+                                        echo json_encode(['success' => false, 'message' => "Erro ao registrar saída de estoque."]);
+                                        exit;
+                                    }
+                                }
+                            }
                         }
                     }
                 }
