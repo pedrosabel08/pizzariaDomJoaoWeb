@@ -101,9 +101,10 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <title>Estoque</title>
-    <link rel="icon" href="./assets/caixa.png" type="image/png">
+    <link rel="icon" href="../assets/caixa.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container mt-4">
@@ -117,7 +118,7 @@ $conn->close();
         </div>
 
         <div class="table-responsive">
-            <table class="table table-bordered align-middle" id="tabelaEstoque">
+            <table id="tabelaEstoque">
                 <thead>
                 <tr>
                     <?php if ($tipo == 'ingredientes'): ?>
@@ -296,94 +297,6 @@ $conn->close();
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-    function trocarTipo() {
-        const tipo = $('#tipoFiltro').val();
-        window.location.href = 'estoque.php?tipo=' + tipo;
-    }
-
-    function abrirModalNovo() {
-        const tipo = $('#tipoFiltro').val();
-        if (tipo === 'ingredientes') {
-            $('#formIngrediente')[0].reset();
-            $('#idIngrediente').val('');
-            $('#nomeIngrediente').prop('readonly', false);
-            $('#tituloModalIngrediente').text('Novo Ingrediente');
-            new bootstrap.Modal(document.getElementById('modalIngrediente')).show();
-        } else {
-            $('#formBebida')[0].reset();
-            $('#idBebida').val('');
-            $('#tituloModalBebida').text('Nova Bebida');
-            new bootstrap.Modal(document.getElementById('modalBebida')).show();
-        }
-    }
-
-    function abrirModalEditar(btn) {
-        const tipo = $('#tipoFiltro').val();
-        const tr = $(btn).closest('tr');
-        const tds = tr.find('td');
-        if (tipo === 'ingredientes') {
-            $('#idIngrediente').val(tr.data('id'));
-            $('#nomeIngrediente').val(tds.eq(0).text()).prop('readonly', true);
-            $('#quantidadeIngrediente').val(tds.eq(1).text());
-            $('#unidadeIngrediente option').filter(function() {
-                return $(this).text() === tds.eq(2).text();
-            }).prop('selected', true);
-
-            // Preencher o tipo corretamente
-            $('#tipoIngrediente').val(tr.data('tipo-id'));
-
-            // Corrigir a validade
-            let validade = tds.eq(4).text().replace(/\s+/g, '').trim();
-            if (validade && validade.includes('/')) {
-                let partes = validade.split('/');
-                if (partes.length === 3) {
-                    validade = [partes[2], partes[1], partes[0]].join('-');
-                } else {
-                    validade = '';
-                }
-            } else {
-                validade = '';
-            }
-            $('#validadeIngrediente').val(validade);
-
-            $('#tituloModalIngrediente').text('Editar Ingrediente');
-            new bootstrap.Modal(document.getElementById('modalIngrediente')).show();
-        } else {
-            $('#idBebida').val(tr.data('id'));
-            $('#marcaBebida').val(tr.data('marca-id'));
-            $('#categoriaBebida').val(tr.data('categoria-id'));
-            $('#tamanhoBebida').val(tr.data('tamanho-id'));
-            $('#quantidadeBebida').val(tds.eq(3).text());
-            let validade = tds.eq(4).text().trim();
-            if (validade) {
-                let partes = validade.split('/');
-                if (partes.length === 3) {
-                    validade = [partes[2], partes[1], partes[0]].join('-');
-                } else {
-                    validade = '';
-                }
-            }
-            $('#validadeBebida').val(validade);
-            $('#precoBebida').val(tds.eq(5).text());
-            $('#tituloModalBebida').text('Editar Bebida');
-            new bootstrap.Modal(document.getElementById('modalBebida')).show();
-        }
-    }
-
-    function excluirLinha(btn) {
-        if (!confirm('Deseja realmente excluir este item?')) return;
-        const tipo = $('#tipoFiltro').val();
-        const tr = $(btn).closest('tr');
-        const id = tr.data('id');
-        $.post('excluir.php', { tipo, id }, function(resp) {
-            if (resp.trim() === 'ok') {
-                tr.remove();
-            } else {
-                alert('Erro ao excluir!');
-            }
-        });
-    }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
