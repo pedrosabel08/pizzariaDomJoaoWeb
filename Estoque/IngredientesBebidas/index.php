@@ -24,7 +24,7 @@
       <!-- <button class="btn btn-success ms-3" onclick="abrirModalNovo()"></button> -->
     </div>
 
-    <div class="table-responsive">
+    <div class="table-responsive" style="max-height: 70vh;">
       <table id="tabelaEstoque">
         <thead>
         </thead>

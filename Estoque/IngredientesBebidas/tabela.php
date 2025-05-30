@@ -50,13 +50,21 @@ while ($row = $result->fetch_assoc()) {
 
 // Dados principais conforme tipo selecionado
 if ($tipo == 'ingredientes') {
-    $sql = "SELECT produtos.idprodutos as id, produtos.nomeProduto as nome,
-                   produtos.quantidade, unidademedida.nome as unidadeMedida, produtos.validade,
-                   tipo_produtos.nome_tipo as tipo_nome, produtos.tipo_id
-            FROM produtos
-            INNER JOIN unidademedida ON produtos.unidadeMedida = unidademedida.idunidadeMedida
-            INNER JOIN tipo_produtos ON produtos.tipo_id = tipo_produtos.idtipo_produtos
-            ORDER BY produtos.nomeProduto ASC";
+    $sql = "SELECT 
+    produtos.idprodutos AS id,
+    produtos.nomeProduto AS nome,
+    produtos.quantidade,
+    unidademedida.nome AS unidadeMedida,
+    produtos.validade,
+    tipo_produtos.nome_tipo AS tipo_nome,
+    produtos.tipo_id
+FROM produtos
+INNER JOIN unidademedida ON produtos.unidadeMedida = unidademedida.idunidadeMedida
+INNER JOIN tipo_produtos ON produtos.tipo_id = tipo_produtos.idtipo_produtos
+ORDER BY 
+    (produtos.quantidade <= 2000) DESC,  -- Primeiro os com quantidade <= 2000
+    produtos.nomeProduto ASC;            -- Depois ordena por nome
+";
 } else if ($tipo == 'bebidas') {
     $sql = "SELECT bebidas.idbebidas as id,
                    marcabebidas.nome as marca,
@@ -73,7 +81,7 @@ if ($tipo == 'ingredientes') {
             INNER JOIN marcabebidas ON bebidas.marca_id = marcabebidas.idmarcaBebidas
             INNER JOIN categoriabebidas ON bebidas.categoriabebidas_idcategoriaBebidas = categoriabebidas.idcategoriaBebidas
             INNER JOIN tamanhobebidas ON bebidas.tamanhobebidas_idtamanhoBebidas = tamanhobebidas.idtamanhoBebidas
-            ORDER BY marcabebidas.nome, categoriabebidas.nome, tamanhobebidas.nome ASC";
+            ORDER BY (bebidas.quantidade <= 7) DESC, marcabebidas.nome, categoriabebidas.nome, tamanhobebidas.nome ASC";
 } else {
     http_response_code(400);
     echo json_encode([
