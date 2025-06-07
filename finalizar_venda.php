@@ -132,85 +132,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Processar sabores de pizza, se forem informados
                 if ($flavors !== null) {
-                    foreach ($flavors as $flavor) {
-                        // Consultar ID do sabor de pizza
-                        $sqlPizza = "SELECT idpizzas FROM pizzas WHERE nomePizza = ?";
-                        if ($stmtPizza = mysqli_prepare($conn, $sqlPizza)) {
-                            mysqli_stmt_bind_param($stmtPizza, "s", $flavor);
-                            mysqli_stmt_execute($stmtPizza);
-                            mysqli_stmt_bind_result($stmtPizza, $pizzaId);
-                            mysqli_stmt_fetch($stmtPizza);
-                            mysqli_stmt_close($stmtPizza);
-                        } else {
-                            echo json_encode(['success' => false, 'message' => "Erro ao buscar sabor."]);
-                            exit;
-                        }
+                    foreach ($saidas as $saida) {
+                        $produtoId = $saida['produto_id'];
+                        $quantidadeNecessaria = $saida['quantidade'];
 
-                        // Inserir pizza na tabela de vendas_pizzas
-                        if ($pizzaId !== null) {
-                            $sqlVendaPizza = "INSERT INTO vendas_pizzas (vendas_idvendas, pizzas_idpizzas, tamanho_idtamanho, borda_idbordas_pizza) VALUES (?, ?, ?, ?)";
-                            if ($stmtVendaPizza = mysqli_prepare($conn, $sqlVendaPizza)) {
-                                mysqli_stmt_bind_param($stmtVendaPizza, "iiii", $vendaId, $pizzaId, $tamanhoId, $bordaId);
-                                mysqli_stmt_execute($stmtVendaPizza);
-                                mysqli_stmt_close($stmtVendaPizza);
-                            } else {
-                                echo json_encode(['success' => false, 'message' => "Erro ao inserir venda de pizza."]);
-                                exit;
+                        // Buscar lotes disponíveis do produto ordenados por validade
+                        $sqlLotes = "SELECT idlote, quantidade, data_validade 
+                                    FROM estoque_lote 
+                                    WHERE idproduto = ? AND quantidade > 0 
+                                    ORDER BY data_validade ASC";
+
+                        if ($stmtLotes = mysqli_prepare($conn, $sqlLotes)) {
+                            mysqli_stmt_bind_param($stmtLotes, "i", $produtoId);
+                            mysqli_stmt_execute($stmtLotes);
+                            mysqli_stmt_bind_result($stmtLotes, $loteId, $loteQtd, $validade);
+
+                            while (mysqli_stmt_fetch($stmtLotes) && $quantidadeNecessaria > 0) {
+                                $usarQtd = min($quantidadeNecessaria, $loteQtd);
+
+                                // Dar baixa no lote
+                                $sqlBaixa = "UPDATE estoque_lote SET quantidade = quantidade - ? WHERE idlote = ?";
+                                $stmtBaixa = mysqli_prepare($conn, $sqlBaixa);
+                                mysqli_stmt_bind_param($stmtBaixa, "di", $usarQtd, $loteId);
+                                mysqli_stmt_execute($stmtBaixa);
+                                mysqli_stmt_close($stmtBaixa);
+
+                                // Registrar saída
+                                $sqlInsertSaida = "INSERT INTO saidas_estoque (produto_id, quantidade, pizza_id, venda_id, motivo, idlote)
+                               VALUES (?, ?, ?, ?, 'produção', ?)";
+                                $stmtInsert = mysqli_prepare($conn, $sqlInsertSaida);
+                                mysqli_stmt_bind_param($stmtInsert, "idiii", $produtoId, $usarQtd, $pizzaId, $vendaId, $loteId);
+                                mysqli_stmt_execute($stmtInsert);
+                                mysqli_stmt_close($stmtInsert);
+
+                                $quantidadeNecessaria -= $usarQtd;
                             }
 
-                            // Atualizar o estoque de ingredientes
-                            $sqlUpdateEstoque = "UPDATE produtos p
-                                                 JOIN pizzas_produtos pp ON p.idprodutos = pp.produto_id
-                                                 SET p.quantidade = p.quantidade - pp.quantidade
-                                                 WHERE pp.pizza_id = ?";
-                            if ($stmtUpdateEstoque = mysqli_prepare($conn, $sqlUpdateEstoque)) {
-                                mysqli_stmt_bind_param($stmtUpdateEstoque, "i", $pizzaId);
-                                mysqli_stmt_execute($stmtUpdateEstoque);
-                                mysqli_stmt_close($stmtUpdateEstoque);
-                            } else {
-                                echo json_encode(['success' => false, 'message' => "Erro ao atualizar estoque."]);
-                                exit;
-                            }
-
-                            $sqlSaida = "SELECT produto_id, quantidade
-             FROM pizzas_produtos
-             WHERE pizza_id = ?";
-
-                            if ($stmtSelect = mysqli_prepare($conn, $sqlSaida)) {
-                                mysqli_stmt_bind_param($stmtSelect, "i", $pizzaId);
-                                mysqli_stmt_execute($stmtSelect);
-                                mysqli_stmt_bind_result($stmtSelect, $produtoId, $quantidade);
-
-                                $saidas = [];
-                                while (mysqli_stmt_fetch($stmtSelect)) {
-                                    // Armazena cada item em um array
-                                    $saidas[] = ['produto_id' => $produtoId, 'quantidade' => $quantidade];
-                                }
-
-                                mysqli_stmt_close($stmtSelect); // Fecha ANTES de iniciar outro prepare
-
-                                // Agora sim, insere as saídas
-                                foreach ($saidas as $saida) {
-                                    $sqlInsertSaida = "INSERT INTO saidas_estoque (produto_id, quantidade, pizza_id, venda_id, motivo)
-                                      VALUES (?, ?, ?, ?, 'produção')";
-
-                                    if ($stmtInsert = mysqli_prepare($conn, $sqlInsertSaida)) {
-                                        mysqli_stmt_bind_param(
-                                            $stmtInsert,
-                                            "idii",
-                                            $saida['produto_id'],
-                                            $saida['quantidade'],
-                                            $pizzaId,
-                                            $vendaId
-                                        );
-                                        mysqli_stmt_execute($stmtInsert);
-                                        mysqli_stmt_close($stmtInsert);
-                                    } else {
-                                        echo json_encode(['success' => false, 'message' => "Erro ao registrar saída de estoque."]);
-                                        exit;
-                                    }
-                                }
-                            }
+                            mysqli_stmt_close($stmtLotes);
                         }
                     }
                 }

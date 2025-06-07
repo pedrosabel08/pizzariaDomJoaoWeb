@@ -96,10 +96,9 @@ DEFAULT CHARACTER SET = utf8mb4;
 CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`produtos` (
   `idprodutos` INT(11) NOT NULL AUTO_INCREMENT,
   `nomeProduto` VARCHAR(45) NOT NULL,
-  `quantidade` VARCHAR(45) NOT NULL,
   `unidadeMedida` INT(11) NOT NULL,
-  `validade` DATE NOT NULL,
   `tipo_id` INT(11) NOT NULL,
+  `quantidade_minima` INT(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`idprodutos`),
   INDEX `fk_produtos_unidadeMedida1_idx` (`unidadeMedida` ASC),
   CONSTRAINT `fk_produtos_unidadeMedida1`
@@ -132,6 +131,17 @@ CREATE TABLE IF NOT EXISTS `bd_pizzaria`.`pizzas_produtos` (
     REFERENCES `bd_pizzaria`.`produtos` (`idprodutos`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
+
+CREATE TABLE IF NOT EXISTS estoque_lote (
+    idlote INT AUTO_INCREMENT PRIMARY KEY,
+    idproduto INT NOT NULL,
+    data_validade DATE,
+    quantidade DECIMAL(10,2) NOT NULL,
+    preco_unitario DECIMAL(10,2) NOT NULL,
+    data_entrada DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (idproduto) REFERENCES produtos(idprodutos)
+);
+
 
 -- -----------------------------------------------------
 -- Table `bd_pizzaria`.`tipo_produtos`
@@ -378,15 +388,19 @@ CREATE TABLE IF NOT EXISTS itens_compra (
 
 CREATE TABLE saidas_estoque (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    produto_id INT,
-    quantidade DECIMAL(10,2),
-    pizza_id INT,
-    venda_id INT,
-    motivo VARCHAR(100),
+    produto_id INT NOT NULL,
+    idlote INT NOT NULL,
+    quantidade DECIMAL(10,2) NOT NULL,
+    pizza_id INT DEFAULT NULL,
+    venda_id INT DEFAULT NULL,
+    motivo VARCHAR(100) DEFAULT 'produção',
     data_saida DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (produto_id) REFERENCES produtos(idprodutos)
-);
 
+    FOREIGN KEY (produto_id) REFERENCES produtos(idprodutos),
+    FOREIGN KEY (idlote) REFERENCES estoque_lote(idlote),
+    FOREIGN KEY (pizza_id) REFERENCES pizzas(idpizzas),
+    FOREIGN KEY (venda_id) REFERENCES vendas(idvendas)
+);
 
 
 -- -----------------------------------------------------
@@ -919,77 +933,78 @@ USE `bd_pizzaria`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION `inserirProdutos`() RETURNS int(11)
     DETERMINISTIC
 BEGIN
-INSERT INTO produtos (idprodutos, nomeProduto, quantidade, unidadeMedida, validade, tipo_id) VALUES
-(1, 'Molho de tomate', '80000', 1, '2025-05-20', 1),
-(2, 'Alho', '10000', 1, '2025-05-20', 2),
-(3, 'Alho Frito', '1500', 1, '2025-05-20', 2),
-(4, 'Óleo', '3000', 2, '2025-05-20', 8),
-(5, 'Orégano', '30000', 1, '2025-05-20', 2),
-(6, 'Queijo Mussarela', '75000', 1, '2025-05-20', 3),
-(7, 'Atum', '10000', 1, '2025-05-20', 4),
-(8, 'Cebola', '10000', 1, '2025-05-20', 5),
-(9, 'Bacon', '10000', 1, '2025-05-20', 4),
-(10, 'Milho', '25000', 1, '2025-05-20', 5),
-(11, 'Carne Moída', '9000', 1, '2025-05-20', 4),
-(12, 'Brócolis', '30000', 1, '2025-05-20', 5),
-(13, 'Calabresa', '15000', 1, '2025-05-20', 6),
-(14, 'Chester', '6000', 1, '2025-05-20', 4),
-(15, 'Catupiry', '7000', 1, '2025-05-20', 3),
-(16, 'Frango', '15000', 1, '2025-05-20', 4),
-(17, 'Lombo', '6000', 1, '2025-05-20', 4),
-(18, 'Tomate', '15000', 1, '2025-05-20', 5),
-(19, 'Manjericão', '3000', 1, '2025-05-20', 2),
-(20, 'Parmesão', '6000', 1, '2025-05-20', 3),
-(21, 'Palmito', '7000', 1, '2025-05-20', 5),
-(22, 'Peito de Peru', '4500', 1, '2025-05-20', 6),
-(23, 'Presunto', '9000', 1, '2025-05-20', 6),
-(24, 'Ovo', '3000', 1, '2025-05-20', 4),
-(25, 'Azeitona', '3000', 1, '2025-05-20', 7),
-(26, 'Provolone', '3000', 1, '2025-05-20', 3),
-(27, 'Batata Palha', '8000', 1, '2025-05-20', 9),
-(28, 'Creme de Leite', '6000', 1, '2025-05-20', 3),
-(29, 'Salame Italiano', '12000', 1, '2025-05-20', 6),
-(30, 'Pepperoni', '6000', 1, '2025-05-20', 6),
-(31, 'Molho de pimenta', '1500', 1, '2025-05-20', 8),
-(32, 'Coração', '3000', 1, '2025-05-20', 4),
-(33, 'Barbecue', '3000', 1, '2025-05-20', 8),
-(34, 'Cream Cheese', '5000', 1, '2025-05-20', 3),
-(35, 'Tiras de Carne', '10000', 1, '2025-05-20', 4),
-(36, 'Linguiça Blumenau', '3000', 1, '2025-05-20', 6),
-(37, 'Cheddar', '4000', 1, '2025-05-20', 3),
-(38, 'Pimenta biquinho', '3000', 1, '2025-05-20', 2),
-(39, 'Doritos', '2000', 1, '2025-05-20', 9),
-(40, 'Tomate seco', '10000', 1, '2025-05-20', 5),
-(41, 'Rúcula', '10000', 1, '2025-05-20', 5),
-(42, 'Azeitonas pretas', 10000, 1, '2025-05-20', 5), -- Vegetais
-(43, 'Strogonoff de carne', 10000, 1, '2025-05-20', 4), -- Carnes
-(44, 'Strogonoff de frango', 10000, 1, '2025-05-20', 4), -- Carnes
-(45, 'Champignon', 10000, 1, '2025-05-20', 5), -- Vegetais
-(46, 'Chocolate Preto', 3000, 1, '2025-05-20', 7), -- Outros
-(47, 'Chocolate Branco', 3000, 1, '2025-05-20', 7), -- Outros
-(48, 'Morango', 1500, 1, '2025-05-20', 5), -- Vegetais
-(49, 'Leite Condensado', 6000, 1, '2025-05-20', 3), -- Laticínios
-(50, 'Banana', 1500, 1, '2025-05-20', 5), -- Vegetais
-(51, 'Granulado', 600, 1, '2025-05-20', 7), -- Outros
-(52, 'Confetti', 600, 1, '2025-05-20', 7), -- Outros
-(53, 'Creme de coco', 1500, 1, '2025-05-20', 7), -- Outros
-(54, 'Goiabada', 1500, 1, '2025-05-20', 7), -- Outros
-(55, 'Sonho de valsa', 1500, 1, '2025-05-20', 7), -- Outros
-(56, 'Capuccino', 1500, 1, '2025-05-20', 7), -- Outros
-(57, 'Doce de leite', 1500, 1, '2025-05-20', 7), -- Outros
-(58, 'Canela', 300, 1, '2025-05-20', 2), -- Temperos
-(59, 'Amendoim', 1500, 1, '2025-05-20', 7), -- Outros
-(60, 'Coco ralado', 1500, 1, '2025-05-20', 7), -- Outros
-(61, 'Cereja', 1500, 1, '2025-05-20', 7), -- Outros
-(62, 'Marshmallow', 10000, 1, '2025-05-20', 7), -- Outros
-(63, 'Queijo brie', 10000, 1, '2025-05-20', 3), -- Laticínios
-(64, 'Geleia de pimenta', 10000, 1, '2025-05-20', 7), -- Outros
-(65, 'Camarão', 5000, 1, '2025-05-20', 4), -- Carnes (pode ser classificado como frutos do mar)
-(66, 'Mignon', 10000, 1, '2025-05-20', 4), -- Carnes
-(67, 'Filé', 1500, 1, '2025-05-20', 4), -- Carnes
-(68, 'Carne seca desfiada', 3000, 1, '2025-05-20', 4), -- Carnes
-(69, 'Costelinha suína desfiada', 3000, 1, '2025-05-20', 6), -- Embutidos
-(70, 'Gorgonzola', 2500, 1, '2025-05-20', 3); -- Laticínios
+INSERT INTO produtos (idprodutos, nomeProduto, unidadeMedida, tipo_id, quantidade_minima) VALUES
+(1, 'Molho de tomate', 1, 1, 10000),
+(2, 'Alho', 1, 2, 1000),
+(3, 'Alho Frito', 1, 2, 500),
+(4, 'Óleo', 2, 8, 2000),
+(5, 'Orégano', 1, 2, 500),
+(6, 'Queijo Mussarela', 1, 3, 50000),
+(7, 'Atum', 1, 4, 1000),
+(8, 'Cebola', 1, 5, 4000),
+(9, 'Bacon', 1, 4, 3000),
+(10, 'Milho', 1, 5, 1000),
+(11, 'Carne Moída', 1, 4, 2000),
+(12, 'Brócolis', 1, 5, 1500),
+(13, 'Calabresa', 1, 6, 6000),
+(14, 'Chester', 1, 4, 1500),
+(15, 'Catupiry', 1, 3, 3000),
+(16, 'Frango', 1, 4, 6000),
+(17, 'Lombo', 1, 4, 2000),
+(18, 'Tomate', 1, 5, 4000),
+(19, 'Manjericão', 1, 2, 500),
+(20, 'Parmesão', 1, 3, 4000),
+(21, 'Palmito', 1, 5, 3000),
+(22, 'Peito de Peru', 1, 6, 2000),
+(23, 'Presunto', 1, 6, 5000),
+(24, 'Ovo', 1, 4, 4500),
+(25, 'Azeitona', 1, 7, 2000),
+(26, 'Provolone', 1, 3, 3000),
+(27, 'Batata Palha', 1, 9, 2000),
+(28, 'Creme de Leite', 1, 3, 2000),
+(29, 'Salame Italiano', 1, 6, 2000),
+(30, 'Pepperoni', 1, 6, 2000),
+(31, 'Molho de pimenta', 1, 8, 400),
+(32, 'Coração', 1, 4, 3000),
+(33, 'Barbecue', 1, 8, 400),
+(34, 'Cream Cheese', 1, 3, 750),
+(35, 'Tiras de Carne', 1, 4, 2000),
+(36, 'Linguiça Blumenau', 1, 6, 2000),
+(37, 'Cheddar', 1, 3, 2000),
+(38, 'Pimenta biquinho', 1, 2, 400),
+(39, 'Doritos', 1, 9, 2000),
+(40, 'Tomate seco', 1, 5, 300),
+(41, 'Rúcula', 1, 5, 200),
+(42, 'Azeitonas pretas', 1, 5, 200),
+(43, 'Strogonoff de carne', 1, 4, 200),
+(44, 'Strogonoff de frango', 1, 4, 200),
+(45, 'Champignon', 1, 5, 200),
+(46, 'Chocolate Preto', 1, 7, 1000),
+(47, 'Chocolate Branco', 1, 7, 1000),
+(48, 'Morango', 1, 5, 600),
+(49, 'Leite Condensado', 1, 3, 300),
+(50, 'Banana', 1, 5, 300),
+(51, 'Granulado', 1, 7, 200),
+(52, 'Confetti', 1, 7, 200),
+(53, 'Creme de coco', 1, 7, 200),
+(54, 'Goiabada', 1, 7, 200),
+(55, 'Sonho de valsa', 1, 7, 200),
+(56, 'Capuccino', 1, 7, 150),
+(57, 'Doce de leite', 1, 7, 200),
+(58, 'Canela', 1, 2, 100),
+(59, 'Amendoim', 1, 7, 200),
+(60, 'Coco ralado', 1, 7, 200),
+(61, 'Cereja', 1, 7, 200),
+(62, 'Marshmallow', 1, 7, 200),
+(63, 'Queijo brie', 1, 3, 200),
+(64, 'Geleia de pimenta', 1, 7, 200),
+(65, 'Camarão', 1, 4, 500),
+(66, 'Mignon', 1, 4, 500),
+(67, 'Filé', 1, 4, 500),
+(68, 'Carne seca desfiada', 1, 4, 500),
+(69, 'Costelinha suína desfiada', 1, 6, 500),
+(70, 'Gorgonzola', 1, 3, 500);
+
 
 RETURN 1;
 
@@ -1196,5 +1211,75 @@ INSERT INTO status_venda (nome_status) values
 
 
 insert into clientes (nome, sobrenome, telefone, email, senha) values ('Pedro', 'Sabel', '47999160344', 'pedrosabel08@gmail.com', '123');
-UPDATE produtos 
-SET quantidade = quantidade * 5;
+
+INSERT INTO estoque_lote (idproduto, quantidade, data_validade, preco_unitario, data_entrada) VALUES
+(1, 5821, '2025-10-02', 17.67, '2025-01-29'),
+(2, 6664, '2025-07-18', 21.62, '2025-02-24'),
+(3, 7633, '2025-10-14', 5.86, '2025-06-01'),
+(4, 5382, '2025-07-16', 6.02, '2025-05-06'),
+(5, 6826, '2025-07-23', 3.63, '2025-03-27'),
+(6, 5618, '2025-09-21', 13.64, '2025-04-08'),
+(7, 9576, '2025-08-27', 11.45, '2025-06-04'),
+(8, 9877, '2025-07-02', 4.34, '2025-02-08'),
+(9, 7446, '2025-09-19', 12.34, '2025-04-14'),
+(10, 7289, '2025-11-10', 8.12, '2025-01-15'),
+(11, 8524, '2025-08-09', 9.56, '2025-04-29'),
+(12, 6402, '2025-10-01', 6.74, '2025-03-11'),
+(13, 5329, '2025-09-07', 15.88, '2025-05-23'),
+(14, 8497, '2025-07-30', 4.95, '2025-03-01'),
+(15, 9742, '2025-10-19', 7.29, '2025-04-17'),
+(16, 6795, '2025-09-12', 11.24, '2025-01-31'),
+(17, 7193, '2025-10-05', 10.76, '2025-02-12'),
+(18, 9944, '2025-09-18', 6.32, '2025-03-22'),
+(19, 8348, '2025-07-15', 14.67, '2025-05-19'),
+(20, 9431, '2025-08-08', 5.48, '2025-06-02'),
+(21, 9001, '2025-09-26', 7.93, '2025-03-16'),
+(22, 5933, '2025-10-09', 9.88, '2025-02-07'),
+(23, 9820, '2025-07-28', 4.72, '2025-04-10'),
+(24, 6974, '2025-11-04', 11.99, '2025-06-06'),
+(25, 7659, '2025-08-14', 6.84, '2025-03-04'),
+(26, 6412, '2025-09-22', 8.65, '2025-04-21'),
+(27, 5800, '2025-10-11', 10.43, '2025-02-18'),
+(28, 7198, '2025-07-17', 5.39, '2025-01-27'),
+(29, 9937, '2025-08-24', 12.76, '2025-03-31'),
+(30, 9324, '2025-10-07', 6.91, '2025-06-01'),
+(31, 8557, '2025-07-05', 9.37, '2025-01-12'),
+(32, 6749, '2025-09-30', 7.15, '2025-04-03'),
+(33, 9125, '2025-08-20', 13.42, '2025-03-14'),
+(34, 6217, '2025-07-09', 8.79, '2025-02-10'),
+(35, 7342, '2025-09-16', 4.88, '2025-05-25'),
+(36, 8521, '2025-08-03', 15.33, '2025-03-30'),
+(37, 8993, '2025-10-22', 6.25, '2025-02-14'),
+(38, 7566, '2025-07-21', 11.78, '2025-04-18'),
+(39, 8810, '2025-09-13', 10.92, '2025-01-19'),
+(40, 6005, '2025-10-28', 7.61, '2025-03-05'),
+(41, 7784, '2025-08-17', 13.09, '2025-05-14'),
+(42, 6886, '2025-07-12', 9.22, '2025-02-27'),
+(43, 9735, '2025-09-23', 5.78, '2025-03-18'),
+(44, 8383, '2025-08-06', 8.37, '2025-04-27'),
+(45, 7877, '2025-10-03', 6.53, '2025-01-23'),
+(46, 6510, '2025-07-25', 12.45, '2025-06-03'),
+(47, 9512, '2025-08-30', 10.29, '2025-03-10'),
+(48, 6145, '2025-09-04', 9.01, '2025-04-20'),
+(49, 8814, '2025-07-07', 5.97, '2025-02-15'),
+(50, 7998, '2025-09-25', 14.22, '2025-03-26'),
+(51, 7400, '2025-08-11', 6.84, '2025-04-01'),
+(52, 9510, '2025-09-10', 10.47, '2025-01-17'),
+(53, 6428, '2025-07-19', 8.18, '2025-06-07'),
+(54, 9313, '2025-08-13', 5.66, '2025-03-12'),
+(55, 8527, '2025-09-03', 7.91, '2025-05-01'),
+(56, 7991, '2025-10-25', 11.34, '2025-02-06'),
+(57, 8613, '2025-08-05', 6.49, '2025-03-21'),
+(58, 7600, '2025-09-06', 13.03, '2025-04-09'),
+(59, 8876, '2025-07-31', 10.88, '2025-01-26'),
+(60, 9933, '2025-10-08', 8.72, '2025-03-09'),
+(61, 8149, '2025-09-01', 7.36, '2025-05-18'),
+(62, 7003, '2025-07-13', 6.55, '2025-02-01'),
+(63, 9771, '2025-10-15', 9.67, '2025-04-29'),
+(64, 8415, '2025-08-25', 12.58, '2025-03-07'),
+(65, 9349, '2025-09-15', 11.23, '2025-01-28'),
+(66, 8830, '2025-07-06', 6.99, '2025-02-20'),
+(67, 7772, '2025-10-06', 5.81, '2025-04-04'),
+(68, 9330, '2025-08-02', 14.44, '2025-03-25'),
+(69, 8691, '2025-09-28', 7.88, '2025-06-05'),
+(70, 7575, '2025-07-26', 9.19, '2025-03-15');

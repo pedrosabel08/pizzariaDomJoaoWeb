@@ -51,20 +51,21 @@ while ($row = $result->fetch_assoc()) {
 // Dados principais conforme tipo selecionado
 if ($tipo == 'ingredientes') {
     $sql = "SELECT 
-    produtos.idprodutos AS id,
-    produtos.nomeProduto AS nome,
-    produtos.quantidade,
-    unidademedida.nome AS unidadeMedida,
-    produtos.validade,
-    tipo_produtos.nome_tipo AS tipo_nome,
-    produtos.tipo_id
-FROM produtos
-INNER JOIN unidademedida ON produtos.unidadeMedida = unidademedida.idunidadeMedida
-INNER JOIN tipo_produtos ON produtos.tipo_id = tipo_produtos.idtipo_produtos
-ORDER BY 
-    (produtos.quantidade <= 2000) DESC,  -- Primeiro os com quantidade <= 2000
-    produtos.nomeProduto ASC;            -- Depois ordena por nome
-";
+        p.idprodutos AS id,
+        p.nomeProduto AS nome,
+        um.nome AS unidadeMedida,
+        tp.nome_tipo AS tipo_nome,
+        p.tipo_id,
+        l.idlote,
+        l.quantidade,
+        l.data_validade
+    FROM produtos p
+    INNER JOIN unidademedida um ON p.unidadeMedida = um.idunidadeMedida
+    INNER JOIN tipo_produtos tp ON p.tipo_id = tp.idtipo_produtos
+    LEFT JOIN estoque_lote l ON p.idprodutos = l.idproduto
+    ORDER BY 
+        p.nomeProduto ASC,
+        l.data_validade ASC;";
 } else if ($tipo == 'bebidas') {
     $sql = "SELECT bebidas.idbebidas as id,
                    marcabebidas.nome as marca,

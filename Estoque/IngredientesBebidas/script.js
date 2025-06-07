@@ -212,7 +212,7 @@ function carregarTabela(tipo) {
                         <td>${item.quantidade}</td>
                         <td>${item.unidadeMedida || ''}</td>
                         <td>${item.tipo_nome || ''}</td>
-                        <td>${item.validade ? formatarData(item.validade) : ''}</td>
+                        <td>${item.data_validade ? formatarData(item.data_validade) : ''}</td>
                     `;
                 } else {
                     row.setAttribute('data-id', item.id);
