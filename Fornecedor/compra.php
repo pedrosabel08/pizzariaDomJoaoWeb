@@ -61,6 +61,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmtItem->bind_param("iidds", $idcompra, $p['idproduto'], $p['quantidade'], $p['preco_unitario'], $subtotal);
             $stmtItem->execute();
         }
+
+        // INSERIR NA TABELA estoque_lote
+        $stmtLote = $conn->prepare("INSERT INTO estoque_lote (idproduto, data_validade, quantidade, preco_unitario) VALUES (?, ?, ?, ?)");
+        foreach ($produtos as $p) {
+            $idproduto = $p['idproduto'];
+            $data_validade = isset($p['data_validade']) ? $p['data_validade'] : null;
+            $quantidade = floatval($p['quantidade']);
+            $preco_unitario = floatval($p['preco_unitario']);
+
+            $stmtLote->bind_param("isdd", $idproduto, $data_validade, $quantidade, $preco_unitario);
+            $stmtLote->execute();
+        }
+
+
         $conn->commit();
         echo json_encode(['sucesso' => true, 'mensagem' => 'Compra registrada com sucesso!']);
     } catch (Exception $e) {

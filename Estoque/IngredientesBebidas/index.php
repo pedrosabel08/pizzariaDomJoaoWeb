@@ -7,6 +7,10 @@
   <link rel="icon" href="../assets/caixa.png" type="image/png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <!-- CSS do DataTables -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+  <!-- Tema opcional: -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
   <!-- Inclua o SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -25,11 +29,9 @@
     </div>
 
     <div class="table-responsive" style="max-height: 70vh;">
-      <table id="tabelaEstoque">
-        <thead>
-        </thead>
-        <tbody>
-        </tbody>
+      <table id="tabelaEstoque" class="display nowrap" style="width:100%">
+        <thead></thead>
+        <tbody></tbody>
       </table>
     </div>
   </div>
@@ -119,6 +121,11 @@
 
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JS do DataTables -->
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <!-- JS para responsividade (opcional) -->
+  <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
   <script src="script.js"></script>
 </body>
 

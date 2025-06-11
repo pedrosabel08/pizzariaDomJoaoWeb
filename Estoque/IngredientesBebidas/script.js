@@ -171,24 +171,30 @@ function carregarTabela(tipo) {
         .then(data => {
             console.log('Dados recebidos:', data.dados);
 
-            const tabela = document.getElementById('tabelaEstoque');
-            const thead = tabela.querySelector('thead');
-            const tbody = tabela.querySelector('tbody');
+            const tabela = $('#tabelaEstoque');
+            const thead = tabela.find('thead');
+            const tbody = tabela.find('tbody');
+
+            // Destrói a DataTable anterior, se existir
+            if ($.fn.DataTable.isDataTable('#tabelaEstoque')) {
+                tabela.DataTable().clear().destroy();
+            }
 
             // Atualiza o cabeçalho da tabela
-            thead.innerHTML = '';
-            let headerRow = document.createElement('tr');
+            thead.html('');
+            let headerRow = '<tr>';
 
             if (tipo === 'ingredientes') {
-                headerRow.innerHTML = `
+                headerRow += `
                     <th>Nome</th>
                     <th>Quantidade</th>
                     <th>Unidade Medida</th>
                     <th>Tipo</th>
                     <th>Validade</th>
+                    <th>Lote</th>
                 `;
             } else {
-                headerRow.innerHTML = `
+                headerRow += `
                     <th>Marca</th>
                     <th>Categoria</th>
                     <th>Tamanho</th>
@@ -197,29 +203,24 @@ function carregarTabela(tipo) {
                     <th>Preço</th>
                 `;
             }
-            thead.appendChild(headerRow);
+            headerRow += '</tr>';
+            thead.append(headerRow);
 
-            // Limpa e preenche o corpo da tabela
-            tbody.innerHTML = '';
+            // Preenche o corpo da tabela
+            tbody.html('');
             data.dados.forEach(item => {
-                let row = document.createElement('tr');
-
+                let row = '<tr>';
                 if (tipo === 'ingredientes') {
-                    row.setAttribute('data-id', item.id);
-                    row.setAttribute('data-tipo-id', item.tipo_id);
-                    row.innerHTML = `
+                    row += `
                         <td>${item.nome}</td>
                         <td>${item.quantidade}</td>
                         <td>${item.unidadeMedida || ''}</td>
                         <td>${item.tipo_nome || ''}</td>
                         <td>${item.data_validade ? formatarData(item.data_validade) : ''}</td>
+                        <td>${item.idlote}</td>
                     `;
                 } else {
-                    row.setAttribute('data-id', item.id);
-                    row.setAttribute('data-marca-id', item.marca_id);
-                    row.setAttribute('data-categoria-id', item.categoria_id);
-                    row.setAttribute('data-tamanho-id', item.tamanho_id);
-                    row.innerHTML = `
+                    row += `
                         <td>${item.marca}</td>
                         <td>${item.categoria}</td>
                         <td>${item.tamanho} (${item.volume}ml)</td>
@@ -228,11 +229,26 @@ function carregarTabela(tipo) {
                         <td>${item.preco}</td>
                     `;
                 }
-
-                tbody.appendChild(row);
-                validarColunaQuantidade();
-
+                row += '</tr>';
+                tbody.append(row);
             });
+
+            // Reativa o DataTables
+            tabela.DataTable({
+                responsive: true,
+                searching: true,       // remove a barra de busca
+                paging: true,          // remove a paginação
+                info: false,            // oculta o texto "Mostrando X de Y"
+                ordering: true,        // desativa ordenação nas colunas
+                lengthChange: false,    // remove o seletor "mostrar X registros"
+                responsive: true,
+                pageLength: 25,
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json'
+                }
+            });
+
+            validarColunaQuantidade();
         });
 }
 
