@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let pizzaSizePrice = 0;
     let pizzaBorder = '';
     let pizzaBorderPrice = 0;
-    let pizzaFlavors = [];
+    var pizzaFlavors = [];
     let maxFlavors = 0;
     let totalCartPrice = 0;
 
@@ -403,6 +403,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     document.getElementById('cartItems').innerHTML = '';
                     document.getElementById('total-price').innerHTML = '';
                     cartModal.style.display = "none"
+                    cartItems = [];
+                    pizzaSize = '';
+                    pizzaSizePrice = 0;
+                    pizzaBorder = '';
+                    pizzaBorderPrice = 0;
+                    pizzaFlavors = [];
+                    maxFlavors = 0;
+                    totalCartPrice = 0;
 
                     const confirmationModal = document.getElementById('confirmation-modal');
                     confirmationModal.classList.remove('hidden');
@@ -419,6 +427,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         },
                     }).showToast();
                 }
+
             })
             .catch(error => {
                 console.error('Erro:', error);
