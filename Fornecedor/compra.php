@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET['action'] === 'produtos_por_fo
         exit;
     }
     $placeholders = implode(',', array_fill(0, count($tipos), '?'));
-    $sqlProdutos = "SELECT * FROM produtos p WHERE p.tipo_id IN ($placeholders)";
+    $sqlProdutos = "SELECT p.*, l.quantidade FROM produtos p LEFT JOIN estoque_lote l ON p.idprodutos = l.idproduto WHERE p.tipo_id IN ($placeholders) AND quantidade > 0";
     $stmtProdutos = $conn->prepare($sqlProdutos);
     $types = str_repeat('i', count($tipos));
     $stmtProdutos->bind_param($types, ...$tipos);
