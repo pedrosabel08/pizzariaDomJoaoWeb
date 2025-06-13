@@ -26,7 +26,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET['action'] === 'produtos_por_fo
         exit;
     }
     $placeholders = implode(',', array_fill(0, count($tipos), '?'));
-    $sqlProdutos = "SELECT p.*, l.quantidade FROM produtos p LEFT JOIN estoque_lote l ON p.idprodutos = l.idproduto WHERE p.tipo_id IN ($placeholders) AND quantidade > 0";
+    $sqlProdutos = "SELECT 
+                        p.idprodutos,
+                        p.nomeProduto,
+                        um.nome as unidadeMedida
+                    FROM produtos p
+                    LEFT JOIN unidadeMedida um
+                        ON p.unidadeMedida = um.idunidadeMedida
+                    WHERE p.tipo_id IN ($placeholders) ";
     $stmtProdutos = $conn->prepare($sqlProdutos);
     $types = str_repeat('i', count($tipos));
     $stmtProdutos->bind_param($types, ...$tipos);
@@ -58,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmtItem = $conn->prepare("INSERT INTO itens_compra (idcompra, idproduto, quantidade, preco_unitario, subtotal) VALUES (?, ?, ?, ?, ?)");
         foreach ($produtos as $p) {
             $subtotal = floatval($p['quantidade']) * floatval($p['preco_unitario']);
+            error_log("idcompra: $idcompra, idproduto: {$p['idproduto']}, quantidade: {$p['quantidade']}, preco_unitario: {$p['preco_unitario']}, subtotal: $subtotal");
             $stmtItem->bind_param("iidds", $idcompra, $p['idproduto'], $p['quantidade'], $p['preco_unitario'], $subtotal);
             $stmtItem->execute();
         }
@@ -66,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmtLote = $conn->prepare("INSERT INTO estoque_lote (idproduto, data_validade, quantidade, preco_unitario) VALUES (?, ?, ?, ?)");
         foreach ($produtos as $p) {
             $idproduto = $p['idproduto'];
-            $data_validade = isset($p['data_validade']) ? $p['data_validade'] : null;
+            $data_validade = isset($p['dataValidade']) ? $p['dataValidade'] : null;
             $quantidade = floatval($p['quantidade']);
             $preco_unitario = floatval($p['preco_unitario']);
 
@@ -79,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode(['sucesso' => true, 'mensagem' => 'Compra registrada com sucesso!']);
     } catch (Exception $e) {
         $conn->rollback();
-        echo json_encode(['sucesso' => false, 'mensagem' => 'Erro ao registrar compra.']);
+        echo json_encode(['sucesso' => false, 'mensagem' => 'Erro ao registrar compra:' . $e->getMessage()]);
     }
     exit;
 }

@@ -3,5 +3,183 @@
 * {
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
     font-family: "Open Sans", sans-serif;
+}
+
+body {
+    background-color: #f6f7f8;
+    min-height: 100vh;
+}
+
+h1 {
+    text-align: center;
+    margin: 48px 0 36px 0;
+    font-size: 2.6rem;
+    color: #ffbb00;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+form {
+    background: #fff;
+    max-width: 1200px;
+    max-height: 600px;
+    margin: 0 auto 48px auto;
+    padding: 20px 48px 36px 36px;
+    border-radius: 20px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.10);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-weight: 600;
+    color: #222;
+    display: block;
+    font-size: 1.1rem;
+}
+
+select,
+textarea,
+input[type="text"] {
+    width: 100%;
+    padding: 10px 10px;
+    border: 1.5px solid #ccc;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    background: #f9f9f9;
+    transition: border-color 0.2s;
+}
+
+select:focus,
+textarea:focus,
+input[type="text"]:focus {
+    border-color: #ffbb00;
+    outline: none;
+    background: #fff;
+}
+
+button[type="submit"] {
+    background: #d89e00;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 0;
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 18px;
+    letter-spacing: 1px;
+}
+
+button[type="submit"]:hover {
+    background: #ffbb00;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+th,
+td {
+    border: 1px solid #eee;
+    padding: 5px 5px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+th {
+    background: #f2f2f2;
+    color: #c49002;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+tr:nth-child(even) {
+    background: #fafafa;
+}
+
+input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    accent-color: #ffbb00;
+}
+
+input.data,
+input.preco_unitario,
+input.quantidade {
+    width: 140px;
+    text-align: center;
+    border-radius: 8px;
+    border: 1.5px solid #ccc;
+    background: #f9f9f9;
+    padding: 10px 6px;
+    font-size: 1.08rem;
+}
+
+input.data:disabled,
+input.preco_unitario:disabled,
+input.quantidade:disabled {
+    background: #ececec;
+    color: #aaa;
+}
+
+textarea {
+    min-height: 20px;
+    resize: vertical;
+    font-size: 1.08rem;
+    resize: none;
+    overflow-y: hidden;
+}
+
+@media (max-width: 1000px) {
+    form {
+        max-width: 98vw;
+        padding: 18px 6vw;
+    }
+
+    table,
+    th,
+    td {
+        font-size: 0.98rem;
+        padding: 10px 4px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    input.data,
+    input.preco_unitario,
+    input.quantidade {
+        width: 90px;
+        font-size: 0.98rem;
+    }
+}
+
+#produtos-container {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+#produtos-container table {
+    border-collapse: separate;
+    width: 100%;
+    min-width: 700px;
+    /* ajuste conforme necessário */
+}
+
+#produtos-container thead th {
+    position: sticky;
+    top: 0;
+    background: #f2f2f2;
+    z-index: 2;
 }
