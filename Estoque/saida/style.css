@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Open Sans", sans-serif;
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+}
+
+#filtros {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+}
+
+.filtro_tipo {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 13px;
+}
+
+tbody tr:hover {
+    background-color: transparent !important;
+    cursor: initial !important;
+}
+
+.venda,
+.pizza {
+    text-align: center;
+    width: max-content;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td,
+th {
+    border: 1px solid black;
+    font-size: 12px;
+    padding: 8px;
+}
+
+th {
+    background-color: #747474;
+    color: black;
+}
+
+.table-wrapper {
+    width: 80%;
+    margin: auto;
+}
+
+.tabela::-webkit-scrollbar {
+    width: 5px;
+}
+
+.tabela::-webkit-scrollbar-thumb {
+    background-color: #747474;
+    border-radius: 10px;
+}
+
+.tabela::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+.tabela {
+    max-height: 70vh;
+    overflow: auto;
+    padding: 0 10px;
+}
+
+.motivo {
+    text-transform: capitalize;
+}
+
+.data {
+    text-align: center;
+}
