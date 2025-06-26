@@ -6,7 +6,13 @@ include("conexao.php");
 if (!isset($_SESSION['loggedin'])) {
     header("Location: login.html");
     exit();
+} else {
+    if (isset($_SESSION['admin']) && $_SESSION['admin'] == true) {
+        header("Location: estoque/produtos.html");
+        exit();
+    }
 }
+
 
 $cliente_id = $_SESSION['cliente_id'];
 $nomeCliente = $_SESSION['nome'];
