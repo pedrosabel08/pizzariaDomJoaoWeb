@@ -77,18 +77,8 @@ main {
 .imagem img {
     width: 50%;
     object-fit: contain;
-    animation: girar 0.3s linear;
 }
 
-@keyframes girar {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(180deg);
-    }
-}
 
 /* Animação opcional */
 @keyframes fadeIn {
