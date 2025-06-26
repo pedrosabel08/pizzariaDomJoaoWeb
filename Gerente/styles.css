@@ -2,14 +2,19 @@
 
 
 * {
-    margin: 0;
     padding: 0;
+    margin: 0;
     box-sizing: border-box;
+    font-family: "Nunito", sans-serif;
 }
 
 body {
-    font-family: 'Nunito', sans-serif;
-    background-color: #f4f4f4;
+    display: grid;
+    grid-template-columns: 60px 1fr;
+}
+
+.container {
+    grid-column: 2;
 }
 
 header {

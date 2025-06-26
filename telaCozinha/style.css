@@ -1,8 +1,20 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+
+* {
     padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Nunito", sans-serif;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+}
+
+.container {
+    grid-column: 2;
 }
 
 main {
@@ -90,6 +102,7 @@ th {
 tr:hover {
     cursor: pointer;
 }
+
 .linha-pendente {
     background-color: #f9c2c2;
     /* Vermelho claro */

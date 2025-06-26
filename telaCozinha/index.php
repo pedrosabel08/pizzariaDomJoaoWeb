@@ -22,27 +22,30 @@
 
     ?>
 
-    <header>
-        <button onclick="window.location.href='../index.php'"><i class="fa-solid fa-left-long"></i></button>
-        <h2>Tela Cozinha</h2>
-    </header>
-    <main>
+    <div class="container">
 
-        <table id="tablePedidos">
-            <thead>
-                <tr>
-                    <th>Tamanho</th>
-                    <th>Borda</th>
-                    <th>Sabores</th>
-                    <th>Data Venda</th>
-                    <th>Status</th>
-                    <th>Tempo espera</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-    </main>
+
+        <header>
+            <h2>Tela Cozinha</h2>
+        </header>
+        <main>
+
+            <table id="tablePedidos">
+                <thead>
+                    <tr>
+                        <th>Tamanho</th>
+                        <th>Borda</th>
+                        <th>Sabores</th>
+                        <th>Data Venda</th>
+                        <th>Status</th>
+                        <th>Tempo espera</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </main>
+    </div>
 
     <script src="script.js"></script>
     <script src="../sidebar.js"></script>

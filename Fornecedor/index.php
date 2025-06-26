@@ -8,9 +8,18 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
+    <link rel="stylesheet" href="../styleSidebar.css">
+
 </head>
 
 <body>
+
+    <?php
+
+    include "../sidebar.php";
+
+    ?>
+
     <form id="formCompra">
         <label for="idfornecedor">Fornecedor:</label>
         <select name="idfornecedor" id="idfornecedor" required>
@@ -21,6 +30,9 @@
         <textarea name="observacoes" id="observacoes"></textarea>
         <button type="submit">Registrar Compra</button>
     </form>
+
+    <script src="../sidebar.js"></script>
+
 </body>
 
 </html>

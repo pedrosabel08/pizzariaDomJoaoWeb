@@ -47,116 +47,119 @@ if ($result->num_rows > 0) {
 
     ?>
 
-    <header>
-        <h1>Painel de Pedidos</h1>
-        <p id="data-atual"></p>
-    </header>
+    <div class="container">
 
-    <main>
-        <div id="filtro">
-            <label for="colunaFiltro">Filtrar por:</label>
-            <select id="colunaFiltro">
-                <option value="0">ID</option>
-                <option value="1">Sabores</option>
-                <option value="2">Tamanho</option>
-                <option value="3">Borda</option>
-                <option value="4">Bebidas</option>
-                <option value="5">Cliente</option>
-                <option value="6">Data</option>
-                <option value="7">Status</option>
-                <option value="8">Valor Total</option>
-            </select>
+        <header>
+            <h1>Painel de Pedidos</h1>
+            <p id="data-atual"></p>
+        </header>
 
-            <input type="text" id="filtro-input" placeholder="Digite para filtrar" onkeyup="filtrarTabela()">
-        </div>
-        <table class="order-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Sabores</th>
-                    <th>Tamanho</th>
-                    <th>Borda</th>
-                    <th>Bebidas</th>
-                    <th>Cliente</th>
-                    <th>Data</th>
-                    <th>Status</th>
-                    <th>Valor Total</th>
-                </tr>
-            </thead>
-            <tbody id="order-list">
-                <?php foreach ($data as $produto): ?>
-                    <tr class="linha-tabela" data-id="<?php echo $produto['vendas_idvendas']; ?>">
-                        <td><?php echo $produto['vendas_idvendas']; ?></td>
-                        <td>
-                            <?php
-                            $pizzas = explode(',', $produto['pizzas']);
-                            $tamanhos = explode(',', $produto['tamanhos']);
-                            $bordas = explode(',', $produto['bordas']);
-                            // Percorrendo e concatenando os dados de pizza, tamanho e borda
-                            for ($i = 0; $i < count($pizzas); $i++) {
-                                echo "Pizza: " . $pizzas[$i] . " - Tamanho: " . $tamanhos[$i] . " - Borda: " . $bordas[$i] . "<br>";
-                            }
-                            ?>
-                        </td>
-                        <td><?php echo $produto['nome']; ?></td>
-                        <td><?php echo $produto['data_venda']; ?></td>
-                        <td><?php echo $produto['nome_status']; ?></td>
-                        <td><?php echo $produto['total']; ?></td>
+        <main>
+            <div id="filtro">
+                <label for="colunaFiltro">Filtrar por:</label>
+                <select id="colunaFiltro">
+                    <option value="0">ID</option>
+                    <option value="1">Sabores</option>
+                    <option value="2">Tamanho</option>
+                    <option value="3">Borda</option>
+                    <option value="4">Bebidas</option>
+                    <option value="5">Cliente</option>
+                    <option value="6">Data</option>
+                    <option value="7">Status</option>
+                    <option value="8">Valor Total</option>
+                </select>
+
+                <input type="text" id="filtro-input" placeholder="Digite para filtrar" onkeyup="filtrarTabela()">
+            </div>
+            <table class="order-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Sabores</th>
+                        <th>Tamanho</th>
+                        <th>Borda</th>
+                        <th>Bebidas</th>
+                        <th>Cliente</th>
+                        <th>Data</th>
+                        <th>Status</th>
+                        <th>Valor Total</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody id="order-list">
+                    <?php foreach ($data as $produto): ?>
+                        <tr class="linha-tabela" data-id="<?php echo $produto['vendas_idvendas']; ?>">
+                            <td><?php echo $produto['vendas_idvendas']; ?></td>
+                            <td>
+                                <?php
+                                $pizzas = explode(',', $produto['pizzas']);
+                                $tamanhos = explode(',', $produto['tamanhos']);
+                                $bordas = explode(',', $produto['bordas']);
+                                // Percorrendo e concatenando os dados de pizza, tamanho e borda
+                                for ($i = 0; $i < count($pizzas); $i++) {
+                                    echo "Pizza: " . $pizzas[$i] . " - Tamanho: " . $tamanhos[$i] . " - Borda: " . $bordas[$i] . "<br>";
+                                }
+                                ?>
+                            </td>
+                            <td><?php echo $produto['nome']; ?></td>
+                            <td><?php echo $produto['data_venda']; ?></td>
+                            <td><?php echo $produto['nome_status']; ?></td>
+                            <td><?php echo $produto['total']; ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
 
-        <div id="modal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <div id="form-inserir">
-                    <h2>Formulário de Dados</h2>
-                    <form id="formPedido">
-                        <div>
-                            <div id="idpedido">
-                                <p>Pedido</p>
-                                <span id="idvenda"></span>
-                            </div>
-                            <div id="pedidos">
-                                <input type="text" id="sabores" disabled>
-                                <input type="text" id="tamanho" disabled>
-                                <input type="text" id="borda" disabled>
-                                <input type="text" id="bebidas" disabled>
-                            </div>
+            <div id="modal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <div id="form-inserir">
+                        <h2>Formulário de Dados</h2>
+                        <form id="formPedido">
                             <div>
-                                <label>Informações do cliente:</label>
-                                <input type="text" id="nome_cliente" disabled>
-                                <input type="text" id="telefone" disabled>
-                                <input type="text" id="data_venda" disabled>
+                                <div id="idpedido">
+                                    <p>Pedido</p>
+                                    <span id="idvenda"></span>
+                                </div>
+                                <div id="pedidos">
+                                    <input type="text" id="sabores" disabled>
+                                    <input type="text" id="tamanho" disabled>
+                                    <input type="text" id="borda" disabled>
+                                    <input type="text" id="bebidas" disabled>
+                                </div>
+                                <div>
+                                    <label>Informações do cliente:</label>
+                                    <input type="text" id="nome_cliente" disabled>
+                                    <input type="text" id="telefone" disabled>
+                                    <input type="text" id="data_venda" disabled>
+                                </div>
+
+                                <div>
+                                    <label for="">Status:</label>
+                                    <input type="text" id="status" disabled>
+                                </div>
+
+                                <div>
+                                    <label for="">Valor total:</label>
+                                    <input type="text" id="total" disabled>
+                                </div>
+
+                                <div>
+                                    <label for="">Tempo de espera:</label>
+                                    <input type="text" id="tempo_espera" disabled>
+                                </div>
+
+
+
+                                <a id="whatsappLink" href="https://wa.me/" target="_blank">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                </a>
                             </div>
-
-                            <div>
-                                <label for="">Status:</label>
-                                <input type="text" id="status" disabled>
-                            </div>
-
-                            <div>
-                                <label for="">Valor total:</label>
-                                <input type="text" id="total" disabled>
-                            </div>
-
-                            <div>
-                                <label for="">Tempo de espera:</label>
-                                <input type="text" id="tempo_espera" disabled>
-                            </div>
-
-
-
-                            <a id="whatsappLink" href="https://wa.me/" target="_blank">
-                                <i class="fa-brands fa-whatsapp"></i>
-                            </a>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-    </main>
+        </main>
+    </div>
 
     <div class="grafico">
         <canvas id="statusChart" width="600" height="350"></canvas>

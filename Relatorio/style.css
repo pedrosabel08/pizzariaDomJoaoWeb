@@ -8,6 +8,15 @@
     font-family: "Nunito", sans-serif;
 }
 
+body {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+}
+
+.container {
+    grid-column: 2;
+}
+
 header {
     display: flex;
     align-items: center;
