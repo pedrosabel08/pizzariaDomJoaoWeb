@@ -6,12 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="/pizzariaDomJoaoWeb/assets/stock.png" type="image/x-icon">
+    <link rel="stylesheet" href="../../styleSidebar.css">
+
 
     <title>Saída de Estoque</title>
 </head>
 
 <body>
 
+    <?php
+
+    include "../../sidebar.php";
+
+    ?>
     <div class="container">
         <div class="table-wrapper">
             <!-- Filtros -->
@@ -62,6 +69,8 @@
     </div>
 
     <script src="script.js"></script>
+    <script src="../../sidebar.js"></script>
+
 </body>
 
 </html>

@@ -15,9 +15,17 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../../styleSidebar.css">
 </head>
 
 <body>
+
+  <?php
+
+  include "../../sidebar.php";
+
+  ?>
+
   <div class="container mt-4">
     <div class="d-flex align-items-center mb-3">
       <label for="tipoFiltro" class="me-2 fw-bold">Tipo:</label>
@@ -127,6 +135,7 @@
   <!-- JS para responsividade (opcional) -->
   <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
   <script src="script.js"></script>
+  <script src="../../sidebar.js"></script>
 </body>
 
 </html>

@@ -12,10 +12,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="../styleSidebar.css">
+
 
 </head>
 
 <body>
+
+    <?php
+
+    include "../sidebar.php";
+
+    ?>
+
     <header>
         <button id="voltar" onclick="window.location.href='../index.php'"><i class="fa-solid fa-left-long"></i></button>
         <h1>Relatório de Vendas da Pizzaria</h1>
@@ -54,6 +63,7 @@
     </div>
 
     <script src="script.js"></script>
+    <script src="../sidebar.js"></script>
 </body>
 
 </html>

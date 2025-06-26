@@ -166,3 +166,16 @@ footer {
 footer p {
     margin-left: 50px;
 }
+
+body::-webkit-scrollbar {
+    width: 5px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #747474;
+    border-radius: 10px;
+}
+
+body::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}

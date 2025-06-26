@@ -24,10 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     v.total,
     f.tipo AS forma_entrega,
     s.nome_status,
-    GROUP_CONCAT(DISTINCT b.nomeBebida SEPARATOR ", ") AS bebidas,  -- Bebidas associadas
+    GROUP_CONCAT(DISTINCT CONCAT(m.nome, \' - \', t.nome) SEPARATOR ", ") AS bebidas,
     GROUP_CONCAT(DISTINCT vb.bebidas_idbebidas SEPARATOR ", ") AS id_bebidas,  -- IDs das bebidas
     SUM(vb.quantidade) AS quantidade_bebidas, -- Quantidade total de bebidas
-    b.tamanho_id
+    b.tamanhobebidas_idtamanhoBebidas
 FROM vendas v
 LEFT JOIN vendas_pizzas vp ON v.idvendas = vp.vendas_idvendas
 INNER JOIN forma_entrega f ON v.forma_entrega_id = f.idforma_entrega
@@ -36,8 +36,9 @@ INNER JOIN status_venda s ON v.status_id = s.idstatus
 LEFT JOIN tamanho t ON vp.tamanho_idtamanho = t.idtamanho
 LEFT JOIN vendas_bebidas vb ON v.idvendas = vb.vendas_idvendas  -- Conexão com as bebidas do pedido
 LEFT JOIN bebidas b ON vb.bebidas_idbebidas = b.idbebidas  -- Conexão com os detalhes das bebidas
+LEFT JOIN marcabebidas m ON b.marca_id = m.idmarcaBebidas  -- Conexão para obter o nome da bebida
 WHERE v.cliente_id = ?
-GROUP BY vendas_idvendas, t.nome, v.data_venda, v.total, f.tipo, s.nome_status, b.tamanho_id
+GROUP BY vendas_idvendas, t.nome, v.data_venda, v.total, f.tipo, s.nome_status, b.tamanhobebidas_idtamanhoBebidas
 ORDER BY 
     v.data_venda DESC;';
 

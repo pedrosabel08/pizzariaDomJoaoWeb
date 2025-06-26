@@ -36,9 +36,17 @@ if ($result->num_rows > 0) {
     <title>Gestão de Pedidos - Gerente</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styleSidebar.css">
 </head>
 
 <body>
+
+    <?php
+
+    include "../sidebar.php";
+
+    ?>
+
     <header>
         <h1>Painel de Pedidos</h1>
         <p id="data-atual"></p>
@@ -157,6 +165,7 @@ if ($result->num_rows > 0) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="script.js"></script>
+    <script src="../sidebar.js"></script>
 
 </body>
 

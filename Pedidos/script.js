@@ -2,6 +2,21 @@ document.addEventListener("DOMContentLoaded", function () {
     const modal = document.getElementById("modalPedido");
     const spanClose = document.querySelector(".close");
 
+    function formatarDataHora(dataString) {
+        const data = new Date(dataString);
+        if (isNaN(data)) return dataString; // Retorna original se inválido
+
+        const pad = n => n.toString().padStart(2, '0');
+        const dia = pad(data.getDate());
+        const mes = pad(data.getMonth() + 1);
+        const ano = data.getFullYear();
+        const hora = pad(data.getHours());
+        const min = pad(data.getMinutes());
+        const seg = pad(data.getSeconds());
+
+        return `${dia}/${mes}/${ano} ${hora}:${min}:${seg}`;
+    }
+
     function atualizarPedidos() {
         fetch('buscar_pedidos.php', {
             method: 'POST'
@@ -52,11 +67,11 @@ document.addEventListener("DOMContentLoaded", function () {
                                     break;
                             }
                         }
-                        
+
                         // Verifica se há bebidas e usa a primeira apenas se não houver pizza
                         if (pedido.id_bebidas && !pedido.id_pizzas) { // Verifica se há bebidas e se não há pizza
                             const tamanhoBebida = pedido.tamanho_id; // Separar os IDs das bebidas
-                        
+
                             // Mapeia o ID da bebida para a imagem
                             switch (tamanhoBebida) {
                                 case 1:
@@ -94,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                     <span>ID Pedido: ${pedido.vendas_idvendas}</span>
                                 </div>
                                 <div>
-                                    <input type="text" name="data" id="data" value="${pedido.data_venda}" readonly>
+                                    <input type="text" name="data" id="data" value="${formatarDataHora(pedido.data_venda)}" readonly>
                                 </div>
                                 <div>
                                     <input type="text" name="total" id="total" value="R$ ${pedido.total}" readonly>
